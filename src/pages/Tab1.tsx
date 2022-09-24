@@ -1,6 +1,6 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/react';
-import Ball from 'components/ball/Ball';
-import Series from 'components/series/Series';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+
+import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 
 import './Tab1.css';
 
@@ -18,7 +18,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Series numbers={[1, 2, 3, 4, 5]} extra={7}></Series>
+        <LotteryDraw draw={{ type: 'mega', series: { numbers: [1, 2], extra: 34 }, date: new Date() }}></LotteryDraw>
       </IonContent>
     </IonPage>
   );

@@ -3,7 +3,7 @@ import Ball from './../ball/Ball';
 
 interface SeriesProps {
   numbers: number[];
-  extra: number;
+  extra: number | null;
 }
 
 const Series: React.FC<SeriesProps> = ({ numbers, extra }) => {
@@ -14,7 +14,7 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra }) => {
           <Ball num={n}></Ball>
         ))}
       </div>
-      <div className="series-extra-container">{extra > 0 && <Ball num={extra} color="blue"></Ball>}</div>
+      <div className="series-extra-container">{extra != null && <Ball num={extra} color="blue"></Ball>}</div>
     </div>
   );
 };
