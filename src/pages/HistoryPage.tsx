@@ -1,4 +1,15 @@
-import { IonCard, IonContent, IonHeader, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonBackButton,
+  IonButtons,
+  IonCard,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import { LotteryDrawModel } from 'types/lottery-draw';
@@ -27,6 +38,12 @@ const HistoryPage: React.FC = () => {
   ];
   return (
     <IonPage>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="/" />
+        </IonButtons>
+        <IonTitle>Historical Data</IonTitle>
+      </IonToolbar>
       <IonContent>
         <Virtuoso
           style={{ height: '100%' }}
