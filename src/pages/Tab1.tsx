@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 
@@ -18,7 +18,11 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <LotteryDraw draw={{ type: 'mega', series: { numbers: [1, 2], extra: 34 }, date: new Date() }}></LotteryDraw>
+        <IonCard>
+          <LotteryDraw
+            draw={{ type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() }}
+          ></LotteryDraw>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

@@ -1,0 +1,8 @@
+.lottery-draw-header {
+  display: flex;
+  justify-content: center;
+}
+
+.lottery-draw-date-label {
+  padding-right: 10px;
+}
