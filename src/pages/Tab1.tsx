@@ -1,5 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonAvatar } from '@ionic/react';
 import Ball from 'components/ball/Ball';
+import Series from 'components/series/Series';
 
 import './Tab1.css';
 
@@ -17,7 +18,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Ball num={32}></Ball>
+        <Series numbers={[1, 2, 3, 4, 5]} extra={7}></Series>
       </IonContent>
     </IonPage>
   );

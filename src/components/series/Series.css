@@ -1,0 +1,10 @@
+.series-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.series-numbers-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
