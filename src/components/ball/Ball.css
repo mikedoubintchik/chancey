@@ -1,13 +1,14 @@
 .ball-container {
   display: flex;
-  height: 48px;
-  width: 48px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   align-items: center;
-  background-color: brown;
+  background-color: #CC9630;
 }
 .ball-number{
   flex: 1;
   text-align: center;
   color: white;
+  font-size: large;
 }

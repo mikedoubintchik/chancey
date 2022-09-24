@@ -9,12 +9,12 @@ interface SeriesProps {
 const Series: React.FC<SeriesProps> = ({ numbers, extra }) => {
   return (
     <div className="series-container">
-      <div className="series-numbers-container" style={{ width: numbers.length * (48 + 10) }}>
+      <div className="series-numbers-container" style={{ width: numbers.length * (40 + 10) }}>
         {numbers.map((n) => (
           <Ball num={n}></Ball>
         ))}
       </div>
-      <div className="series-extra-container">{extra != null && <Ball num={extra} color="blue"></Ball>}</div>
+      <div className="series-extra-container">{extra != null && <Ball num={extra} color="#BD4F46"></Ball>}</div>
     </div>
   );
 };

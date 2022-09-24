@@ -6,7 +6,7 @@ interface BallProps {
 }
 
 const Ball: React.FC<BallProps> = ({ num, color }) => {
-  color = color ? color : 'brown';
+  color = color ? color : '#CC9630';
   return (
     <div className="ball-container" style={{ backgroundColor: color }}>
       <div className="ball-number">{num}</div>
