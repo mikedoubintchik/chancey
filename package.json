@@ -3,11 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@awesome-cordova-plugins/camera": "^5.45.0",
+    "@awesome-cordova-plugins/core": "^5.45.0",
+    "@awesome-cordova-plugins/geolocation": "^5.45.0",
     "@capacitor/app": "4.0.1",
+    "@capacitor/camera": "^4.1.1",
     "@capacitor/core": "4.3.0",
+    "@capacitor/filesystem": "^4.1.1",
     "@capacitor/haptics": "4.0.1",
     "@capacitor/keyboard": "4.0.1",
+    "@capacitor/preferences": "^4.0.1",
     "@capacitor/status-bar": "4.0.1",
+    "@google-cloud/vision": "3.0.0",
+    "@ionic-native/camera": "5.36.0",
+    "@ionic/pwa-elements": "^3.1.1",
     "@ionic/react": "^6.0.0",
     "@ionic/react-router": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -19,6 +28,9 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "cordova-plugin-camera": "6.0.0",
+    "cordova-plugin-geolocation": "^4.1.0",
+    "firebase": "9.10.0",
     "ionicons": "^6.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -41,10 +53,12 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "ionic serve",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "emulate": "cd functions && npm run serve",
+    "functions:watch": "cd functions && npm run build:watch"
   },
   "eslintConfig": {
     "extends": [
@@ -65,7 +79,18 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "4.3.0"
+    "@capacitor/cli": "4.3.0",
+    "eslint": "8.23.1",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.6.1",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "7.31.8",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.3",
+    "prettier": "2.7.1"
   },
   "description": "An Ionic project"
 }

@@ -1,0 +1,692 @@
+[debug] [2022-09-24T14:37:34.885Z] ----------------------------------------------------------------------
+[debug] [2022-09-24T14:37:34.886Z] Command:       /Users/ninja/.nvm/versions/node/v16.17.0/bin/node /Users/ninja/.nvm/versions/node/v16.17.0/bin/firebase emulators:start --only functions
+[debug] [2022-09-24T14:37:34.887Z] CLI Version:   11.10.0
+[debug] [2022-09-24T14:37:34.887Z] Platform:      darwin
+[debug] [2022-09-24T14:37:34.888Z] Node Version:  v16.17.0
+[debug] [2022-09-24T14:37:34.889Z] Time:          Sat Sep 24 2022 10:37:34 GMT-0400 (Eastern Daylight Time)
+[debug] [2022-09-24T14:37:34.889Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-09-24T14:37:35.016Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-09-24T14:37:35.017Z] > authorizing via signed-in user (mike.doubintchik@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2022-09-24T14:37:35.068Z] [hub] writing locator at /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/hub-tune-363401.json
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub, storage, eventarc {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub, storage, eventarc\u001b[22m"}}
+[info] ✔  functions: Using node@16 from host. {"metadata":{"emulator":{"name":"functions"},"message":"Using node@16 from host."}}
+[debug] [2022-09-24T14:37:35.120Z] defaultcredentials: writing to file /Users/ninja/.config/firebase/mike_doubintchik_gmail.com_application_default_credentials.json
+[debug] [2022-09-24T14:37:35.129Z] Setting GAC to /Users/ninja/.config/firebase/mike_doubintchik_gmail.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/ninja/.config/firebase/mike_doubintchik_gmail.com_application_default_credentials.json"}}
+[debug] [2022-09-24T14:37:35.134Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/tune-363401/adminSdkConfig [none]
+[debug] [2022-09-24T14:37:35.444Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/tune-363401/adminSdkConfig 200
+[debug] [2022-09-24T14:37:35.444Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/tune-363401/adminSdkConfig {"projectId":"tune-363401","databaseURL":"https://tune-363401-default-rtdb.firebaseio.com","storageBucket":"tune-363401.appspot.com","locationId":"us-central"}
+[debug] [2022-09-24T14:37:35.516Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-09-24T14:37:35.516Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-09-24T14:37:35.516Z] Starting Emulator UI with command {"binary":"node","args":["/Users/ninja/.cache/firebase/emulators/ui-v1.9.0/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/ninja/.cache/firebase/emulators/ui-v1.9.0/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2022-09-24T14:37:35.665Z] Web / API server started at localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
+[info] i  functions: Watching "/Users/ninja/Projects/4tune/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/ninja/Projects/4tune/functions\" for Cloud Functions..."}}
+[debug] [2022-09-24T14:37:35.793Z] Validating nodejs source
+[debug] [2022-09-24T14:37:37.453Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "firebase emulators:start --only functions && npm run build:watch",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:37:37.455Z] Building nodejs source
+[debug] [2022-09-24T14:37:37.455Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:37:37.464Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:37:37.822Z] Serving at port 9005
+
+[debug] [2022-09-24T14:37:38.553Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:37:38.560Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[info] ✔  functions[us-central1-helloWorld]: http function initialized (http://localhost:5001/tune-363401/us-central1/helloWorld). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/tune-363401/us-central1/helloWorld)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://localhost:4000                │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ localhost:5001 │ http://localhost:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2022-09-24T14:38:01.105Z] File /Users/ninja/Projects/4tune/functions/package.json changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/package.json changed, reloading triggers"}}
+[debug] [2022-09-24T14:38:02.106Z] Validating nodejs source
+[debug] [2022-09-24T14:38:04.124Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:38:04.124Z] Building nodejs source
+[debug] [2022-09-24T14:38:04.124Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:38:04.125Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:38:04.394Z] Serving at port 9005
+
+[debug] [2022-09-24T14:38:04.787Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:38:04.793Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:39:17.292Z] File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers"}}
+[debug] [2022-09-24T14:39:17.292Z] File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers"}}
+[debug] [2022-09-24T14:39:18.294Z] Validating nodejs source
+[debug] [2022-09-24T14:39:20.098Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:39:20.100Z] Building nodejs source
+[debug] [2022-09-24T14:39:20.100Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:39:20.101Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:39:20.390Z] Serving at port 9005
+
+[debug] [2022-09-24T14:39:21.093Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:39:21.098Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:40:07.829Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-24T14:40:07.829Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-24T14:40:07.830Z] Accepted request GET /tune-363401/us-central1/helloWorld --> us-central1-helloWorld
+[debug] [2022-09-24T14:40:07.837Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-24T14:40:07.838Z] [functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/"}}
+[debug] [2022-09-24T14:40:07.856Z] [worker-pool] addWorker(us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:40:07.857Z] [worker-pool] Adding worker with key us-central1-helloWorld, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-helloWorld, total=1"}}
+[debug] [2022-09-24T14:40:10.596Z] [runtime-status] [76461] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.598Z] [runtime-status] [76461] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.598Z] [runtime-status] [76461] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-24T14:40:10.600Z] [runtime-status] [76461] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.678Z] [runtime-status] [76461] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-24T14:40:10.678Z] [runtime-status] [76461] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:40:10.679Z] [runtime-status] [76461] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.681Z] [runtime-status] [76461] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.682Z] [runtime-status] [76461] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:40:10.682Z] [runtime-status] [76461] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:40:11.214Z] [runtime-status] [76461] Functions runtime initialized. {"cwd":"/Users/ninja/Projects/4tune/functions","node_version":"16.17.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Functions runtime initialized. {\"cwd\":\"/Users/ninja/Projects/4tune/functions\",\"node_version\":\"16.17.0\"}"}}
+[debug] [2022-09-24T14:40:11.214Z] [runtime-status] [76461] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_ec7ae4fe0bdc34d3.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [76461] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_ec7ae4fe0bdc34d3.sock"}}
+[debug] [2022-09-24T14:40:11.310Z] [worker-pool] submitRequest(triggerId=us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:40:11.311Z] [worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: BUSY"}}
+[info] i  functions: Beginning execution of "helloWorld" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Beginning execution of \"helloWorld\""}}
+[info] >  {"severity":"INFO","message":""} {"user":{"severity":"INFO","message":""},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"INFO\",\"message\":\"\"}"}}
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[info] >  {"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"} {"user":{"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\\nfor call at\\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\\n  code: 7,\\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\\n  metadata: Metadata {\\n    internalRepr: Map(3) {\\n      'google.rpc.errorinfo-bin' => [Array],\\n      'google.rpc.help-bin' => [Array],\\n      'grpc-status-details-bin' => [Array]\\n    },\\n    options: {}\\n  },\\n  note: 'Exception occurred in retry method that was not classified as transient'\\n}\"}"}}
+[debug] [2022-09-24T14:40:11.940Z] [worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: IDLE"}}
+[debug] [2022-09-24T14:40:11.940Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "helloWorld" in 623.557161ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Finished \"helloWorld\" in 623.557161ms"}}
+[debug] [2022-09-24T14:41:27.576Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:27.902Z] File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:27.907Z] File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:28.910Z] Validating nodejs source
+[debug] [2022-09-24T14:41:31.134Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:41:31.135Z] Building nodejs source
+[debug] [2022-09-24T14:41:31.135Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:41:31.137Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:31.142Z] File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:31.143Z] File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:31.144Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:41:31.413Z] Serving at port 9005
+
+[debug] [2022-09-24T14:41:32.145Z] Validating nodejs source
+[debug] [2022-09-24T14:41:33.816Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:41:33.817Z] Building nodejs source
+[debug] [2022-09-24T14:41:33.817Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:41:33.817Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:41:33.830Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:41:33.838Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:41:33.854Z] [worker-pool] Shutting down IDLE worker (us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:41:33.855Z] [worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: FINISHING"}}
+[debug] [2022-09-24T14:41:33.868Z] [worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: exited"}}
+[debug] [2022-09-24T14:41:33.868Z] [worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-50e8db10-edfa-4b92-92fe-e6a63a9c4be7]: FINISHED"}}
+[debug] [2022-09-24T14:41:34.179Z] Serving at port 9006
+
+[debug] [2022-09-24T14:41:34.710Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:41:34.716Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:41:35.004Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:41:36.005Z] Validating nodejs source
+[debug] [2022-09-24T14:41:37.606Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:41:37.607Z] Building nodejs source
+[debug] [2022-09-24T14:41:37.607Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:41:37.607Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:41:37.796Z] Serving at port 9005
+
+[debug] [2022-09-24T14:41:38.348Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:41:38.354Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:44:58.534Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-24T14:44:58.535Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-24T14:44:58.535Z] Accepted request GET /tune-363401/us-central1/helloWorld --> us-central1-helloWorld
+[debug] [2022-09-24T14:44:58.540Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-24T14:44:58.540Z] [functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/"}}
+[debug] [2022-09-24T14:44:58.541Z] [worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0"}}
+[debug] [2022-09-24T14:44:58.550Z] [worker-pool] addWorker(us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:44:58.550Z] [worker-pool] Adding worker with key us-central1-helloWorld, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-helloWorld, total=1"}}
+[debug] [2022-09-24T14:45:00.423Z] [runtime-status] [77212] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.424Z] [runtime-status] [77212] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.425Z] [runtime-status] [77212] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-24T14:45:00.426Z] [runtime-status] [77212] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.497Z] [runtime-status] [77212] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-24T14:45:00.497Z] [runtime-status] [77212] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:45:00.498Z] [runtime-status] [77212] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.499Z] [runtime-status] [77212] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.500Z] [runtime-status] [77212] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:00.500Z] [runtime-status] [77212] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:45:01.065Z] [runtime-status] [77212] Functions runtime initialized. {"cwd":"/Users/ninja/Projects/4tune/functions","node_version":"16.17.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Functions runtime initialized. {\"cwd\":\"/Users/ninja/Projects/4tune/functions\",\"node_version\":\"16.17.0\"}"}}
+[debug] [2022-09-24T14:45:01.065Z] [runtime-status] [77212] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_cb5cef12f1f5a78d.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77212] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_cb5cef12f1f5a78d.sock"}}
+[debug] [2022-09-24T14:45:01.092Z] [worker-pool] submitRequest(triggerId=us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:45:01.092Z] [worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: BUSY"}}
+[info] i  functions: Beginning execution of "helloWorld" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Beginning execution of \"helloWorld\""}}
+[info] >  {"severity":"INFO","message":""} {"user":{"severity":"INFO","message":""},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"INFO\",\"message\":\"\"}"}}
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[info] >  {"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"} {"user":{"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\\nfor call at\\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\\n  code: 7,\\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\\n  metadata: Metadata {\\n    internalRepr: Map(3) {\\n      'google.rpc.errorinfo-bin' => [Array],\\n      'google.rpc.help-bin' => [Array],\\n      'grpc-status-details-bin' => [Array]\\n    },\\n    options: {}\\n  },\\n  note: 'Exception occurred in retry method that was not classified as transient'\\n}\"}"}}
+[debug] [2022-09-24T14:45:01.680Z] [worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: IDLE"}}
+[debug] [2022-09-24T14:45:01.680Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "helloWorld" in 582.273778ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Finished \"helloWorld\" in 582.273778ms"}}
+[debug] [2022-09-24T14:45:23.749Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:45:24.141Z] File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers"}}
+[debug] [2022-09-24T14:45:24.141Z] File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers"}}
+[debug] [2022-09-24T14:45:25.145Z] Validating nodejs source
+[debug] [2022-09-24T14:45:27.057Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:45:27.058Z] Building nodejs source
+[debug] [2022-09-24T14:45:27.059Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:45:27.060Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:45:27.365Z] Serving at port 9005
+
+[debug] [2022-09-24T14:45:28.046Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:45:28.052Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:45:28.066Z] [worker-pool] Shutting down IDLE worker (us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:45:28.067Z] [worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: FINISHING"}}
+[debug] [2022-09-24T14:45:28.082Z] [worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: exited"}}
+[debug] [2022-09-24T14:45:28.082Z] [worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-40cd51ac-ba0d-4b28-b794-823ed18ce664]: FINISHED"}}
+[debug] [2022-09-24T14:45:37.966Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-24T14:45:37.966Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-24T14:45:37.966Z] Accepted request GET /tune-363401/us-central1/helloWorld --> us-central1-helloWorld
+[debug] [2022-09-24T14:45:37.971Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-24T14:45:37.971Z] [functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/"}}
+[debug] [2022-09-24T14:45:37.971Z] [worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0"}}
+[debug] [2022-09-24T14:45:37.980Z] [worker-pool] addWorker(us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:45:37.982Z] [worker-pool] Adding worker with key us-central1-helloWorld, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-helloWorld, total=1"}}
+[debug] [2022-09-24T14:45:39.808Z] [runtime-status] [77328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.809Z] [runtime-status] [77328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.810Z] [runtime-status] [77328] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-24T14:45:39.812Z] [runtime-status] [77328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.855Z] [runtime-status] [77328] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-24T14:45:39.856Z] [runtime-status] [77328] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:45:39.856Z] [runtime-status] [77328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.857Z] [runtime-status] [77328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.858Z] [runtime-status] [77328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:45:39.858Z] [runtime-status] [77328] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:45:40.159Z] [runtime-status] [77328] Functions runtime initialized. {"cwd":"/Users/ninja/Projects/4tune/functions","node_version":"16.17.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Functions runtime initialized. {\"cwd\":\"/Users/ninja/Projects/4tune/functions\",\"node_version\":\"16.17.0\"}"}}
+[debug] [2022-09-24T14:45:40.159Z] [runtime-status] [77328] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_946e45fc6efda000.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [77328] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_946e45fc6efda000.sock"}}
+[debug] [2022-09-24T14:45:40.219Z] [worker-pool] submitRequest(triggerId=us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:45:40.219Z] [worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: BUSY"}}
+[info] i  functions: Beginning execution of "helloWorld" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Beginning execution of \"helloWorld\""}}
+[info] >  {"severity":"INFO","message":"meow"} {"user":{"severity":"INFO","message":"meow"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"INFO\",\"message\":\"meow\"}"}}
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[info] >  {"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"} {"user":{"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\\nfor call at\\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\\n  code: 7,\\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\\n  metadata: Metadata {\\n    internalRepr: Map(3) {\\n      'google.rpc.errorinfo-bin' => [Array],\\n      'google.rpc.help-bin' => [Array],\\n      'grpc-status-details-bin' => [Array]\\n    },\\n    options: {}\\n  },\\n  note: 'Exception occurred in retry method that was not classified as transient'\\n}\"}"}}
+[debug] [2022-09-24T14:45:40.810Z] [worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: IDLE"}}
+[debug] [2022-09-24T14:45:40.811Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "helloWorld" in 586.779585ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Finished \"helloWorld\" in 586.779585ms"}}
+[debug] [2022-09-24T14:46:03.847Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:04.205Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:04.303Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:04.403Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:05.404Z] Validating nodejs source
+[debug] [2022-09-24T14:46:07.252Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:46:07.252Z] Building nodejs source
+[debug] [2022-09-24T14:46:07.252Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:46:07.253Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:46:07.521Z] Serving at port 9005
+
+[debug] [2022-09-24T14:46:08.233Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:46:08.240Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:46:08.255Z] [worker-pool] Shutting down IDLE worker (us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:46:08.255Z] [worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: FINISHING"}}
+[debug] [2022-09-24T14:46:08.269Z] [worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: exited"}}
+[debug] [2022-09-24T14:46:08.269Z] [worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-8d22c902-89e7-4ae2-a48b-8c434efbc3fa]: FINISHED"}}
+[debug] [2022-09-24T14:46:13.329Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:14.332Z] Validating nodejs source
+[debug] [2022-09-24T14:46:16.123Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:46:16.125Z] Building nodejs source
+[debug] [2022-09-24T14:46:16.126Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:46:16.127Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:46:16.349Z] Serving at port 9005
+
+[debug] [2022-09-24T14:46:16.794Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:46:16.800Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:46:42.605Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:43.608Z] Validating nodejs source
+[debug] [2022-09-24T14:46:45.510Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:46:45.511Z] Building nodejs source
+[debug] [2022-09-24T14:46:45.511Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:46:45.512Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:46:45.695Z] Serving at port 9005
+
+[debug] [2022-09-24T14:46:46.061Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:46:46.067Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:46:47.318Z] File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js.map changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:47.318Z] File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/lib/index.js changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:48.321Z] Validating nodejs source
+[debug] [2022-09-24T14:46:50.570Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:46:50.571Z] Building nodejs source
+[debug] [2022-09-24T14:46:50.572Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:46:50.574Z] File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/ninja/Projects/4tune/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2022-09-24T14:46:50.575Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:46:50.811Z] Serving at port 9005
+
+[debug] [2022-09-24T14:46:51.320Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:46:51.325Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:46:51.576Z] Validating nodejs source
+[debug] [2022-09-24T14:46:53.064Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}
+[debug] [2022-09-24T14:46:53.065Z] Building nodejs source
+[debug] [2022-09-24T14:46:53.065Z] Analyzing nodejs backend spec
+[debug] [2022-09-24T14:46:53.066Z] Could not find functions.yaml. Must use http discovery
+[debug] [2022-09-24T14:46:53.240Z] Serving at port 9005
+
+[debug] [2022-09-24T14:46:53.588Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2022-09-24T14:46:53.594Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: helloWorld. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: helloWorld."}}
+[debug] [2022-09-24T14:49:44.872Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2022-09-24T14:49:44.872Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2022-09-24T14:49:44.872Z] Accepted request OPTIONS /tune-363401/us-central1/helloWorld --> us-central1-helloWorld
+[debug] [2022-09-24T14:49:44.880Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2022-09-24T14:49:44.881Z] [functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/tune-363401/us-central1/helloWorld, mapping to path=/"}}
+[debug] [2022-09-24T14:49:44.881Z] [worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-helloWorld: 1 --> 0"}}
+[debug] [2022-09-24T14:49:44.891Z] [worker-pool] addWorker(us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:49:44.891Z] [worker-pool] Adding worker with key us-central1-helloWorld, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-helloWorld, total=1"}}
+[debug] [2022-09-24T14:49:46.734Z] [runtime-status] [78004] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.735Z] [runtime-status] [78004] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.736Z] [runtime-status] [78004] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2022-09-24T14:49:46.737Z] [runtime-status] [78004] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.810Z] [runtime-status] [78004] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Checked functions.config() {\"config\":{}}"}}
+[debug] [2022-09-24T14:49:46.810Z] [runtime-status] [78004] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:49:46.811Z] [runtime-status] [78004] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.812Z] [runtime-status] [78004] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.812Z] [runtime-status] [78004] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.24.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.24.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2022-09-24T14:49:46.813Z] [runtime-status] [78004] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"/Users/ninja/Projects/4tune/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2022-09-24T14:49:47.334Z] [runtime-status] [78004] Functions runtime initialized. {"cwd":"/Users/ninja/Projects/4tune/functions","node_version":"16.17.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Functions runtime initialized. {\"cwd\":\"/Users/ninja/Projects/4tune/functions\",\"node_version\":\"16.17.0\"}"}}
+[debug] [2022-09-24T14:49:47.334Z] [runtime-status] [78004] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_19d93dfbe69034d4.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"[runtime-status] [78004] Listening to port: /var/folders/sp/5cm_75qs2yn497n739npr16w0000gn/T/fire_emu_19d93dfbe69034d4.sock"}}
+[debug] [2022-09-24T14:49:47.429Z] [worker-pool] submitRequest(triggerId=us-central1-helloWorld) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-helloWorld)"}}
+[debug] [2022-09-24T14:49:47.430Z] [worker-us-central1-helloWorld-dbfc22b5-8441-49d8-91a6-38ec5ebf713d]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-dbfc22b5-8441-49d8-91a6-38ec5ebf713d]: BUSY"}}
+[info] i  functions: Beginning execution of "helloWorld" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Beginning execution of \"helloWorld\""}}
+[info] >  {"severity":"INFO","message":"meow"} {"user":{"severity":"INFO","message":"meow"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"INFO\",\"message\":\"meow\"}"}}
+[warn] ⚠  Google API requested!
+   - URL: "https://oauth2.googleapis.com/token"
+   - Be careful, this may be a production service. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Google API requested!\n   - URL: \"https://oauth2.googleapis.com/token\"\n   - Be careful, this may be a production service."}}
+[info] >  {"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"} {"user":{"severity":"ERROR","message":"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\nfor call at\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\n  code: 7,\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\n  metadata: Metadata {\n    internalRepr: Map(3) {\n      'google.rpc.errorinfo-bin' => [Array],\n      'google.rpc.help-bin' => [Array],\n      'grpc-status-details-bin' => [Array]\n    },\n    options: {}\n  },\n  note: 'Exception occurred in retry method that was not classified as transient'\n}"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: 7 PERMISSION_DENIED: Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\\n    at Object.callErrorFromStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call.js:31:19)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:195:52)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:365:141)\\n    at Object.onReceiveStatus (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:328:181)\\n    at /Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/call-stream.js:188:78\\n    at processTicksAndRejections (node:internal/process/task_queues:78:11)\\nfor call at\\n    at ServiceClientImpl.makeUnaryRequest (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/client.js:163:34)\\n    at ServiceClientImpl.<anonymous> (/Users/ninja/Projects/4tune/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)\\n    at /Users/ninja/Projects/4tune/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:223:29\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16\\n    at repeat (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:80:25)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/retries.js:118:13\\n    at OngoingCall.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/call.js:67:27)\\n    at NormalApiCaller.call (/Users/ninja/Projects/4tune/node_modules/google-gax/build/src/normalCalls/normalApiCaller.js:34:19)\\n    at /Users/ninja/Projects/4tune/node_modules/google-gax/build/src/createApiCall.js:84:30\\n    at processTicksAndRejections (node:internal/process/task_queues:96:5) {\\n  code: 7,\\n  details: 'Cloud Vision API has not been used in project 563584335869 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/vision.googleapis.com/overview?project=563584335869 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.',\\n  metadata: Metadata {\\n    internalRepr: Map(3) {\\n      'google.rpc.errorinfo-bin' => [Array],\\n      'google.rpc.help-bin' => [Array],\\n      'grpc-status-details-bin' => [Array]\\n    },\\n    options: {}\\n  },\\n  note: 'Exception occurred in retry method that was not classified as transient'\\n}\"}"}}
+[debug] [2022-09-24T14:49:48.076Z] [worker-us-central1-helloWorld-dbfc22b5-8441-49d8-91a6-38ec5ebf713d]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-helloWorld-dbfc22b5-8441-49d8-91a6-38ec5ebf713d]: IDLE"}}
+[debug] [2022-09-24T14:49:48.076Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] i  functions: Finished "helloWorld" in 615.224307ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-helloWorld"},"extension":{},"message":"Finished \"helloWorld\" in 615.224307ms"}}
