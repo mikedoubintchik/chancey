@@ -57,8 +57,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
-    "emulate": "cd functions && npm run serve",
-    "functions:watch": "cd functions && npm run build:watch"
+    "functions:emulate": "cd functions && npm run serve",
+    "functions:watch": "cd functions && npm run serve:watch"
   },
   "eslintConfig": {
     "extends": [
