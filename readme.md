@@ -7,10 +7,11 @@ npm start
 ```
 
 ## Emulating Firebase Functions
+See Emulator UI at `http://localhost:4000/`
 ```sh
-# goto http://localhost:4000/
-npm run emulate
+# run emulator
+npm run functions:emulate
 
-# then run build watcher
+# run emulator and watch for changes to code
 npm run functions:watch
 ```
