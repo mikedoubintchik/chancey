@@ -18,7 +18,7 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonCard>
+        <IonCard href="/history">
           <LotteryDraw
             draw={{ type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() }}
           ></LotteryDraw>
