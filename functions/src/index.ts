@@ -13,7 +13,9 @@ export const helloWorld = functions.https.onRequest(async (request, response) =>
   //     message: 'Not allowed',
   //   });
   // }
-  const client = new vision.ImageAnnotatorClient();
+  const client = new vision.ImageAnnotatorClient({
+    keyFilename: '../credentials/google_credentials.json',
+  });
 
   // TODO: this is for local path, haven't been able to make it work
   const fileName = '/Users/ninja/Downloads/sample.jpeg';
