@@ -1,17 +1,18 @@
 import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
-
+import { useStore } from 'store';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
+  const { state } = useStore();
   return (
     <IonPage>
-      {/* <IonHeader>
+      <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>{state.user ? 'Hello ' + state.user.displayName + '!' : ''}</IonTitle>
         </IonToolbar>
-      </IonHeader> */}
+      </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
