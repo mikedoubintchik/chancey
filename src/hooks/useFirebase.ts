@@ -16,6 +16,7 @@ import {
 import { ActionType, useStore } from 'store';
 import { getFirestore, addDoc, collection } from 'firebase/firestore';
 import { Dispatch } from 'react';
+import { useHistory } from 'react-router';
 
 export function useFirebase() {
   const _getFileBlob = (url: URL, cb: Function) => {
@@ -75,7 +76,14 @@ export function useFirebase() {
     });
   };
 
-  const login = async (method: UserRegisterMethodType, dispatch: Dispatch<any>, username = null, password = null) => {
+  const login = async (
+    method: UserRegisterMethodType,
+    dispatch: Dispatch<any>,
+    // @ts-expect-error
+    history: History<unknown>,
+    username = null,
+    password = null,
+  ) => {
     let response = null;
 
     if (username && password) {
@@ -109,6 +117,9 @@ export function useFirebase() {
           };
 
           _registerUser(user, dispatch);
+
+          // redirect to profile page upon successful login
+          history.push(`/tab1`);
         }
 
         // TODO: fix any

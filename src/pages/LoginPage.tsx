@@ -9,6 +9,7 @@ import { useFirebase } from '../hooks/useFirebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { addDoc, collection } from 'firebase/firestore';
+import { useHistory } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const { onAuthStateChange, login, logout } = useFirebase();
@@ -17,6 +18,7 @@ const LoginPage: React.FC = () => {
   const [showErrorToast, setShowErrorToast] = useState<boolean>(false);
   const [user, setUser] = useState<IUser>({ loggedIn: false, uid: null });
   const { dispatch } = useStore();
+  const history = useHistory();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
@@ -25,16 +27,16 @@ const LoginPage: React.FC = () => {
   }, [onAuthStateChange]);
 
   const requestLogin = useCallback(
-    async (method: UserRegisterMethodType, dispatch: Dispatch<any>) => {
+    async (method: UserRegisterMethodType) => {
       try {
-        await login(method, dispatch);
+        await login(method, dispatch, history);
         // TODO: fix any
       } catch (error: any) {
         setError(error.message);
         setShowErrorToast(true);
       }
     },
-    [login],
+    [login, dispatch, history],
   );
 
   const requestLogout = useCallback(() => {
@@ -56,19 +58,11 @@ const LoginPage: React.FC = () => {
         </IonHeader>
         {!user.loggedIn && (
           <>
-            <IonButton
-              onClick={() => {
-                requestLogin(UserRegisterMethodType.google, dispatch);
-              }}
-            >
+            <IonButton onClick={() => requestLogin(UserRegisterMethodType.google)}>
               <FontAwesomeIcon icon={['fab', 'google']} />
               {'  Login with Google'}
             </IonButton>
-            <IonButton
-              onClick={() => {
-                requestLogin(UserRegisterMethodType.facebook, dispatch);
-              }}
-            >
+            <IonButton onClick={() => requestLogin(UserRegisterMethodType.facebook)}>
               <FontAwesomeIcon icon={['fab', 'facebook']} />
               {'  Login with Facebook'}
             </IonButton>
