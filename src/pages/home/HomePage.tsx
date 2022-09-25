@@ -2,17 +2,17 @@ import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonTitle, IonTo
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import { useStore } from 'store';
-import './Tab1.css';
+import './HomePage.css';
 
-const Tab1: React.FC = () => {
+const HomePage: React.FC = () => {
   const { state } = useStore();
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>{state.user ? 'Hello ' + state.user.displayName + '!' : ''}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      {/* <IonHeader> */}
+      <IonToolbar>
+        <IonTitle>{state.user ? 'Hello ' + state.user.displayName + '!' : ''}</IonTitle>
+      </IonToolbar>
+      {/* </IonHeader> */}
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -30,4 +30,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default HomePage;

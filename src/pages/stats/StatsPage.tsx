@@ -5,7 +5,11 @@ import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 // import './Tab1.css';
 
 const StatsPage: React.FC = () => {
-  return <IonPage></IonPage>;
+  return (
+    <IonPage>
+      <IonContent fullscreen></IonContent>
+    </IonPage>
+  );
 };
 
 export default StatsPage;

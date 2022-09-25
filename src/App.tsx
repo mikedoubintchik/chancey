@@ -10,9 +10,9 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, ellipse, person, square, homeOutline } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
+import { camera, ellipse, person, square, homeOutline, statsChart } from 'ionicons/icons';
+import HomePage from './pages/home/HomePage';
+import StatsPage from './pages/stats/StatsPage';
 import Tab3 from './pages/Tab3';
 import GeolocationPage from './pages/GeolocationPage';
 import ScanTicket from './pages/ScanTicket';
@@ -38,7 +38,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import StatsPage from 'pages/StatsPage';
+
 import HistoryPage from 'pages/HistoryPage';
 import LoginPage from 'pages/LoginPage';
 import { Reducer, useReducer } from 'react';
@@ -64,10 +64,10 @@ const App: React.FC = () => {
             <IonTabs>
               <IonRouterOutlet>
                 <Route exact path="/home">
-                  <Tab1 />
+                  <HomePage />
                 </Route>
-                <Route exact path="/tab2">
-                  <Tab2 />
+                <Route exact path="/stats">
+                  <StatsPage />
                 </Route>
                 <Route path="/tab3">
                   <Tab3 />
@@ -91,9 +91,9 @@ const App: React.FC = () => {
                   <IonIcon icon={homeOutline} />
                   {/* <IonLabel>Home</IonLabel> */}
                 </IonTabButton>
-                <IonTabButton tab="tab2" href="/tab2">
-                  <IonIcon icon={ellipse} />
-                  <IonLabel>Tab 2</IonLabel>
+                <IonTabButton tab="stats" href="/stats">
+                  <IonIcon icon={statsChart} />
+                  {/* <IonLabel>Tab 2</IonLabel> */}
                 </IonTabButton>
                 <IonTabButton tab="tab3" href="/tab3">
                   <IonIcon icon={square} />
