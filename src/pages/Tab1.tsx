@@ -7,11 +7,11 @@ import './Tab1.css';
 const Tab1: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Tab 1</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
