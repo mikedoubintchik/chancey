@@ -1,4 +1,18 @@
-import { IonCard, IonContent, IonHeader, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonCard,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonSegment,
+  IonSegmentButton,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
@@ -32,7 +46,7 @@ export const data = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: labels.map(() => 200),
+      data: labels.map(() => -200),
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
@@ -45,8 +59,19 @@ export const data = {
   ],
 };
 const StatsPage: React.FC = () => {
+  const handleChage = (event: any) => {
+    console.log(event.detail.value);
+  };
   return (
     <IonPage>
+      <IonToolbar>
+        <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value={'10'}>
+          <IonSelectOption value="10">Last 10 Drawings</IonSelectOption>
+          <IonSelectOption value="50">Last 50 Drawings</IonSelectOption>
+          <IonSelectOption value="100">Last 100 Drawings</IonSelectOption>
+        </IonSelect>
+      </IonToolbar>
+
       <IonContent fullscreen>
         <IonList>
           <IonItem>
