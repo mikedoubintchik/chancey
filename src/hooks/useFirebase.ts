@@ -14,7 +14,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import { ActionType, useStore } from 'store';
-import { getFirestore, addDoc, collection } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { Dispatch } from 'react';
 import { useHistory } from 'react-router';
 
@@ -68,7 +68,7 @@ export function useFirebase() {
   // TODO: fix any
   const _registerUser = async (user: UserType, dispatch: Dispatch<any>) => {
     // save user to database
-    await addDoc(collection(db, 'users'), { ...user });
+    await setDoc(doc(db, 'users', user.uid), { ...user });
 
     dispatch({
       type: ActionType.UPDATE_USER,
