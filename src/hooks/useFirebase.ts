@@ -119,7 +119,7 @@ export function useFirebase() {
           _registerUser(user, dispatch);
 
           // redirect to profile page upon successful login
-          history.push(`/tab1`);
+          history.push(`/home`);
         }
 
         // TODO: fix any

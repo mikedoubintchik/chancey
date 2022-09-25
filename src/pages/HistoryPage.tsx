@@ -40,7 +40,7 @@ const HistoryPage: React.FC = () => {
     <IonPage>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton defaultHref="/" />
+          <IonBackButton defaultHref="/home" />
         </IonButtons>
         <IonTitle>Historical Data</IonTitle>
       </IonToolbar>
