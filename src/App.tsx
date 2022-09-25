@@ -16,6 +16,9 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import GeolocationPage from './pages/GeolocationPage';
 import ScanTicket from './pages/ScanTicket';
+import { AppContext, initialState, InitialStateType, IReducer, reducer } from './store';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,67 +40,80 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import StatsPage from 'pages/StatsPage';
 import HistoryPage from 'pages/HistoryPage';
+import LoginPage from 'pages/LoginPage';
+import { Reducer, useReducer } from 'react';
+
+library.add(fab);
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/history">
-          <HistoryPage />
-        </Route>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/tab1">
-              <Tab1 />
-            </Route>
-            <Route exact path="/tab2">
-              <Tab2 />
-            </Route>
-            <Route path="/tab3">
-              <Tab3 />
-            </Route>
-            <Route path="/geolocation">
-              <GeolocationPage />
-            </Route>
-            <Route path="/scan">
-              <ScanTicket />
-            </Route>
-            <Route path="/stats">
-              <StatsPage />
-            </Route>
+const App: React.FC = () => {
+  const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
 
-            <Route exact path="/">
-              <Redirect to="/tab1" />
+  return (
+    <AppContext.Provider value={{ state, dispatch }}>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route path="/history">
+              <HistoryPage />
             </Route>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/login">
+                  <LoginPage />
+                </Route>
+                <Route exact path="/tab1">
+                  <Tab1 />
+                </Route>
+                <Route exact path="/tab2">
+                  <Tab2 />
+                </Route>
+                <Route path="/tab3">
+                  <Tab3 />
+                </Route>
+                <Route path="/geolocation">
+                  <GeolocationPage />
+                </Route>
+                <Route path="/scan">
+                  <ScanTicket />
+                </Route>
+                <Route path="/stats">
+                  <StatsPage />
+                </Route>
+
+                <Route exact path="/">
+                  <Redirect to="/login" />
+                </Route>
+              </IonRouterOutlet>
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="tab1" href="/tab1">
+                  <IonIcon icon={triangle} />
+                  <IonLabel>Tab 1</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab2" href="/tab2">
+                  <IonIcon icon={ellipse} />
+                  <IonLabel>Tab 2</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab3" href="/tab3">
+                  <IonIcon icon={square} />
+                  <IonLabel>Tab 3</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="geolocation" href="/geolocation">
+                  <IonIcon icon={person} />
+                  <IonLabel>Geolocation</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="scan" href="/scan">
+                  <IonIcon icon={camera} />
+                  <IonLabel>Scan Ticket</IonLabel>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
-              <IonIcon icon={triangle} />
-              <IonLabel>Tab 1</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
-              <IonIcon icon={ellipse} />
-              <IonLabel>Tab 2</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
-              <IonIcon icon={square} />
-              <IonLabel>Tab 3</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="geolocation" href="/geolocation">
-              <IonIcon icon={person} />
-              <IonLabel>Geolocation</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="scan" href="/scan">
-              <IonIcon icon={camera} />
-              <IonLabel>Scan Ticket</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+        </IonReactRouter>
+      </IonApp>
+    </AppContext.Provider>
+  );
+};
 
 export default App;

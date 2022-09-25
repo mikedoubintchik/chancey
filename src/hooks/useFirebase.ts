@@ -1,8 +1,21 @@
 import { Photo } from '@capacitor/camera';
-import { auth, storage, functions } from 'config/firebase';
+import { auth, db, storage, functions } from 'config/firebase';
 import { ref, uploadBytes } from 'firebase/storage';
 import { httpsCallable } from 'firebase/functions';
-import { UserPhoto } from 'types/profile';
+import { UserPhoto, UserRegisterMethodType, UserType } from 'types/profile';
+import {
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from 'firebase/auth';
+import { ActionType, useStore } from 'store';
+import { getFirestore, addDoc, collection } from 'firebase/firestore';
+import { Dispatch } from 'react';
 
 export function useFirebase() {
   const _getFileBlob = (url: URL, cb: Function) => {
@@ -51,8 +64,72 @@ export function useFirebase() {
     });
   };
 
+  // TODO: fix any
+  const _registerUser = async (user: UserType, dispatch: Dispatch<any>) => {
+    // save user to database
+    await addDoc(collection(db, 'users'), { ...user });
+
+    dispatch({
+      type: ActionType.UPDATE_USER,
+      user,
+    });
+  };
+
+  const login = async (method: UserRegisterMethodType, dispatch: Dispatch<any>, username = null, password = null) => {
+    let response = null;
+
+    if (username && password) {
+      try {
+        response = await signInWithEmailAndPassword(auth, username, password);
+        // TODO: fix any
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error.message);
+      }
+    } else {
+      try {
+        const provider =
+          method === UserRegisterMethodType.google ? new GoogleAuthProvider() : new FacebookAuthProvider();
+
+        response = await signInWithPopup(auth, provider);
+
+        const {
+          providerId,
+          user: { uid, photoURL, displayName, email },
+        } = response;
+
+        // only register user if we get all necessary data
+        if (email && providerId) {
+          const user = {
+            uid,
+            photoURL,
+            displayName,
+            email,
+            providerId,
+          };
+
+          _registerUser(user, dispatch);
+        }
+
+        // TODO: fix any
+      } catch (error: any) {
+        console.log(error);
+
+        throw new Error(error.message);
+      }
+    }
+
+    return response;
+  };
+
+  const logout = () => {
+    auth.signOut();
+  };
+
   return {
     readNumbersFromTicket,
+    login,
+    logout,
     onAuthStateChange,
     uploadToFirebaseStorage,
   };
