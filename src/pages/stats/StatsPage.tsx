@@ -15,50 +15,72 @@ import {
 } from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-// import './Tab1.css';
-export const options = {
-  indexAxis: 'y' as const,
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'right' as const,
-    },
-    title: {
-      display: true,
-      text: 'Some stats and shit',
-    },
-  },
-};
+import Chart from 'react-apexcharts';
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => -200),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => 200),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
 const StatsPage: React.FC = () => {
+  const state = {
+    series: [
+      {
+        data: [
+          {
+            x: 'Ball #1',
+            y: [54, 66, 69, 75, 88],
+          },
+          {
+            x: 'Ball #2',
+            y: [43, 65, 69, 76, 81],
+          },
+          {
+            x: 'Ball #3',
+            y: [31, 39, 45, 51, 59],
+          },
+          {
+            x: 'Ball #4',
+            y: [39, 46, 55, 65, 71],
+          },
+          {
+            x: 'Ball #5',
+            y: [29, 31, 35, 39, 44],
+          },
+          {
+            x: 'Extra Ball',
+            y: [41, 49, 58, 61, 67],
+          },
+        ],
+      },
+    ],
+    options: {
+      chart: {
+        type: 'boxPlot',
+        height: 350,
+        toolbar: {
+          show: false,
+        },
+      },
+
+      // title: {
+      //   text: 'Horizontal BoxPlot Chart',
+      //   align: 'left',
+      // },
+      plotOptions: {
+        bar: {
+          horizontal: true,
+          barHeight: '50%',
+        },
+        boxPlot: {
+          colors: {
+            upper: '#e9ecef',
+            lower: '#f8f9fa',
+          },
+        },
+      },
+      stroke: {
+        colors: ['#6c757d'],
+      },
+    },
+  };
+
   const handleChage = (event: any) => {
     console.log(event.detail.value);
   };
@@ -73,11 +95,10 @@ const StatsPage: React.FC = () => {
       </IonToolbar>
 
       <IonContent fullscreen>
-        <IonList>
-          <IonItem>
-            <Bar data={data} options={options} />
-          </IonItem>
-        </IonList>
+        <IonCard>
+          <Chart options={state.options as any} series={state.series} type="boxPlot" height={350} />
+        </IonCard>
+        {/* <Bar data={data} options={options} /> */}
       </IonContent>
     </IonPage>
   );
