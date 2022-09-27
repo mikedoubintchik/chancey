@@ -4,10 +4,9 @@ const vision = require('@google-cloud/vision');
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const helloWorld = functions.https // }) //   // Check tokens continue to your code. //   allowInvalidAppCheckToken: true, // Opt-out: Requests with invalid App // .runWith({
+export const getTextFromTicket = functions.https // }) //   // Check tokens continue to your code. //   allowInvalidAppCheckToken: true, // Opt-out: Requests with invalid App // .runWith({
   .onCall(async (data, context) => {
     const { fileName } = data;
-    console.log('🚀 ~ file: index.ts ~ line 9 ~ helloWorld ~ fileName', fileName);
 
     // context.app will be undefined if the request doesn't include an
     // App Check token. (If the request includes an invalid App Check

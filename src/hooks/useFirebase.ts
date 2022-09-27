@@ -27,7 +27,7 @@ export function useFirebase() {
     // TODO: remove public access
     // https://console.cloud.google.com/functions/details/us-central1/helloWorld?env=gen1&tab=logs&project=tune-363401
     try {
-      const { data } = await httpsCallable(functions, 'helloWorld')({ fileName });
+      const { data } = await httpsCallable(functions, 'getTextFromTicket')({ fileName });
       console.log('🚀 ~ file: useFirebase.ts ~ line 31 ~ readNumbersFromTicket ~ ticketText', data);
       dispatch({
         type: ActionType.UPDATE_TICKET_PHOTOS_TEXT,
