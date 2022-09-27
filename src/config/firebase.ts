@@ -33,7 +33,5 @@ export const db = getFirestore(app);
 export default app;
 
 if (process.env.REACT_APP_ENV === 'development') {
-  // use debug token for app check
-
   connectFunctionsEmulator(functions, 'localhost', 5001);
 }
