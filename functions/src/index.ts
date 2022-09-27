@@ -20,34 +20,30 @@ export const helloWorld = functions.https // }) //   // Check tokens continue to
     }
 
     // Checking attribute.
-    // if (!(typeof photos === 'object') || photos.length === 0) {
-    //   // Throwing an HttpsError so that the client gets the error details.
-    //   throw new functions.https.HttpsError(
-    //     'invalid-argument',
-    //     'The function must be called with ' + 'one arguments "text" containing the message text to add.',
-    //   );
-    // }
+    if (!(typeof fileName === 'string') || fileName.length === 0) {
+      // Throwing an HttpsError so that the client gets the error details.
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'The function must be called with ' + 'one arguments "fileName" containing the path to the image.',
+      );
+    }
 
     //  if (!context.auth) return { status: 'error', code: 401, message: 'Not signed in' };
 
-    // // Checking that the user is authenticated.
-    // if (!context.auth) {
-    //   // Throwing an HttpsError so that the client gets the error details.
-    //   throw new functions.https.HttpsError(
-    //     'failed-precondition',
-    //     'The function must be called ' + 'while authenticated.',
-    //   );
-    // }
+    // Checking that the user is authenticated.
+    if (!context.auth) {
+      // Throwing an HttpsError so that the client gets the error details.
+      throw new functions.https.HttpsError(
+        'failed-precondition',
+        'The function must be called ' + 'while authenticated.',
+      );
+    }
 
     const client = new vision.ImageAnnotatorClient({
       keyFilename: '../credentials/google_credentials.json',
     });
 
-    // const localFile =
-    //   '/Users/ninja/Projects/4tune/functions/__tests__/images/4VfLNhjOjwXwvLEK2qE6t3W9Hgb2-1664243751757.jpeg';
-
     try {
-      // const [result] = await client.textDetection(`${localFile}`);
       // const [result] = await client.textDetection(`gs://tune-363401.appspot.com/tickets/${fileName}.jpg`);
       const [result] = await client.textDetection(
         `gs://tune-363401.appspot.com/tickets/4VfLNhjOjwXwvLEK2qE6t3W9Hgb2/4VfLNhjOjwXwvLEK2qE6t3W9Hgb2-1664245175065.jpg`,
