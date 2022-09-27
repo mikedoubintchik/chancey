@@ -23,7 +23,7 @@ initializeAppCheck(app, {
 
   // Optional argument. If true, the SDK automatically refreshes App Check
   // tokens as needed.
-  isTokenAutoRefreshEnabled: false,
+  isTokenAutoRefreshEnabled: true,
 });
 
 export const auth = getAuth(app);
