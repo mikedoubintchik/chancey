@@ -23,7 +23,10 @@ export enum UserRegisterMethodType {
   email = 'email',
 }
 
-export interface UserPhoto {
-  filepath: string;
+export interface TicketPhotoType {
+  fileName: string;
+  filePath: string;
   webviewPath?: string;
+  // TODO: fix below type
+  ticketText?: Record<string, unknown>;
 }

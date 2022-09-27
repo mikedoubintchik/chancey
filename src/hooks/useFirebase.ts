@@ -2,7 +2,7 @@ import { Photo } from '@capacitor/camera';
 import { auth, db, storage, functions } from 'config/firebase';
 import { ref, uploadBytes } from 'firebase/storage';
 import { httpsCallable } from 'firebase/functions';
-import { UserPhoto, UserRegisterMethodType, UserType } from 'types/profile';
+import { UserRegisterMethodType, UserType, TicketPhotoType } from 'types/profile';
 import {
   GoogleAuthProvider,
   FacebookAuthProvider,
@@ -19,37 +19,35 @@ import { Dispatch } from 'react';
 import { useHistory } from 'react-router';
 
 export function useFirebase() {
-  const _getFileBlob = (url: URL, cb: Function) => {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.addEventListener('load', function () {
-      cb(xhr.response);
-    });
-    xhr.send();
-  };
+  const { dispatch } = useStore();
 
-  const readNumbersFromTicket = (photos: UserPhoto[]) => {
+  const readNumbersFromTicket = async (fileName: TicketPhotoType['filePath']) => {
     console.log('reading numbers');
 
     // TODO: remove public access
     // https://console.cloud.google.com/functions/details/us-central1/helloWorld?env=gen1&tab=logs&project=tune-363401
-    const readNumbersFromTicket = httpsCallable(functions, 'helloWorld');
     try {
-      readNumbersFromTicket();
+      const { data } = await httpsCallable(functions, 'helloWorld')({ fileName });
+      console.log('🚀 ~ file: useFirebase.ts ~ line 31 ~ readNumbersFromTicket ~ ticketText', data);
+      dispatch({
+        type: ActionType.UPDATE_TICKET_PHOTOS_TEXT,
+        ticketText: data,
+      });
     } catch ({ code, message, details }) {
       console.error(code, message, details);
     }
   };
 
-  const uploadToFirebaseStorage = (imageURL: Photo) => {
-    const store = {
-      user: 'mike',
-    };
-    const storageRef = ref(storage, `tickets/${store.user}/${store.user}.jpg`);
+  // TODO: add return type on function
+  const uploadToFirebaseStorage = async (ticketPhoto: TicketPhotoType) => {
+    if (!ticketPhoto?.webviewPath) return;
 
-    // @ts-expect-error
-    uploadBytes(storageRef, imageURL).then((snapshot) => {
+    const storageRef = ref(storage, `tickets/${ticketPhoto.filePath}.jpg`);
+
+    const ticketBlob = await fetch(ticketPhoto?.webviewPath).then((r) => r.blob());
+
+    // // @ts-expect-error
+    uploadBytes(storageRef, ticketBlob).then((snapshot) => {
       console.log('Uploaded a blob or file!');
     });
   };

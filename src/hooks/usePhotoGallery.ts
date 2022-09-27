@@ -6,35 +6,33 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
 import { useFirebase } from '../hooks/useFirebase';
-import { UserPhoto } from 'types/profile';
+import { TicketPhotoType, UserType } from 'types/profile';
+import { useStore } from 'store';
 
 export function usePhotoGallery() {
-  const [photos, setPhotos] = useState<UserPhoto[]>([]);
+  const [photos, setPhotos] = useState<TicketPhotoType[]>([]);
   const { uploadToFirebaseStorage } = useFirebase();
 
-  const takePhoto = async () => {
+  const takePhoto = async (user: UserType) => {
     const ticketPhoto: Photo = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
       quality: 100,
     });
 
-    // TODO: get this from global state for logged in user
-    const user = 'meow';
+    const fileName = `${user?.uid}-${new Date().getTime()}`;
 
-    const fileName = `${user}-${new Date().getTime()}`;
+    const newPhoto: TicketPhotoType = {
+      fileName: fileName,
+      filePath: `${user?.uid}/${fileName}`,
+      webviewPath: ticketPhoto.webPath,
+    };
 
-    const newPhotos = [
-      {
-        filepath: fileName,
-        webviewPath: ticketPhoto.webPath,
-      },
-      ...photos,
-    ];
+    const newPhotos = [newPhoto, ...photos];
 
     setPhotos(newPhotos);
 
-    uploadToFirebaseStorage(ticketPhoto);
+    uploadToFirebaseStorage(newPhoto);
   };
 
   return {

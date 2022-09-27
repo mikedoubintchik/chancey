@@ -13,10 +13,21 @@ import {
 import { useFirebase } from 'hooks/useFirebase';
 import ExploreContainer from 'components/ExploreContainer';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
+import { useEffect } from 'react';
+import { ActionType, useStore } from 'store';
 
 const ScanTicket: React.FC = () => {
+  const { state, dispatch } = useStore();
+  console.log('🚀 ~ file: ScanTicket.tsx ~ line 21 ~ state', state);
   const { photos, takePhoto } = usePhotoGallery();
   const { readNumbersFromTicket } = useFirebase();
+
+  useEffect(() => {
+    dispatch({
+      type: ActionType.UPDATE_TICKET_PHOTOS,
+      ticketPhotos: photos,
+    });
+  }, [dispatch, photos]);
 
   return (
     <IonPage>
@@ -31,8 +42,12 @@ const ScanTicket: React.FC = () => {
             <IonTitle size="large">Scan Ticket</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonButton onClick={() => readNumbersFromTicket(photos)}>Read Ticket</IonButton>
-        <IonButton onClick={() => takePhoto()}>Take Photo</IonButton>
+        <IonButton
+          onClick={async () => readNumbersFromTicket(state.ticketPhotos[state.ticketPhotos.length - 1].filePath)}
+        >
+          Read Ticket
+        </IonButton>
+        <IonButton onClick={() => state.user && takePhoto(state.user)}>Take Photo</IonButton>
         <ExploreContainer name="Scan ticket page" />
         <IonGrid>
           <IonRow>
