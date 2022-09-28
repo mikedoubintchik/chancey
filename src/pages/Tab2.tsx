@@ -7,7 +7,7 @@ const Tab2: React.FC = () => {
   return (
     <>
       <SideMenu />
-      <IonPage>
+      <IonPage id="main-content">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Tab 2</IonTitle>

@@ -10,14 +10,14 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useFirebase } from 'hooks/useFirebase';
 import ExploreContainer from 'components/ExploreContainer';
+import Header from 'components/Header';
+import SideMenu from 'components/SideMenu';
+import { useFirebase } from 'hooks/useFirebase';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
+import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { ActionType, useStore } from 'stores/store';
-import SideMenu from 'components/SideMenu';
-import { nanoid } from 'nanoid';
-import Header from 'components/Header';
 
 const ScanTicket: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -35,7 +35,7 @@ const ScanTicket: React.FC = () => {
   return (
     <>
       <SideMenu />
-      <IonPage>
+      <IonPage id="main-content">
         <Header />
         <IonContent fullscreen>
           <IonHeader collapse="condense">

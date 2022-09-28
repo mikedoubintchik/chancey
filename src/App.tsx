@@ -4,8 +4,6 @@ import {
   IonApp,
   IonIcon,
   IonLabel,
-  IonRefresher,
-  IonRefresherContent,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
@@ -14,13 +12,13 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { camera, homeOutline, person, statsChart } from 'ionicons/icons';
-import { Redirect, Route } from 'react-router-dom';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
+import { Redirect, Route } from 'react-router-dom';
+import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
-import { createIonicStore, get, set, setObject } from 'stores/IonicStorage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -41,10 +39,10 @@ import '@ionic/react/css/text-transformation.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import { useFirebase } from 'hooks/useFirebase';
 import HistoryPage from 'pages/HistoryPage';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { db } from 'config/firebase';
+import { getHeapSnapshot } from 'v8';
 
 library.add(fab);
 
@@ -52,51 +50,21 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
-
-  const getHistoricalData = async () => {
-    const colRef = collection(db, 'historicalData');
-    const result = await getDocs(colRef);
-    // TODO: fix any
-    const historicalData: any = [];
-    result.forEach((doc) =>
-      historicalData.push({
-        [doc.id]: doc.data(),
-      }),
-    );
-    return historicalData;
-  };
+  const { getHistoricalData } = useFirebase();
 
   const setupHistoricalDataStorage = useCallback(async () => {
     await createIonicStore('HistoricalLotteryData');
     const exists = await get('historicalData');
 
-    if (!exists) {
-      // initialize store
-      const historicalData = await getHistoricalData();
-      set('historicalData', historicalData);
-    }
-  }, []);
+    if (!exists) set('historicalData', await getHistoricalData());
+  }, [getHistoricalData]);
 
   useEffect(() => {
     setupHistoricalDataStorage();
   }, [setupHistoricalDataStorage]);
 
-  // TODO: fix any
-  const refreshHistoricalData = (e: any) => {
-    resetHistoricalDataStorage();
-
-    setTimeout(() => {
-      e.detail.complete();
-    }, 10000);
-  };
-
-  const resetHistoricalDataStorage = async () => set('historicalData', await getHistoricalData());
-
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <IonRefresher slot="fixed" onIonRefresh={refreshHistoricalData}>
-        <IonRefresherContent>refreshing historical data...</IonRefresherContent>
-      </IonRefresher>
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>

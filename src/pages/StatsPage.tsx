@@ -1,21 +1,6 @@
-import {
-  IonCard,
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonPage,
-  IonSegment,
-  IonSegmentButton,
-  IonSelect,
-  IonSelectOption,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonCard, IonContent, IonPage, IonSelect, IonSelectOption, IonToolbar } from '@ionic/react';
 import Header from 'components/Header';
 
-import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import SideMenu from 'components/SideMenu';
 
 import Chart from 'react-apexcharts';
@@ -89,7 +74,7 @@ const StatsPage: React.FC = () => {
   return (
     <>
       <SideMenu />
-      <IonPage>
+      <IonPage id="main-content">
         <Header />
         <IonToolbar>
           <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value="10">

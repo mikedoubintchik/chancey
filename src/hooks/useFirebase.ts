@@ -1,6 +1,6 @@
 import { auth, db, functions, storage } from 'config/firebase';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { ref, uploadBytes } from 'firebase/storage';
 import { useHistory } from 'react-router-dom';
@@ -114,7 +114,21 @@ export function useFirebase() {
     history.push(`/home`);
   };
 
+  const getHistoricalData = async () => {
+    const colRef = collection(db, 'historicalData');
+    const result = await getDocs(colRef);
+    // TODO: fix any
+    const historicalData: any = [];
+    result.forEach((doc) =>
+      historicalData.push({
+        [doc.id]: doc.data(),
+      }),
+    );
+    return historicalData;
+  };
+
   return {
+    getHistoricalData,
     readNumbersFromTicket,
     login,
     logout,

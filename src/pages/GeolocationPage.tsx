@@ -31,7 +31,7 @@ const GeolocationPage: React.FC = () => {
   return (
     <>
       <SideMenu />
-      <IonPage>
+      <IonPage id="main-content">
         <Header />
         <IonContent fullscreen>
           <IonHeader collapse="condense">
