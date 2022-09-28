@@ -7,7 +7,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
 import { useFirebase } from '../hooks/useFirebase';
 import { TicketPhotoType, UserType } from 'types/profile';
-import { useStore } from 'store';
+import { useStore } from 'stores/store';
 
 export function usePhotoGallery() {
   const [photos, setPhotos] = useState<TicketPhotoType[]>([]);

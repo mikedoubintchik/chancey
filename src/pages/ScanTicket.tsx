@@ -14,7 +14,7 @@ import { useFirebase } from 'hooks/useFirebase';
 import ExploreContainer from 'components/ExploreContainer';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
 import { useEffect } from 'react';
-import { ActionType, useStore } from 'store';
+import { ActionType, useStore } from 'stores/store';
 import SideMenu from 'components/SideMenu';
 import { nanoid } from 'nanoid';
 import Header from 'components/Header';

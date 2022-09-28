@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IonButton, IonContent, IonHeader, IonMenu, IonMenuToggle, IonTitle, IonToolbar } from '@ionic/react';
 import { useFirebase } from 'hooks/useFirebase';
 import { useCallback, useState } from 'react';
-import { useStore } from 'store';
+import { useStore } from 'stores/store';
 import { UserRegisterMethodType } from 'types/profile';
 
 const SideMenu = () => {

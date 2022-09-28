@@ -1,6 +1,6 @@
 import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuToggle, IonTitle, IonToolbar } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
-import { useStore } from 'store';
+import { useStore } from 'stores/store';
 
 const Header = () => {
   const { state } = useStore();
