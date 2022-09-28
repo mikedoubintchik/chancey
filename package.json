@@ -63,7 +63,7 @@
     "start": "ionic serve",
     "build": "react-scripts build",
     "test": "react-scripts test -- --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "test:ci": "react-scripts test -- --watchAll=false -- --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
+    "test:ci": "react-scripts test -- --watchAll=false --json --passWithNoTests --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "ci": "echo 'doing CIIIII'",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
