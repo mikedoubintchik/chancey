@@ -13,8 +13,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import Header from 'components/Header';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
+import SideMenu from 'components/SideMenu';
 
 import Chart from 'react-apexcharts';
 
@@ -85,22 +87,26 @@ const StatsPage: React.FC = () => {
     console.log(event.detail.value);
   };
   return (
-    <IonPage>
-      <IonToolbar>
-        <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value={'10'}>
-          <IonSelectOption value="10">Last 10 Drawings</IonSelectOption>
-          <IonSelectOption value="50">Last 50 Drawings</IonSelectOption>
-          <IonSelectOption value="100">Last 100 Drawings</IonSelectOption>
-        </IonSelect>
-      </IonToolbar>
+    <>
+      <SideMenu />
+      <IonPage>
+        <Header />
+        <IonToolbar>
+          <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value="10">
+            <IonSelectOption value="10">Last 10 Drawings</IonSelectOption>
+            <IonSelectOption value="50">Last 50 Drawings</IonSelectOption>
+            <IonSelectOption value="100">Last 100 Drawings</IonSelectOption>
+          </IonSelect>
+        </IonToolbar>
 
-      <IonContent fullscreen>
-        <IonCard>
-          <Chart options={state.options as any} series={state.series} type="boxPlot" height={350} />
-        </IonCard>
-        {/* <Bar data={data} options={options} /> */}
-      </IonContent>
-    </IonPage>
+        <IonContent fullscreen>
+          <IonCard>
+            <Chart options={state.options as any} series={state.series} type="boxPlot" height={350} />
+          </IonCard>
+          {/* <Bar data={data} options={options} /> */}
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

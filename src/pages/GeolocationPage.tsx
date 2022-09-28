@@ -1,7 +1,8 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonLoading, IonToast } from '@ionic/react';
 import { Geolocation, Geoposition } from '@awesome-cordova-plugins/geolocation';
-import { IonButton, IonLoading, IonToast } from '@ionic/react';
 import { useState } from 'react';
+import SideMenu from 'components/SideMenu';
+import Header from 'components/Header';
 import ExploreContainer from '../components/ExploreContainer';
 
 interface LocationError {
@@ -17,8 +18,8 @@ const GeolocationPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const position = await Geolocation.getCurrentPosition();
-      setPosition(position);
+      const currentPosition = await Geolocation.getCurrentPosition();
+      setPosition(currentPosition);
       setLoading(false);
       setError({ showError: false });
     } catch (e: any) {
@@ -28,33 +29,32 @@ const GeolocationPage: React.FC = () => {
   };
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>GeolocationPage</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Geolocation</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Geolocation page" />
-        <>
-          <IonLoading isOpen={loading} onDidDismiss={() => setLoading(false)} message={'Getting Location...'} />
-          <IonToast
-            isOpen={error.showError}
-            onDidDismiss={() => setError({ message: '', showError: false })}
-            message={error.message}
-            duration={3000}
-          />
-          <IonButton color="primary" onClick={getLocation}>
-            {position ? `${position.coords.latitude} ${position.coords.longitude}` : 'Get Location'}
-          </IonButton>
-        </>
-      </IonContent>
-    </IonPage>
+    <>
+      <SideMenu />
+      <IonPage>
+        <Header />
+        <IonContent fullscreen>
+          <IonHeader collapse="condense">
+            <IonToolbar>
+              <IonTitle size="large">Geolocation</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <ExploreContainer name="Geolocation page" />
+          <>
+            <IonLoading isOpen={loading} onDidDismiss={() => setLoading(false)} message="Getting Location..." />
+            <IonToast
+              isOpen={error.showError}
+              onDidDismiss={() => setError({ message: '', showError: false })}
+              message={error.message}
+              duration={3000}
+            />
+            <IonButton color="primary" onClick={getLocation}>
+              {position ? `${position.coords.latitude} ${position.coords.longitude}` : 'Get Location'}
+            </IonButton>
+          </>
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

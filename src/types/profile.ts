@@ -12,11 +12,6 @@ export type UserType = {
   password?: string;
 };
 
-export interface IUser {
-  loggedIn: boolean;
-  uid: UserCredential['user']['uid'] | null;
-}
-
 export enum UserRegisterMethodType {
   google = 'google',
   facebook = 'facebook',

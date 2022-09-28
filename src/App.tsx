@@ -1,4 +1,5 @@
-import { Redirect, Route } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
   IonApp,
   IonIcon,
@@ -10,15 +11,13 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, ellipse, person, square, homeOutline, statsChart } from 'ionicons/icons';
-import HomePage from './pages/home/HomePage';
-import StatsPage from './pages/stats/StatsPage';
-import Tab3 from './pages/Tab3';
+import { camera, homeOutline, person, statsChart } from 'ionicons/icons';
+import { Redirect, Route } from 'react-router-dom';
 import GeolocationPage from './pages/GeolocationPage';
+import HomePage from './pages/HomePage';
 import ScanTicket from './pages/ScanTicket';
+import StatsPage from './pages/StatsPage';
 import { AppContext, initialState, InitialStateType, IReducer, reducer } from './store';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,18 +28,17 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
+import '@ionic/react/css/display.css';
+import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/padding.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
 
 import HistoryPage from 'pages/HistoryPage';
-import LoginPage from 'pages/LoginPage';
 import { Reducer, useReducer } from 'react';
 
 library.add(fab);
@@ -55,9 +53,6 @@ const App: React.FC = () => {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
             <Route path="/history">
               <HistoryPage />
             </Route>
@@ -68,9 +63,6 @@ const App: React.FC = () => {
                 </Route>
                 <Route exact path="/stats">
                   <StatsPage />
-                </Route>
-                <Route path="/tab3">
-                  <Tab3 />
                 </Route>
                 <Route path="/geolocation">
                   <GeolocationPage />
@@ -83,7 +75,7 @@ const App: React.FC = () => {
                 </Route>
 
                 <Route exact path="/">
-                  <Redirect to="/login" />
+                  <Redirect to="/home" />
                 </Route>
               </IonRouterOutlet>
               <IonTabBar slot="bottom">
@@ -95,10 +87,7 @@ const App: React.FC = () => {
                   <IonIcon icon={statsChart} />
                   {/* <IonLabel>Tab 2</IonLabel> */}
                 </IonTabButton>
-                <IonTabButton tab="tab3" href="/tab3">
-                  <IonIcon icon={square} />
-                  <IonLabel>Tab 3</IonLabel>
-                </IonTabButton>
+
                 <IonTabButton tab="geolocation" href="/geolocation">
                   <IonIcon icon={person} />
                   <IonLabel>Geolocation</IonLabel>

@@ -15,6 +15,9 @@ import ExploreContainer from 'components/ExploreContainer';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
 import { useEffect } from 'react';
 import { ActionType, useStore } from 'store';
+import SideMenu from 'components/SideMenu';
+import { nanoid } from 'nanoid';
+import Header from 'components/Header';
 
 const ScanTicket: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -30,36 +33,35 @@ const ScanTicket: React.FC = () => {
   }, [dispatch, photos]);
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Scan Ticket</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Scan Ticket</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonButton
-          onClick={async () => readNumbersFromTicket(state.ticketPhotos[state.ticketPhotos.length - 1].filePath)}
-        >
-          Read Ticket
-        </IonButton>
-        <IonButton onClick={() => state.user && takePhoto(state.user)}>Take Photo</IonButton>
-        <ExploreContainer name="Scan ticket page" />
-        <IonGrid>
-          <IonRow>
-            {photos.map((photo, index) => (
-              <IonCol size="6" key={index}>
-                <IonImg src={photo.webviewPath} />
-              </IonCol>
-            ))}
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
+    <>
+      <SideMenu />
+      <IonPage>
+        <Header />
+        <IonContent fullscreen>
+          <IonHeader collapse="condense">
+            <IonToolbar>
+              <IonTitle size="large">Scan Ticket</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonButton
+            onClick={async () => readNumbersFromTicket(state.ticketPhotos[state.ticketPhotos.length - 1].filePath)}
+          >
+            Read Ticket
+          </IonButton>
+          <IonButton onClick={() => state.user && takePhoto(state.user)}>Take Photo</IonButton>
+          <ExploreContainer name="Scan ticket page" />
+          <IonGrid>
+            <IonRow>
+              {photos.map((photo, index) => (
+                <IonCol size="6" key={nanoid()}>
+                  <IonImg src={photo.webviewPath} />
+                </IonCol>
+              ))}
+            </IonRow>
+          </IonGrid>
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

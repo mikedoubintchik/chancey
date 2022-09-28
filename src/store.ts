@@ -30,6 +30,8 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     case ActionType.RESET:
       return {
         ...state,
+        user: null,
+        ticketPhotos: [],
       };
     case ActionType.UPDATE_USER:
       return { ...state, user: action.user };

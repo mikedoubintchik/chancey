@@ -16,10 +16,11 @@ import {
 import { ActionType, useStore } from 'store';
 import { getFirestore, addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { Dispatch } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 export function useFirebase() {
   const { dispatch } = useStore();
+  const history = useHistory();
 
   const readNumbersFromTicket = async (fileName: TicketPhotoType['filePath']) => {
     console.log('reading numbers');
@@ -53,19 +54,9 @@ export function useFirebase() {
   };
 
   // TODO: fix any
-  const onAuthStateChange = (callback: any) => {
-    return auth.onAuthStateChanged((user) => {
-      if (user) {
-        callback({ loggedIn: true, uid: user.uid });
-      } else {
-        callback({ loggedIn: false });
-      }
-    });
-  };
-
-  // TODO: fix any
-  const _registerUser = async (user: UserType, dispatch: Dispatch<any>) => {
+  const _registerUser = async (user: UserType) => {
     // save user to database
+    // TODO: we no longer have permissions to do this
     await setDoc(doc(db, 'users', user.uid), { ...user });
 
     dispatch({
@@ -74,14 +65,7 @@ export function useFirebase() {
     });
   };
 
-  const login = async (
-    method: UserRegisterMethodType,
-    dispatch: Dispatch<any>,
-    // @ts-expect-error
-    history: History<unknown>,
-    username = null,
-    password = null,
-  ) => {
+  const login = async (method: UserRegisterMethodType, username = null, password = null) => {
     let response = null;
 
     if (username && password) {
@@ -114,7 +98,7 @@ export function useFirebase() {
             providerId,
           };
 
-          _registerUser(user, dispatch);
+          _registerUser(user);
 
           // redirect to profile page upon successful login
           history.push(`/home`);
@@ -133,6 +117,14 @@ export function useFirebase() {
 
   const logout = () => {
     auth.signOut();
+
+    // reset global state
+    dispatch({
+      type: ActionType.RESET,
+    });
+
+    // redirect to profile page upon successful logout
+    history.push(`/home`);
   };
 
   return {
