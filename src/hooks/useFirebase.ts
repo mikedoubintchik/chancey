@@ -120,7 +120,6 @@ export function useFirebase() {
     readNumbersFromTicket,
     login,
     logout,
-    onAuthStateChange,
     uploadToFirebaseStorage,
   };
 }
