@@ -1,22 +1,11 @@
-import { Photo } from '@capacitor/camera';
-import { auth, db, storage, functions } from 'config/firebase';
-import { ref, uploadBytes } from 'firebase/storage';
+import { auth, db, functions, storage } from 'config/firebase';
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
-import { UserRegisterMethodType, UserType, TicketPhotoType } from 'types/profile';
-import {
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-} from 'firebase/auth';
-import { ActionType, useStore } from 'store';
-import { getFirestore, addDoc, collection, setDoc, doc } from 'firebase/firestore';
-import { Dispatch } from 'react';
+import { ref, uploadBytes } from 'firebase/storage';
 import { useHistory } from 'react-router-dom';
+import { ActionType, useStore } from 'store';
+import { TicketPhotoType, UserRegisterMethodType, UserType } from 'types/profile';
 
 export function useFirebase() {
   const { dispatch } = useStore();

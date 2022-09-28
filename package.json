@@ -64,6 +64,9 @@
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "ci": "echo 'doing CIIIII'",
     "eject": "react-scripts eject",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint --quiet --fix 'src/**/*.{js,jsx,ts,tsx}'",
+    "prepush": "npm run test",
     "functions:emulate": "cd functions && npm run serve",
     "functions:watch": "cd functions && npm run serve:watch"
   },
