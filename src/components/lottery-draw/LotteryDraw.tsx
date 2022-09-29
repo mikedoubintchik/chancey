@@ -3,6 +3,7 @@ import Series from 'components/series/Series';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import './LotteryDraw.css';
 import { calendarOutline } from 'ionicons/icons';
+
 interface LotteryDrawProps {
   draw: LotteryDrawModel;
 }
@@ -12,10 +13,10 @@ const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw }) => {
     <div>
       <IonCardHeader class="lottery-draw-header">
         <IonLabel class="lottery-draw-date-label">{draw.date.toLocaleDateString()}</IonLabel>
-        <IonIcon icon={calendarOutline}></IonIcon>
+        <IonIcon icon={calendarOutline} />
       </IonCardHeader>
       <IonCardContent>
-        <Series numbers={draw.series.numbers} extra={draw.series.extra}></Series>
+        <Series numbers={draw.series.numbers} extra={draw.series.extra} />
       </IonCardContent>
     </div>
   );

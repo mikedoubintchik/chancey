@@ -5,13 +5,10 @@ interface BallProps {
   color?: string;
 }
 
-const Ball: React.FC<BallProps> = ({ num, color }) => {
-  color = color ? color : '#CC9630';
-  return (
-    <div className="ball-container" style={{ backgroundColor: color }}>
-      <div className="ball-number">{num}</div>
-    </div>
-  );
-};
+const Ball: React.FC<BallProps> = ({ num, color }) => (
+  <div className="ball-container" style={{ backgroundColor: color || '#CC9630' }}>
+    <div className="ball-number">{num}</div>
+  </div>
+);
 
 export default Ball;

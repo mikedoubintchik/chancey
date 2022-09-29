@@ -5,9 +5,9 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
-import { useFirebase } from '../hooks/useFirebase';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { useStore } from 'stores/store';
+import { useFirebase } from '../hooks/useFirebase';
 
 export function usePhotoGallery() {
   const [photos, setPhotos] = useState<TicketPhotoType[]>([]);
@@ -23,7 +23,7 @@ export function usePhotoGallery() {
     const fileName = `${user?.uid}-${new Date().getTime()}`;
 
     const newPhoto: TicketPhotoType = {
-      fileName: fileName,
+      fileName,
       filePath: `${user?.uid}/${fileName}`,
       webviewPath: ticketPhoto.webPath,
     };

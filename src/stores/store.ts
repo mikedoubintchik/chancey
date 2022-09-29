@@ -37,12 +37,13 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, user: action.user };
     case ActionType.UPDATE_TICKET_PHOTOS:
       return { ...state, ticketPhotos: action.ticketPhotos };
-    case ActionType.UPDATE_TICKET_PHOTOS_TEXT:
+    case ActionType.UPDATE_TICKET_PHOTOS_TEXT: {
       const lastTicket = state.ticketPhotos.pop() as TicketPhotoType;
       const updatedTicket = { ...lastTicket, ticketText: action.ticketText };
       const updatedTickets = state.ticketPhotos;
       updatedTickets.push(updatedTicket);
       return { ...state, ticketPhotos: updatedTickets };
+    }
     default:
       return state;
   }

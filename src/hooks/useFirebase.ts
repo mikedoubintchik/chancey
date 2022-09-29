@@ -41,7 +41,7 @@ export function useFirebase() {
   };
 
   // TODO: fix any
-  const _registerUser = async (user: UserType) => {
+  const registerUser = async (user: UserType) => {
     // save user to database
     // TODO: we no longer have permissions to do this
     await setDoc(doc(db, 'users', user.uid), { ...user });
@@ -85,7 +85,7 @@ export function useFirebase() {
             providerId,
           };
 
-          _registerUser(user);
+          registerUser(user);
 
           // redirect to profile page upon successful login
           history.push(`/home`);
@@ -119,9 +119,9 @@ export function useFirebase() {
     const result = await getDocs(colRef);
     // TODO: fix any
     const historicalData: any = [];
-    result.forEach((doc) =>
+    result.forEach((ticket) =>
       historicalData.push({
-        [doc.id]: doc.data(),
+        [ticket.id]: ticket.data(),
       }),
     );
     return historicalData;

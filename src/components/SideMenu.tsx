@@ -43,13 +43,13 @@ const SideMenu = () => {
             <IonMenuToggle>
               <IonButton onClick={() => requestLogin(UserRegisterMethodType.google)}>
                 <FontAwesomeIcon className="ion-margin-end" icon={['fab', 'google']} />
-                {'Login with Google'}
+                Login with Google
               </IonButton>
             </IonMenuToggle>
             <IonMenuToggle>
               <IonButton onClick={() => requestLogin(UserRegisterMethodType.facebook)}>
                 <FontAwesomeIcon className="ion-margin-end" icon={['fab', 'facebook']} />
-                {'Login with Facebook'}
+                Login with Facebook
               </IonButton>
             </IonMenuToggle>
           </>

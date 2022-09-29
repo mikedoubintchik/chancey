@@ -30,8 +30,7 @@ export const clear = async () => {
 
 export const setObject = async (key: string, id: string, val: any) => {
   const all = await storage.get(key);
-  const objIndex = await all.findIndex((a: any) => parseInt(a.id) === parseInt(id));
-  console.log('🚀 ~ file: ionicStorage.ts ~ line 37 ~ setObject ~ objIndex', objIndex);
+  const objIndex = await all.findIndex((a: any) => parseInt(a.id, 10) === parseInt(id, 10));
 
   all[objIndex] = val;
   set(key, all);
@@ -39,7 +38,7 @@ export const setObject = async (key: string, id: string, val: any) => {
 
 export const removeObject = async (key: string, id: string) => {
   const all = await storage.get(key);
-  const objIndex = await all.findIndex((a: any) => parseInt(a.id) === parseInt(id));
+  const objIndex = await all.findIndex((a: any) => parseInt(a.id, 10) === parseInt(id, 10));
 
   all.splice(objIndex, 1);
   set(key, all);
@@ -47,6 +46,6 @@ export const removeObject = async (key: string, id: string) => {
 
 export const getObject = async (key: string, id: string) => {
   const all = await storage.get(key);
-  const obj = await all.filter((a: any) => parseInt(a.id) === parseInt(id))[0];
+  const obj = await all.filter((a: any) => parseInt(a.id, 10) === parseInt(id, 10))[0];
   return obj;
 };

@@ -43,6 +43,8 @@ const draws: Array<LotteryDrawModel> = [
 const HistoryPage: React.FC = () => {
   const { getHistoricalData } = useFirebase();
 
+  const refresh = async () => set('historicalData', await getHistoricalData());
+
   // TODO: fix any
   // refresh historical data every 10 seconds
   const refreshHistoricalData = (e: any) => {
@@ -54,8 +56,6 @@ const HistoryPage: React.FC = () => {
     }, 10000);
   };
 
-  const refresh = async () => set('historicalData', await getHistoricalData());
-
   return (
     <>
       <SideMenu />
@@ -63,7 +63,7 @@ const HistoryPage: React.FC = () => {
         <Header pageTitle="Historical Data" />
         <IonContent>
           <IonRefresher slot="fixed" onIonRefresh={refreshHistoricalData}>
-            <IonRefresherContent></IonRefresherContent>
+            <IonRefresherContent />
           </IonRefresher>
           <Virtuoso
             style={{ height: '100%' }}

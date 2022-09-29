@@ -5,7 +5,8 @@ import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { getStorage } from 'firebase/storage';
 
 import config from './config';
-const { initializeAppCheck, ReCaptchaV3Provider } = require('firebase/app-check');
+
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 if (process.env.REACT_APP_ENV === 'development') {
   console.log('development environment');
