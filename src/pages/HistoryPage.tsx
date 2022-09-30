@@ -19,6 +19,7 @@ import { Virtuoso } from 'react-virtuoso';
 import SideMenu from 'components/SideMenu';
 import { set } from 'stores/IonicStorage';
 import { useFirebase } from 'hooks/useFirebase';
+import { useHistoricalData } from 'hooks/useHistoricalData';
 import Header from 'components/Header';
 
 const draws: Array<LotteryDrawModel> = [
@@ -42,9 +43,11 @@ const draws: Array<LotteryDrawModel> = [
 
 const HistoryPage: React.FC = () => {
   const { getHistoricalData } = useFirebase();
-
-  const refresh = async () => set('historicalData', await getHistoricalData());
-
+  // const { updateRemoteWithMegaData } = useHistoricalData();
+  const refresh = async () => {
+    // await updateRemoteWithMegaData();
+    set('historicalData', await getHistoricalData());
+  };
   // TODO: fix any
   // refresh historical data every 10 seconds
   const refreshHistoricalData = (e: any) => {
