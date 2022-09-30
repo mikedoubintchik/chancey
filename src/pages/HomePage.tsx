@@ -3,7 +3,7 @@ import Header from 'components/Header';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import SideMenu from 'components/SideMenu';
-
+import { DrawType } from 'types/lottery-draw';
 const HomePage: React.FC = () => {
   return (
     <>
@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
           <IonCard href="/history">
             <IonCardHeader style={{ textAlign: 'center' }}>Winning Numbers</IonCardHeader>
             <LotteryDraw
-              draw={{ type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() }}
+              draw={{ type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() }}
             />
           </IonCard>
         </IonContent>

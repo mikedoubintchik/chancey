@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
-import { LotteryDrawModel } from 'types/lottery-draw';
+import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { Virtuoso } from 'react-virtuoso';
 import SideMenu from 'components/SideMenu';
 import { set } from 'stores/IonicStorage';
@@ -22,22 +22,22 @@ import { useFirebase } from 'hooks/useFirebase';
 import Header from 'components/Header';
 
 const draws: Array<LotteryDrawModel> = [
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: 'mega', series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
+  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
 ];
 
 const HistoryPage: React.FC = () => {
