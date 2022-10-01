@@ -114,21 +114,7 @@ export function useFirebase() {
     history.push(`/home`);
   };
 
-  const getHistoricalData = async () => {
-    const colRef = collection(db, 'historicalData');
-    const result = await getDocs(colRef);
-    // TODO: fix any
-    const historicalData: any = [];
-    result.forEach((ticket) =>
-      historicalData.push({
-        [ticket.id]: ticket.data(),
-      }),
-    );
-    return historicalData;
-  };
-
   return {
-    getHistoricalData,
     readNumbersFromTicket,
     login,
     logout,

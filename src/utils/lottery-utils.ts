@@ -8,4 +8,12 @@ export class LotteryDataUtils {
     var ldm: LotteryDrawModel = { type: DrawType.MEGA, date: date, series: { numbers: numbers, extra: extra } };
     return ldm;
   }
+
+  static getDefaultLDM(): LotteryDrawModel {
+    let date = new Date();
+    let numbers = [0, 0, 0, 0, 0];
+    let extra = 0;
+    var ldm: LotteryDrawModel = { type: DrawType.MEGA, date: date, series: { numbers: numbers, extra: extra } };
+    return ldm;
+  }
 }

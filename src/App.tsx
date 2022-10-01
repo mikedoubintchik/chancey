@@ -43,6 +43,7 @@ import { useFirebase } from 'hooks/useFirebase';
 import HistoryPage from 'pages/HistoryPage';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 import { getHeapSnapshot } from 'v8';
+import { useHistoricalData } from 'hooks/useHistoricalData';
 
 library.add(fab);
 
@@ -50,7 +51,7 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
-  const { getHistoricalData } = useFirebase();
+  const { getHistoricalData } = useHistoricalData();
 
   const setupHistoricalDataStorage = useCallback(async () => {
     await createIonicStore('HistoricalLotteryData');

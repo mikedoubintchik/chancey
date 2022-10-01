@@ -1,10 +1,19 @@
-import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
 import Header from 'components/Header';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import SideMenu from 'components/SideMenu';
-import { DrawType } from 'types/lottery-draw';
+import { useHistoricalData } from 'hooks/useHistoricalData';
+import { useEffect, useState } from 'react';
+import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 const HomePage: React.FC = () => {
+  const { getLatesMegaResults } = useHistoricalData();
+  const [latestResult, setLatestResult] = useState<LotteryDrawModel | undefined>(undefined);
+
+  useEffect(() => {
+    getLatesMegaResults().then((data) => setLatestResult(data));
+  }, []);
+
   return (
     <>
       <SideMenu />
@@ -18,9 +27,11 @@ const HomePage: React.FC = () => {
           </IonHeader>
           <IonCard href="/history">
             <IonCardHeader style={{ textAlign: 'center' }}>Winning Numbers</IonCardHeader>
-            <LotteryDraw
-              draw={{ type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() }}
-            />
+            {latestResult === undefined ? (
+              <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
+            ) : (
+              <LotteryDraw draw={latestResult} />
+            )}
           </IonCard>
         </IonContent>
       </IonPage>

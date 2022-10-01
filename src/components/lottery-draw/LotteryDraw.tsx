@@ -3,20 +3,22 @@ import Series from 'components/series/Series';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import './LotteryDraw.css';
 import { calendarOutline } from 'ionicons/icons';
+import { LotteryDataUtils } from 'utils/lottery-utils';
 
 interface LotteryDrawProps {
-  draw: LotteryDrawModel;
+  draw: LotteryDrawModel | undefined;
 }
 
 const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw }) => {
+  let finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : LotteryDataUtils.getDefaultLDM();
   return (
     <div>
       <IonCardHeader class="lottery-draw-header">
-        <IonLabel class="lottery-draw-date-label">{draw.date.toLocaleDateString()}</IonLabel>
+        <IonLabel class="lottery-draw-date-label">{finalDraw.date.toLocaleDateString()}</IonLabel>
         <IonIcon icon={calendarOutline} />
       </IonCardHeader>
       <IonCardContent>
-        <Series numbers={draw.series.numbers} extra={draw.series.extra} />
+        <Series numbers={finalDraw.series.numbers} extra={finalDraw.series.extra} />
       </IonCardContent>
     </div>
   );

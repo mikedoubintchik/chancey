@@ -21,6 +21,7 @@ import { set } from 'stores/IonicStorage';
 import { useFirebase } from 'hooks/useFirebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import Header from 'components/Header';
+import { useEffect, useState } from 'react';
 
 const draws: Array<LotteryDrawModel> = [
   { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
@@ -42,11 +43,14 @@ const draws: Array<LotteryDrawModel> = [
 ];
 
 const HistoryPage: React.FC = () => {
-  const { getHistoricalData } = useFirebase();
-  // const { updateRemoteWithMegaData } = useHistoricalData();
+  // const { getHistoricalData } = useFirebase();
+  const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel>>([]);
+  const { getHistoricalData } = useHistoricalData();
   const refresh = async () => {
     // await updateRemoteWithMegaData();
-    set('historicalData', await getHistoricalData());
+    let historicalData = await getHistoricalData();
+    set('historicalData', historicalData);
+    setLatestResults(historicalData);
   };
   // TODO: fix any
   // refresh historical data every 10 seconds
@@ -59,6 +63,10 @@ const HistoryPage: React.FC = () => {
     }, 10000);
   };
 
+  useEffect(() => {
+    getHistoricalData().then((data) => setLatestResults(data));
+  }, []);
+
   return (
     <>
       <SideMenu />
@@ -70,11 +78,11 @@ const HistoryPage: React.FC = () => {
           </IonRefresher>
           <Virtuoso
             style={{ height: '100%' }}
-            totalCount={draws.length}
+            totalCount={latestResults.length}
             itemContent={(index) => {
               return (
                 <IonItem>
-                  <LotteryDraw draw={draws[index]} />
+                  <LotteryDraw draw={latestResults[index]} />
                 </IonItem>
               );
             }}
