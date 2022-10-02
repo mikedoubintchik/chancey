@@ -1,7 +1,9 @@
 import { IonCard, IonContent, IonPage, IonSelect, IonSelectOption, IonToolbar } from '@ionic/react';
 import Header from 'components/Header';
+import NumbersFrequency from 'components/numbers-frequency/NumbersFrequency';
 
 import SideMenu from 'components/SideMenu';
+import StatsFrame from 'components/stats-frame/StatsFrame';
 
 import Chart from 'react-apexcharts';
 
@@ -85,9 +87,10 @@ const StatsPage: React.FC = () => {
         </IonToolbar>
 
         <IonContent fullscreen>
-          <IonCard>
+          <NumbersFrequency></NumbersFrequency>
+          {/* <IonCard>
             <Chart options={state.options as any} series={state.series} type="boxPlot" height={350} />
-          </IonCard>
+          </IonCard> */}
           {/* <Bar data={data} options={options} /> */}
         </IonContent>
       </IonPage>
