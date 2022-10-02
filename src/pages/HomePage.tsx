@@ -7,11 +7,11 @@ import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useEffect, useState } from 'react';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 const HomePage: React.FC = () => {
-  const { getLatesMegaResults } = useHistoricalData();
+  const { getLatestMegaResults } = useHistoricalData();
   const [latestResult, setLatestResult] = useState<LotteryDrawModel | undefined>(undefined);
 
   useEffect(() => {
-    getLatesMegaResults().then((data) => setLatestResult(data));
+    getLatestMegaResults().then((data) => setLatestResult(data));
   }, []);
 
   return (

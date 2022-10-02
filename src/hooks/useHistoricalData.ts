@@ -6,7 +6,7 @@ import { httpsCallable } from 'firebase/functions';
 import axios from 'axios';
 import { LotteryDataUtils } from 'utils/lottery-utils';
 export function useHistoricalData() {
-  const getLatesMegaResults = async () => {
+  const getLatestMegaResults = async () => {
     try {
       // const { data } = await httpsCallable(functions, 'updateRemoteWithMegaData')();
 
@@ -60,6 +60,6 @@ export function useHistoricalData() {
 
   return {
     getHistoricalData,
-    getLatesMegaResults,
+    getLatestMegaResults,
   };
 }
