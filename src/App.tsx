@@ -55,9 +55,9 @@ const App: React.FC = () => {
 
   const setupHistoricalDataStorage = useCallback(async () => {
     await createIonicStore('HistoricalLotteryData');
-    const exists = await get('historicalData');
+    const exists = await get('historical-data-mega');
 
-    if (!exists) set('historicalData', await getHistoricalData());
+    if (!exists) set('historical-data-mega', await getHistoricalData());
   }, [getHistoricalData]);
 
   useEffect(() => {

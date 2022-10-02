@@ -17,7 +17,7 @@ import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { Virtuoso } from 'react-virtuoso';
 import SideMenu from 'components/SideMenu';
-import { set } from 'stores/IonicStorage';
+import { set, get } from 'stores/IonicStorage';
 import { useFirebase } from 'hooks/useFirebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import Header from 'components/Header';
@@ -49,7 +49,7 @@ const HistoryPage: React.FC = () => {
   const refresh = async () => {
     // await updateRemoteWithMegaData();
     let historicalData = await getHistoricalData();
-    set('historicalData', historicalData);
+    set('historical-data-mega', historicalData);
     setLatestResults(historicalData);
   };
   // TODO: fix any
@@ -64,7 +64,17 @@ const HistoryPage: React.FC = () => {
   };
 
   useEffect(() => {
-    getHistoricalData().then((data) => setLatestResults(data));
+    const fetchData = async () => {
+      var data = await get('historical-data-mega');
+      if (data.length) {
+        console.log('loaded history from cache');
+        setLatestResults(data);
+      } else {
+        data = await getHistoricalData();
+        setLatestResults(data);
+      }
+    };
+    fetchData().catch(console.error);
   }, []);
 
   return (
