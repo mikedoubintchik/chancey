@@ -29,7 +29,7 @@ const HistoryPage: React.FC = () => {
   const { getHistoricalData } = useHistoricalData();
   const refresh = async () => {
     // await updateRemoteWithMegaData();
-    let historicalData = await getHistoricalData(false);
+    const historicalData = await getHistoricalData(false);
     set('historical-data-mega', historicalData);
     setLatestResults(historicalData);
   };
@@ -41,12 +41,12 @@ const HistoryPage: React.FC = () => {
 
     setTimeout(() => {
       e.detail.complete();
-    }, 10000);
+    }, 1000);
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      var data = await getHistoricalData(true);
+      const data = await getHistoricalData();
       setLatestResults(data);
     };
     fetchData().catch(console.error);

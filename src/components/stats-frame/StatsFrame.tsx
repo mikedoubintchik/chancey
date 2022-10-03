@@ -56,9 +56,9 @@ const StatsFrame: React.FC<StatsFrameProps> = ({
         </IonToolbar>
       </IonCardHeader>
       <IonCardContent>
-        {mode === StatsFrameMode.DISPLAY ? displayComponent : undefined}
-        {mode === StatsFrameMode.EDIT ? editComponent : undefined}
-        {mode === StatsFrameMode.INFO ? infoComponent : undefined}
+        {mode === StatsFrameMode.DISPLAY && displayComponent}
+        {mode === StatsFrameMode.EDIT && editComponent}
+        {mode === StatsFrameMode.INFO && infoComponent}
       </IonCardContent>
     </IonCard>
   );
