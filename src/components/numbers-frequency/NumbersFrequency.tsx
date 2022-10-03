@@ -14,6 +14,7 @@ const getDefaultState = () => {
   return {
     series: [
       {
+        name: 'Occurances',
         data: [],
       },
     ],
@@ -63,11 +64,8 @@ const NumbersFrequency: React.FC<NumbersFrequencyProps> = ({ showLast }) => {
     var sortedFrequencies = frequencies.map(decor).sort((a: number[], b: number[]) => b[1] - a[1]);
     // console.log('f', frequencies);
     var state = getDefaultState();
-    state.series = [
-      {
-        data: sortedFrequencies.map((item) => item[1]) as any,
-      },
-    ];
+    state.series[0].data = sortedFrequencies.map((item) => item[1]) as any;
+
     state.options.xaxis.categories = sortedFrequencies.map((item) => item[0] + 1) as any;
 
     setChartState(state);
