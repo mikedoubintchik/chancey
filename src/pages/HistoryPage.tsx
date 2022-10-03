@@ -23,32 +23,13 @@ import { useHistoricalData } from 'hooks/useHistoricalData';
 import Header from 'components/Header';
 import { useEffect, useState } from 'react';
 
-const draws: Array<LotteryDrawModel> = [
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-  { type: DrawType.MEGA, series: { numbers: [1, 2, 22, 34, 45], extra: 34 }, date: new Date() },
-];
-
 const HistoryPage: React.FC = () => {
   // const { getHistoricalData } = useFirebase();
   const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel>>([]);
   const { getHistoricalData } = useHistoricalData();
   const refresh = async () => {
     // await updateRemoteWithMegaData();
-    let historicalData = await getHistoricalData();
+    let historicalData = await getHistoricalData(false);
     set('historical-data-mega', historicalData);
     setLatestResults(historicalData);
   };
@@ -65,14 +46,8 @@ const HistoryPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      var data = await get('historical-data-mega');
-      if (data.length) {
-        console.log('loaded history from cache');
-        setLatestResults(data);
-      } else {
-        data = await getHistoricalData();
-        setLatestResults(data);
-      }
+      var data = await getHistoricalData(true);
+      setLatestResults(data);
     };
     fetchData().catch(console.error);
   }, []);

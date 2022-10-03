@@ -5,6 +5,7 @@ import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { httpsCallable } from 'firebase/functions';
 import axios from 'axios';
 import { LotteryDataUtils } from 'utils/lottery-utils';
+import { get } from 'stores/IonicStorage';
 export function useHistoricalData() {
   const getLatestMegaResults = async () => {
     try {
@@ -33,7 +34,15 @@ export function useHistoricalData() {
     }
   };
 
-  const getHistoricalData = async () => {
+  const getHistoricalData = async (tryCacheFirst = false): Promise<Array<LotteryDrawModel>> => {
+    if (tryCacheFirst) {
+      var data = await get('historical-data-mega');
+      if (data.length) {
+        console.log('loaded history from cache');
+        return data;
+      }
+    }
+
     const historicalDataRef = collection(db, 'historical-data-' + DrawType.MEGA);
     const queryLatest = query(historicalDataRef, orderBy('date', 'desc'), limit(400));
     const res = await getDocs(queryLatest);

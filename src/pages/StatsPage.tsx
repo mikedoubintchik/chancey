@@ -4,10 +4,12 @@ import NumbersFrequency from 'components/numbers-frequency/NumbersFrequency';
 
 import SideMenu from 'components/SideMenu';
 import StatsFrame from 'components/stats-frame/StatsFrame';
+import { useState } from 'react';
 
 import Chart from 'react-apexcharts';
 
 const StatsPage: React.FC = () => {
+  const [_showLast, setShowLast] = useState(10);
   const state = {
     series: [
       {
@@ -72,6 +74,7 @@ const StatsPage: React.FC = () => {
 
   const handleChage = (event: any) => {
     console.log(event.detail.value);
+    setShowLast(parseInt(event.detail.value));
   };
   return (
     <>
@@ -79,15 +82,15 @@ const StatsPage: React.FC = () => {
       <IonPage id="main-content">
         <Header />
         <IonToolbar>
-          <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value="10">
-            <IonSelectOption value="10">Last 10 Drawings</IonSelectOption>
-            <IonSelectOption value="50">Last 50 Drawings</IonSelectOption>
-            <IonSelectOption value="100">Last 100 Drawings</IonSelectOption>
+          <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value={_showLast}>
+            <IonSelectOption value={10}>Last 10 Drawings</IonSelectOption>
+            <IonSelectOption value={50}>Last 50 Drawings</IonSelectOption>
+            <IonSelectOption value={100}>Last 100 Drawings</IonSelectOption>
           </IonSelect>
         </IonToolbar>
 
         <IonContent fullscreen>
-          <NumbersFrequency></NumbersFrequency>
+          <NumbersFrequency showLast={_showLast}></NumbersFrequency>
           {/* <IonCard>
             <Chart options={state.options as any} series={state.series} type="boxPlot" height={350} />
           </IonCard> */}
