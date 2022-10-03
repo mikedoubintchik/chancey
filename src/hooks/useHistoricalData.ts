@@ -36,8 +36,8 @@ export function useHistoricalData() {
 
   const getHistoricalData = async (tryCacheFirst = true): Promise<Array<LotteryDrawModel>> => {
     if (tryCacheFirst) {
-      var data = await get('historical-data-mega');
-      if (data.length) {
+      const data = await get('historical-data-mega');
+      if (data?.length) {
         console.log('loaded history from cache');
         return data;
       }
