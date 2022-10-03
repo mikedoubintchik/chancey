@@ -37,6 +37,9 @@ const getDefaultState = () => {
       xaxis: {
         categories: [],
       },
+      grid: {
+        show: false,
+      },
     },
   };
 };
