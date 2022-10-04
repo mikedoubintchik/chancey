@@ -1,5 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
-import StatsFrame, { StatsFrameMode } from 'components/stats-frame/StatsFrame';
+import StatsFrame, { StatsFrameMode } from 'components/stats/stats-frame/StatsFrame';
 import { useEffect, useState } from 'react';
 import './NumbersFrequency.css';
 import { useHistoricalData } from 'hooks/useHistoricalData';

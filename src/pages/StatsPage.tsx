@@ -1,6 +1,7 @@
 import { IonCard, IonContent, IonPage, IonSelect, IonSelectOption, IonToolbar } from '@ionic/react';
 import Header from 'components/Header';
-import NumbersFrequency from 'components/numbers-frequency/NumbersFrequency';
+import NumbersFrequency from 'components/stats/numbers-frequency/NumbersFrequency';
+import NumberRanges from 'components/stats/number-ranges/NumberRanges';
 
 import SideMenu from 'components/SideMenu';
 
@@ -30,6 +31,7 @@ const StatsPage: React.FC = () => {
 
         <IonContent fullscreen>
           <NumbersFrequency showLast={_showLast}></NumbersFrequency>
+          <NumberRanges showLast={_showLast}></NumberRanges>
         </IonContent>
       </IonPage>
     </>
