@@ -62,7 +62,14 @@ npm run functions:watch
 - [Detecting Platform](https://ionicframework.com/docs/core-concepts/cross-platform#platform-detection)
 
 ## Deployment
+
 ```sh
 # deploy to hosting
 npm run deploy
 ```
+
+## Troubleshoot
+
+### Errors when running `firebase deploy`
+
+These usually have to do with firebase functions issues. To debug those run `firebase functions:log`. In most cases, that will show you the issue.
