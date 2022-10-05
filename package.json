@@ -2,15 +2,21 @@
   "name": "4tune",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "npm": "^8",
+    "node": "^v16"
+  },
   "dependencies": {
     "@awesome-cordova-plugins/camera": "^5.45.0",
     "@awesome-cordova-plugins/core": "^5.45.0",
     "@awesome-cordova-plugins/geolocation": "^5.45.0",
+    "@capacitor/android": "4.3.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/camera": "^4.1.1",
     "@capacitor/core": "4.3.0",
     "@capacitor/filesystem": "^4.1.1",
     "@capacitor/haptics": "4.0.1",
+    "@capacitor/ios": "4.3.0",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/preferences": "^4.0.1",
     "@capacitor/status-bar": "4.0.1",
@@ -73,7 +79,11 @@
     "lint": "eslint --quiet --fix 'src/**/*.{js,jsx,ts,tsx}'",
     "prepush": "npm run test:ci",
     "functions:emulate": "cd functions && npm run serve",
-    "functions:watch": "cd functions && npm run serve:watch"
+    "functions:watch": "cd functions && npm run serve:watch",
+    "start:ios": "ionic capacitor run ios -l --external",
+    "build:android": "ionic capacitor copy android",
+    "start:android": "GENERATE_SOURCEMAP=false ionic capacitor run android -l --host=$(ipconfig getifaddr en0)",
+    "deploy": "ionic build --prod && firebase deploy"
   },
   "eslintConfig": {
     "extends": [
