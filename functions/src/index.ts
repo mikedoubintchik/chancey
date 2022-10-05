@@ -62,35 +62,37 @@ export const getTextFromTicket = functions.https // }) //   // Check tokens cont
   });
 
 export const updateRemoteWithMegaData = functions.https.onCall(async (data, context) => {
-  if (context.app == undefined) {
+  if (context.app === undefined) {
     throw new functions.https.HttpsError(
       'failed-precondition',
       'The function must be called from an App Check verified app.',
     );
   }
   try {
-    let megaData = await axios.get('https://data.ny.gov/api/views/5xaw-6ayf/rows.json?accessType=DOWNLOAD');
-    let records = megaData.data.data;
+    const megaData = await axios.get('https://data.ny.gov/api/views/5xaw-6ayf/rows.json?accessType=DOWNLOAD');
+    const records = megaData.data.data;
     // console.log(records[0]);
     const historyDataRef = admin.firestore().collection('historical-data-mega');
     const latest = await historyDataRef.orderBy('date', 'desc').limit(1).get();
-    var latestStoredResultData = new Date('01/01/1980');
+    let latestStoredResultData = new Date('01/01/1980');
+
     if (latest.empty) {
       console.log('No matching documents.');
     } else {
       latestStoredResultData = latest.docs[0].data().date.toDate();
     }
-    for (var i = 0; i < records.length; i++) {
-      let ldm = LotteryDataUtils.parseMegaRecord(records[i]);
 
-      if (ldm.date > latestStoredResultData) {
-        console.log('adding record to store', ldm);
-        const result = await historyDataRef.add(ldm);
+    data.forEach(async (record: string[]) => {
+      const lotteryDraw = LotteryDataUtils.parseMegaRecord(record);
+
+      if (lotteryDraw.date > latestStoredResultData) {
+        console.log('adding record to store', lotteryDraw);
+        const result = await historyDataRef.add(lotteryDraw);
         console.log(result);
       }
-    }
+    });
     // console.log(latestStoredResultData);
-    return 'Success';
+    return 'Successfully added latest records';
   } catch (error: any) {
     functions.logger.error(error);
     throw new functions.https.HttpsError('failed-precondition', { ...error });
