@@ -1,8 +1,6 @@
 describe('Use Frequent Numbers Rule', () => {
   it('does something', () => {
-    let x = 5;
+    let x = 6;
     expect(x).toEqual(5);
   });
 });
-
-export {};

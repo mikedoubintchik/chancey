@@ -6,6 +6,23 @@
     "npm": "^8",
     "node": "^v16"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "text"
+    ]
+  },
   "dependencies": {
     "@awesome-cordova-plugins/camera": "^5.45.0",
     "@awesome-cordova-plugins/core": "^5.45.0",
@@ -72,7 +89,7 @@
   "scripts": {
     "start": "ionic serve",
     "build": "react-scripts build",
-    "test": "react-scripts test -- --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
+    "test": "react-scripts test",
     "test:ci": "react-scripts test -- --watchAll=false --json --passWithNoTests --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "ci": "echo 'doing CIIIII'",
     "eject": "react-scripts eject",
