@@ -2,7 +2,7 @@ import { LotteryDrawModel } from './../types/lottery-draw';
 export interface IRuleBase {
   getDescription(): string;
   getInformation(): string;
-  calcPercentageInLastDrawings(lastDrawingsNumbe: number, historicalData: Array<LotteryDrawModel>): number;
+  calcPercentageInLastDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumbe: number): number;
 }
 
 export class RuleBase implements IRuleBase {
@@ -14,7 +14,7 @@ export class RuleBase implements IRuleBase {
     return '';
   }
 
-  calcPercentageInLastDrawings(lastDrawingsNumber = 400, historicalData: Array<LotteryDrawModel>): number {
+  calcPercentageInLastDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumbe: number): number {
     return 0;
   }
 }
