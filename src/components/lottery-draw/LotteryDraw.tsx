@@ -3,14 +3,14 @@ import Series from 'components/series/Series';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import './LotteryDraw.css';
 import { calendarOutline } from 'ionicons/icons';
-import { LotteryDataUtils } from 'utils/lottery-utils';
+import { getDefaultLDM } from 'utils/lottery-utils';
 
 interface LotteryDrawProps {
   draw: LotteryDrawModel | undefined;
 }
 
 const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw }) => {
-  let finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : LotteryDataUtils.getDefaultLDM();
+  let finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : getDefaultLDM();
   return (
     <div>
       <IonCardHeader class="lottery-draw-header">

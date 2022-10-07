@@ -4,7 +4,7 @@ import { collection, doc, getDocs, setDoc, addDoc, query, orderBy, limit } from 
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { httpsCallable } from 'firebase/functions';
 import axios from 'axios';
-import { LotteryDataUtils } from 'utils/lottery-utils';
+
 import { get } from 'stores/IonicStorage';
 export function useHistoricalData() {
   const getLatestMegaResults = async () => {
