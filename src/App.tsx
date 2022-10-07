@@ -2,6 +2,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
   IonApp,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFabList,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
@@ -11,7 +15,7 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, homeOutline, person, statsChart } from 'ionicons/icons';
+import { camera, diamondOutline, homeOutline, logoVimeo, person, settings, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
@@ -19,7 +23,6 @@ import StatsPage from 'pages/StatsPage';
 import { Redirect, Route } from 'react-router-dom';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -39,11 +42,10 @@ import '@ionic/react/css/text-transformation.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import { useFirebase } from 'hooks/useFirebase';
+import { useHistoricalData } from 'hooks/useHistoricalData';
 import HistoryPage from 'pages/HistoryPage';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
-import { getHeapSnapshot } from 'v8';
-import { useHistoricalData } from 'hooks/useHistoricalData';
+import RulesPage from 'pages/RulesPage';
 
 library.add(fab);
 
@@ -89,7 +91,9 @@ const App: React.FC = () => {
                 <Route path="/stats">
                   <StatsPage />
                 </Route>
-
+                <Route path="/rules">
+                  <RulesPage />
+                </Route>
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
@@ -97,13 +101,15 @@ const App: React.FC = () => {
               <IonTabBar slot="bottom">
                 <IonTabButton tab="home" href="/home">
                   <IonIcon icon={homeOutline} />
-                  {/* <IonLabel>Home</IonLabel> */}
+                  <IonLabel>Home</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="stats" href="/stats">
                   <IonIcon icon={statsChart} />
-                  {/* <IonLabel>Tab 2</IonLabel> */}
+                  <IonLabel>Stats</IonLabel>
                 </IonTabButton>
-
+                <IonTabButton>
+                  <IonLabel>Rules</IonLabel>
+                </IonTabButton>
                 <IonTabButton tab="geolocation" href="/geolocation">
                   <IonIcon icon={person} />
                   <IonLabel>Geolocation</IonLabel>
@@ -116,6 +122,11 @@ const App: React.FC = () => {
             </IonTabs>
           </IonRouterOutlet>
         </IonReactRouter>
+        <IonFab vertical="bottom" horizontal="center" slot="fixed">
+          <IonFabButton href="/rules">
+            <IonIcon icon={diamondOutline} />
+          </IonFabButton>
+        </IonFab>
       </IonApp>
     </AppContext.Provider>
   );

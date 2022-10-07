@@ -1,8 +1,8 @@
+import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
+import { SeriesModel } from 'types/series';
 import { getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
-import intersection from 'lodash/intersection';
-import { SeriesModel } from 'types/series';
 export class UseFrequentNumberRule extends RuleBase {
   private useTop: number = 10;
 

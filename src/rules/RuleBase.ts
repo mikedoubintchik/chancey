@@ -1,6 +1,9 @@
+import { nanoid } from 'nanoid';
 import { SeriesModel } from 'types/series';
 import { LotteryDrawModel } from './../types/lottery-draw';
+
 export interface IRuleBase {
+  id: string;
   getDescription(): string;
   getInformation(): string;
   calculatePercentageForRecentDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumber: number): number;
@@ -8,10 +11,12 @@ export interface IRuleBase {
 }
 
 export class RuleBase implements IRuleBase {
-  constructor() {}
+  id = nanoid();
+
   getDescription(): string {
     return '';
   }
+
   getInformation(): string {
     return '';
   }

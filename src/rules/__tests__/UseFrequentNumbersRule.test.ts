@@ -2,6 +2,10 @@ import { UseFrequentNumberRule } from 'rules/UseFrequentNumbersRule';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 
+jest.mock('nanoid', () => {
+  return { nanoid: () => '1234' };
+});
+
 describe('Use Frequent Numbers Rule', () => {
   it('Calculates percentage in recent drawings', () => {
     let rule = new UseFrequentNumberRule();

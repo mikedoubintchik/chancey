@@ -1,21 +1,27 @@
 import { createContext, Dispatch, Reducer, useContext } from 'react';
-import { UserType, TicketPhotoType } from 'types/profile';
+import { TicketPhotoType, UserType } from 'types/profile';
+import { RuleType } from 'types/rules';
+import { IRuleBase } from '../rules/RuleBase';
 
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
   UPDATE_TICKET_PHOTOS = 'UPDATE_TICKET_PHOTOS',
   UPDATE_TICKET_PHOTOS_TEXT = 'UPDATE_TICKET_PHOTOS_TEXT',
+  ADD_RULE = 'ADD_RULE',
+  REMOVE_RULE = 'REMOVE_RULE',
 }
 
 export type InitialStateType = {
   user: UserType | null;
   ticketPhotos: TicketPhotoType[];
+  rules: IRuleBase[];
 };
 
 export const initialState: InitialStateType = {
   user: null,
   ticketPhotos: [],
+  rules: [],
 };
 
 export interface IReducer {
@@ -23,6 +29,8 @@ export interface IReducer {
   user: UserType;
   ticketPhotos: TicketPhotoType[];
   ticketText: TicketPhotoType['ticketText'];
+  rule: IRuleBase;
+  id: IRuleBase['id'];
 }
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
@@ -43,6 +51,13 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       const updatedTickets = state.ticketPhotos;
       updatedTickets.push(updatedTicket);
       return { ...state, ticketPhotos: updatedTickets };
+    }
+    case ActionType.ADD_RULE: {
+      return { ...state, rules: [...state.rules, action.rule] };
+    }
+    case ActionType.REMOVE_RULE: {
+      const updatedRules = state.rules.filter(({ id }) => id !== action.id);
+      return { ...state, rules: updatedRules };
     }
     default:
       return state;
