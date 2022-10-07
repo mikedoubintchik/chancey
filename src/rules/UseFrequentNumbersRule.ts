@@ -22,8 +22,9 @@ export class UseFrequentNumberRule extends RuleBase {
     let topNumbers = numberFrequencies.slice(0, this.useTop).map((item) => item.number);
     let count = 0;
     latestData.forEach((item) => {
-      let intersections = intersection([item.series.numbers, topNumbers]);
-      if (intersections.toLength() > 0) {
+      let intersections = intersection<Array<number>>([item.series.numbers, topNumbers]);
+
+      if (intersections.size() > 0) {
         count += 1;
       }
     });
