@@ -8,7 +8,6 @@ jest.mock('nanoid', () => {
 
 describe('Use Frequent Numbers Rule', () => {
   it('Calculates percentage in recent drawings', () => {
-    let rule = new UseFrequentNumberRule();
     let history: Array<LotteryDrawModel> = [
       {
         date: new Date(),
@@ -27,12 +26,12 @@ describe('Use Frequent Numbers Rule', () => {
         type: DrawType.MEGA,
       },
     ];
+    let rule = new UseFrequentNumberRule(history);
     let precentage = rule.calculatePercentageForRecentDrawings(history, 2);
     expect(precentage).toEqual(1);
   });
 
   it('Filters serieses that the rule apply to', () => {
-    let rule = new UseFrequentNumberRule();
     let historicalData: Array<LotteryDrawModel> = new Array<LotteryDrawModel>();
     for (let i = 0; i < 5; i++) {
       historicalData.push({
@@ -52,7 +51,7 @@ describe('Use Frequent Numbers Rule', () => {
         type: DrawType.MEGA,
       });
     }
-
+    let rule = new UseFrequentNumberRule(historicalData);
     let serieses: Array<SeriesModel> = [
       {
         numbers: [11, 12, 13, 14, 15],
