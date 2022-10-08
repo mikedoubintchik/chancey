@@ -1,0 +1,5 @@
+.rule-item{
+  border-color: var(--ion-color-primary) !important;
+  border: 1px solid;
+  border-radius: 10px;
+}
