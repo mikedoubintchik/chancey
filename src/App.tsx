@@ -1,28 +1,14 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import {
-  IonApp,
-  IonContent,
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact,
-} from '@ionic/react';
+import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, diamondOutline, homeOutline, logoVimeo, person, settings, statsChart } from 'ionicons/icons';
+import { camera, diamondOutline, homeOutline, person, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
 import { Redirect, Route } from 'react-router-dom';
-import { createIonicStore, get, set } from 'stores/IonicStorage';
-import { ActionType, AppContext, initialState, InitialStateType, IReducer, reducer, useStore } from 'stores/store';
+import { AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -42,13 +28,9 @@ import '@ionic/react/css/text-transformation.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import { useHistoricalData } from 'hooks/useHistoricalData';
-import HistoryPage from 'pages/HistoryPage';
-import { Reducer, useCallback, useEffect, useReducer } from 'react';
-import RulesPage from 'pages/RulesPage';
-import { getAllCombinations } from 'utils/combinatorics';
-import { getRulesBank } from 'rules/RuleUtils';
 import AsyncLoader from 'components/AsyncLoader';
+import RulesPage from 'pages/RulesPage';
+import { Reducer, useReducer } from 'react';
 
 library.add(fab);
 

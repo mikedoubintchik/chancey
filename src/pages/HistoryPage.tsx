@@ -1,27 +1,11 @@
-import {
-  IonBackButton,
-  IonButtons,
-  IonCard,
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonList,
-  IonPage,
-  IonRefresher,
-  IonRefresherContent,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonContent, IonItem, IonRefresher, IonRefresherContent } from '@ionic/react';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
-import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
-import { Virtuoso } from 'react-virtuoso';
-import SideMenu from 'components/SideMenu';
-import { set, get } from 'stores/IonicStorage';
-import { useFirebase } from 'hooks/useFirebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
-import Header from 'components/Header';
 import { useEffect, useState } from 'react';
+import { Virtuoso } from 'react-virtuoso';
+import { set } from 'stores/IonicStorage';
+import { LotteryDrawModel } from 'types/lottery-draw';
 
 const HistoryPage: React.FC = () => {
   // const { getHistoricalData } = useFirebase();
@@ -54,9 +38,6 @@ const HistoryPage: React.FC = () => {
 
   return (
     <>
-      {/* <SideMenu /> */}
-      {/* <IonPage id="main-content">
-        <Header pageTitle="Historical Data" /> */}
       <IonContent>
         <IonRefresher slot="fixed" onIonRefresh={refreshHistoricalData}>
           <IonRefresherContent />
@@ -73,7 +54,6 @@ const HistoryPage: React.FC = () => {
           }}
         />
       </IonContent>
-      {/* </IonPage> */}
     </>
   );
 };

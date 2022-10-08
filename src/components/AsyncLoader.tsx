@@ -32,10 +32,6 @@ const AsyncLoader: React.FC = () => {
         rulesBank,
       });
     }
-    // initialState.historicalData = historicalData;
-
-    // let rulesBank = getRulesBank(historicalData);
-    // initialState.rulesBank = rulesBank;
 
     if (state.cache.length === 0) {
       const cache = getAllCombinations();
