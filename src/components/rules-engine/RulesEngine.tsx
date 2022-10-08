@@ -29,14 +29,8 @@ import { getAllCombinations } from 'utils/combinatorics';
 interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const { state, dispatch } = useStore();
-  console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
-  // if (state.cache.length === 0) {
-  //   let cache = getAllCombinations();
-  //   dispatch({
-  //     type: ActionType.INITIALIZE_CACHE,
-  //     cache: cache,
-  //   });
-  // }
+  // console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
+
   const { isOpen, showModal, hideModal } = useModal();
 
   const renderRules = (): ReactElement[] =>

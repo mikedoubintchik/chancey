@@ -46,6 +46,7 @@ export const initialState: InitialStateType = {
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
+  // console.log('reducing...', action.type);
   switch (action.type) {
     case ActionType.RESET:
       return {
@@ -75,6 +76,7 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, cache: action.cache };
     }
     case ActionType.UPDATE_HISTORICAL_DATA: {
+      // console.log('🚀 ~ file: store.ts ~ line 80 ~ action.historicalData', action.historicalData);
       return { ...state, historicalData: action.historicalData };
     }
     case ActionType.INITIALIZE_RULES_BANK: {

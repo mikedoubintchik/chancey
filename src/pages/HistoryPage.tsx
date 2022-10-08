@@ -54,26 +54,26 @@ const HistoryPage: React.FC = () => {
 
   return (
     <>
-      <SideMenu />
-      <IonPage id="main-content">
-        <Header pageTitle="Historical Data" />
-        <IonContent>
-          <IonRefresher slot="fixed" onIonRefresh={refreshHistoricalData}>
-            <IonRefresherContent />
-          </IonRefresher>
-          <Virtuoso
-            style={{ height: '100%' }}
-            totalCount={latestResults.length}
-            itemContent={(index) => {
-              return (
-                <IonItem>
-                  <LotteryDraw draw={latestResults[index]} />
-                </IonItem>
-              );
-            }}
-          />
-        </IonContent>
-      </IonPage>
+      {/* <SideMenu /> */}
+      {/* <IonPage id="main-content">
+        <Header pageTitle="Historical Data" /> */}
+      <IonContent>
+        <IonRefresher slot="fixed" onIonRefresh={refreshHistoricalData}>
+          <IonRefresherContent />
+        </IonRefresher>
+        <Virtuoso
+          style={{ height: '100%' }}
+          totalCount={latestResults.length}
+          itemContent={(index) => {
+            return (
+              <IonItem>
+                <LotteryDraw draw={latestResults[index]} />
+              </IonItem>
+            );
+          }}
+        />
+      </IonContent>
+      {/* </IonPage> */}
     </>
   );
 };

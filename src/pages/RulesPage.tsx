@@ -25,7 +25,7 @@ import RulesEngine from 'components/rules-engine/RulesEngine';
 
 const RulesPage: React.FC = () => {
   const { state, dispatch } = useStore();
-  console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
+  // console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
 
   const { isOpen, showModal, hideModal } = useModal();
 

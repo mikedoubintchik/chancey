@@ -11,7 +11,7 @@ const SideMenu = () => {
 
   const [, setShowErrorToast] = useState<boolean>(false);
   const { state } = useStore();
-  console.log('state', state);
+  // console.log('state', state);
 
   const requestLogin = useCallback(
     async (method: UserRegisterMethodType) => {

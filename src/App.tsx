@@ -48,6 +48,7 @@ import { Reducer, useCallback, useEffect, useReducer } from 'react';
 import RulesPage from 'pages/RulesPage';
 import { getAllCombinations } from 'utils/combinatorics';
 import { getRulesBank } from 'rules/RuleUtils';
+import AsyncLoader from 'components/AsyncLoader';
 
 library.add(fab);
 
@@ -55,100 +56,57 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
-  const store = useStore();
-  const { getHistoricalData } = useHistoricalData();
-
-  // console.log('start', Date.now());
-  // let arr = [];
-  // for (let i = 0; i < 70; i++) {
-  //   arr.push(i + 1);
-  // }
-  // let combs = combinations(arr, 5);
-  // console.log('end', Date.now(), combs.length);
-  const setupHistoricalDataStorage = useCallback(async () => {
-    await createIonicStore('historical-data-mega');
-    let historicalData = await get('historical-data-mega');
-
-    if (!historicalData) {
-      historicalData = await getHistoricalData();
-      set('historical-data-mega', historicalData);
-      store.dispatch({
-        type: ActionType.UPDATE_HISTORICAL_DATA,
-        historicalData,
-      });
-    }
-    console.log('dispatching INITIALIZE_RULES_BANK');
-    store.dispatch({
-      type: ActionType.INITIALIZE_RULES_BANK,
-      rulesBank: getRulesBank(historicalData),
-    });
-    // const combs = await get('mega-combs');
-    // if (!combs) set('mega-combs', getAllCombinations());
-  }, [getHistoricalData, store]);
-
-  useEffect(() => {
-    setupHistoricalDataStorage();
-  }, [setupHistoricalDataStorage]);
-
+  console.log('Initializing app');
+  console.log('returning app component');
   return (
     <AppContext.Provider value={{ state, dispatch }}>
+      {/* splash */}
       <IonApp>
+        <AsyncLoader />
         <IonReactRouter>
-          <IonRouterOutlet>
-            <Route path="/history">
-              <HistoryPage />
-            </Route>
-            <IonTabs>
-              <IonRouterOutlet>
-                <Route exact path="/home">
-                  <HomePage />
-                </Route>
-                <Route exact path="/stats">
-                  <StatsPage />
-                </Route>
-                <Route path="/geolocation">
-                  <GeolocationPage />
-                </Route>
-                <Route path="/scan">
-                  <ScanTicket />
-                </Route>
-                <Route path="/stats">
-                  <StatsPage />
-                </Route>
-                <Route path="/rules">
-                  <RulesPage />
-                </Route>
-                <Route exact path="/">
-                  <Redirect to="/home" />
-                </Route>
-              </IonRouterOutlet>
-              <IonTabBar slot="bottom">
-                <IonTabButton tab="home" href="/home">
-                  <IonIcon icon={homeOutline} />
-                  {/* <IonLabel>Home</IonLabel> */}
-                </IonTabButton>
-                <IonTabButton tab="stats" href="/stats">
-                  <IonIcon icon={statsChart} />
-                  {/* <IonLabel>Stats</IonLabel> */}
-                </IonTabButton>
-                <IonTabButton>{/* <IonLabel>Rules</IonLabel> */}</IonTabButton>
-                <IonTabButton tab="geolocation" href="/geolocation">
-                  <IonIcon icon={person} />
-                  {/* <IonLabel>Geolocation</IonLabel> */}
-                </IonTabButton>
-                <IonTabButton tab="scan" href="/scan">
-                  <IonIcon icon={camera} />
-                  {/* <IonLabel>Scan Ticket</IonLabel> */}
-                </IonTabButton>
-              </IonTabBar>
-            </IonTabs>
-          </IonRouterOutlet>
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/home">
+                <HomePage />
+              </Route>
+              <Route exact path="/stats">
+                <StatsPage />
+              </Route>
+              <Route path="/geolocation">
+                <GeolocationPage />
+              </Route>
+              <Route path="/scan">
+                <ScanTicket />
+              </Route>
+              <Route path="/stats">
+                <StatsPage />
+              </Route>
+              <Route path="/rules">
+                <RulesPage />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="home" href="/home">
+                <IonIcon icon={homeOutline} />
+              </IonTabButton>
+              <IonTabButton tab="stats" href="/stats">
+                <IonIcon icon={statsChart} />
+              </IonTabButton>
+              <IonTabButton tab="rules" href="/rules">
+                <IonIcon icon={diamondOutline} style={{ border: '1px solid', borderRadius: '100%', padding: '10px' }} />
+              </IonTabButton>
+              <IonTabButton tab="geolocation" href="/geolocation">
+                <IonIcon icon={person} />
+              </IonTabButton>
+              <IonTabButton tab="scan" href="/scan">
+                <IonIcon icon={camera} />
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
         </IonReactRouter>
-        <IonFab vertical="bottom" horizontal="center" slot="fixed">
-          <IonFabButton href="/rules">
-            <IonIcon icon={diamondOutline} />
-          </IonFabButton>
-        </IonFab>
       </IonApp>
     </AppContext.Provider>
   );
