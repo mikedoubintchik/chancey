@@ -84,7 +84,7 @@ const App: React.FC = () => {
     });
     // const combs = await get('mega-combs');
     // if (!combs) set('mega-combs', getAllCombinations());
-  }, [getHistoricalData]);
+  }, [getHistoricalData, store]);
 
   useEffect(() => {
     setupHistoricalDataStorage();
