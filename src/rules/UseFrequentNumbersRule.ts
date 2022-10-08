@@ -4,15 +4,20 @@ import { SeriesModel } from 'types/series';
 import { getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
 export class UseFrequentNumberRule extends RuleBase {
-  private useTop: number = 10;
-
-  constructor(lastDrawingsNumber = 300, useTop = 10) {
+  private topFrequentCount: number = 10;
+  private topFrequentNumbers: number[];
+  private historicalData: Array<LotteryDrawModel> = [];
+  constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 300, topFrequentCount = 10) {
     super();
-    this.useTop = useTop;
+    this.topFrequentCount = topFrequentCount;
+    this.topFrequentNumbers = [];
+    this.historicalData = historicalData.slice(0, lastDrawingsCount);
+    let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
+    this.topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
   }
 
   override getDescription(): string {
-    return `Use atleast one of the top ${this.useTop} frequent numbers in the last 400 draws`;
+    return `Use atleast one of the top ${this.topFrequentCount} frequent numbers in the last 400 draws`;
   }
 
   override getInformation(): string {
@@ -23,12 +28,13 @@ export class UseFrequentNumberRule extends RuleBase {
     historicalData: Array<LotteryDrawModel>,
     lastDrawingsNumber: number = 300,
   ): number {
-    let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
-    let latestData = historicalData.slice(0, lastDrawingsNumber);
-    let topNumbers = numberFrequencies.slice(0, this.useTop).map((item) => item.number);
+    // let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
+    // let latestData = historicalData.slice(0, lastDrawingsNumber);
+    // let topNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
+    // this.topNumbers = topNumbers;
     let count = 0;
-    latestData.forEach((item) => {
-      if (this.validateSeries(item.series, topNumbers)) {
+    this.historicalData.forEach((item) => {
+      if (this.validateSeries(item.series, this.topFrequentNumbers)) {
         count += 1;
       }
     });
@@ -46,17 +52,21 @@ export class UseFrequentNumberRule extends RuleBase {
     historicalData: Array<LotteryDrawModel>,
     lastDrawingsNumber: number = 300,
   ): Array<SeriesModel> {
-    let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
-    let latestData = historicalData.slice(0, lastDrawingsNumber);
-    let topNumbers = numberFrequencies.slice(0, this.useTop).map((item) => item.number);
-    console.log(numberFrequencies);
-
+    // let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
+    // let latestData = historicalData.slice(0, lastDrawingsNumber);
+    // let topNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
+    // // console.log(numberFrequencies);
+    // this.topNumbers = topNumbers;
     return serieses.filter((series) => {
       // console.log(topNumbers);
       // console.log(series.numbers);
       // console.log(intersection<Array<number>>([[2], [2]]));
       // console.log(intersection(series.numbers, topNumbers));
-      return this.validateSeries(series, topNumbers);
+      return this.validateSeries(series, this.topFrequentNumbers);
     });
+  }
+
+  validate(series: SeriesModel): boolean {
+    return this.validateSeries(series, this.topFrequentNumbers);
   }
 }

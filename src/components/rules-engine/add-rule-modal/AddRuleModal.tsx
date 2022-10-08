@@ -16,7 +16,6 @@ import { ReactElement, useRef } from 'react';
 import { ActionType, useStore } from 'stores/store';
 
 import { IRuleBase } from 'rules/RuleBase';
-import { rules } from 'rules/RuleUtils';
 
 interface IModal {
   isOpenModal: boolean;
@@ -25,7 +24,8 @@ interface IModal {
 const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
   const popover = useRef<HTMLIonPopoverElement>(null);
   const { isOpen, showPopover, hidePopover } = usePopover();
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
+  console.log('🚀 ~ file: AddRuleModal.tsx ~ line 28 ~ state', state);
 
   const openPopover = (e: any) => {
     popover.current!.event = e;
@@ -65,7 +65,7 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
     </IonCard>
   );
 
-  const renderRules = (): ReactElement[] => rules().map((rule) => <Rule key={rule.id} rule={rule} />);
+  const renderRules = (): ReactElement[] => state.rulesBank.map((rule) => <Rule key={rule.id} rule={rule} />);
 
   return (
     <Modal isOpen={isOpenModal} hideModal={hideModal}>

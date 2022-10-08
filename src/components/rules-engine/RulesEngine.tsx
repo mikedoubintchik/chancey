@@ -25,11 +25,18 @@ import './RulesEngine.css';
 import FlowSeparator from './flow-separator/FlowSeparator';
 import FlowEnd from './flow-end/FlowEnd';
 import FlowSummary from './flow-summary/FlowSummary';
+import { getAllCombinations } from 'utils/combinatorics';
 interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const { state, dispatch } = useStore();
   console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
-
+  if (state.cache.length === 0) {
+    let cache = getAllCombinations();
+    dispatch({
+      type: ActionType.INITIALIZE_CACHE,
+      cache: cache,
+    });
+  }
   const { isOpen, showModal, hideModal } = useModal();
 
   const renderRules = (): ReactElement[] =>
@@ -39,6 +46,14 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
         <FlowSeparator></FlowSeparator>
       </>
     ));
+
+  state.rules.map((rule) => {
+    console.log(state.cache.length);
+    let cache = state.cache.filter((comb) => {
+      return rule.validate({ numbers: comb, extra: 0 });
+    });
+    console.log(cache.length);
+  });
   return (
     <>
       <FlowStart></FlowStart>

@@ -22,7 +22,7 @@ import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
 import { Redirect, Route } from 'react-router-dom';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
-import { AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
+import { ActionType, AppContext, initialState, InitialStateType, IReducer, reducer, useStore } from 'stores/store';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -46,6 +46,8 @@ import { useHistoricalData } from 'hooks/useHistoricalData';
 import HistoryPage from 'pages/HistoryPage';
 import { Reducer, useCallback, useEffect, useReducer } from 'react';
 import RulesPage from 'pages/RulesPage';
+import { getAllCombinations } from 'utils/combinatorics';
+import { getRulesBank } from 'rules/RuleUtils';
 
 library.add(fab);
 
@@ -53,13 +55,35 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
+  const store = useStore();
   const { getHistoricalData } = useHistoricalData();
 
+  // console.log('start', Date.now());
+  // let arr = [];
+  // for (let i = 0; i < 70; i++) {
+  //   arr.push(i + 1);
+  // }
+  // let combs = combinations(arr, 5);
+  // console.log('end', Date.now(), combs.length);
   const setupHistoricalDataStorage = useCallback(async () => {
-    await createIonicStore('HistoricalLotteryData');
-    const exists = await get('historical-data-mega');
+    await createIonicStore('historical-data-mega');
+    let historicalData = await get('historical-data-mega');
 
-    if (!exists) set('historical-data-mega', await getHistoricalData());
+    if (!historicalData) {
+      historicalData = await getHistoricalData();
+      set('historical-data-mega', historicalData);
+      store.dispatch({
+        type: ActionType.UPDATE_HISTORICAL_DATA,
+        historicalData,
+      });
+    }
+    console.log('dispatching INITIALIZE_RULES_BANK');
+    store.dispatch({
+      type: ActionType.INITIALIZE_RULES_BANK,
+      rulesBank: getRulesBank(historicalData),
+    });
+    // const combs = await get('mega-combs');
+    // if (!combs) set('mega-combs', getAllCombinations());
   }, [getHistoricalData]);
 
   useEffect(() => {

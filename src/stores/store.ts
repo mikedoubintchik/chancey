@@ -1,4 +1,5 @@
 import { createContext, Dispatch, Reducer, useContext } from 'react';
+import { LotteryDrawModel } from 'types/lottery-draw';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { RuleType } from 'types/rules';
 import { IRuleBase } from '../rules/RuleBase';
@@ -10,20 +11,10 @@ export enum ActionType {
   UPDATE_TICKET_PHOTOS_TEXT = 'UPDATE_TICKET_PHOTOS_TEXT',
   ADD_RULE = 'ADD_RULE',
   REMOVE_RULE = 'REMOVE_RULE',
+  INITIALIZE_CACHE = 'INITIALIZE_CACHE',
+  UPDATE_HISTORICAL_DATA = 'UPDATE_HISTORICAL_DATA',
+  INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
 }
-
-export type InitialStateType = {
-  user: UserType | null;
-  ticketPhotos: TicketPhotoType[];
-  rules: IRuleBase[];
-};
-
-export const initialState: InitialStateType = {
-  user: null,
-  ticketPhotos: [],
-  rules: [],
-};
-
 export interface IReducer {
   type: ActionType;
   user: UserType;
@@ -31,7 +22,28 @@ export interface IReducer {
   ticketText: TicketPhotoType['ticketText'];
   rule: IRuleBase;
   id: IRuleBase['id'];
+  cache: number[][];
+  historicalData: Array<LotteryDrawModel>;
+  rulesBank: Array<IRuleBase>;
 }
+
+export type InitialStateType = {
+  user: UserType | null;
+  ticketPhotos: TicketPhotoType[];
+  rules: IRuleBase[];
+  cache: number[][];
+  historicalData: LotteryDrawModel[];
+  rulesBank: IRuleBase[];
+};
+
+export const initialState: InitialStateType = {
+  user: null,
+  ticketPhotos: [],
+  rules: [],
+  cache: [],
+  historicalData: [],
+  rulesBank: [],
+};
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
   switch (action.type) {
@@ -58,6 +70,15 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     case ActionType.REMOVE_RULE: {
       const updatedRules = state.rules.filter(({ id }) => id !== action.id);
       return { ...state, rules: updatedRules };
+    }
+    case ActionType.INITIALIZE_CACHE: {
+      return { ...state, cache: action.cache };
+    }
+    case ActionType.UPDATE_HISTORICAL_DATA: {
+      return { ...state, historicalData: action.historicalData };
+    }
+    case ActionType.INITIALIZE_RULES_BANK: {
+      return { ...state, rulesBank: action.rulesBank };
     }
     default:
       return state;
