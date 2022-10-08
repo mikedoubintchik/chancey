@@ -101,22 +101,20 @@ const App: React.FC = () => {
               <IonTabBar slot="bottom">
                 <IonTabButton tab="home" href="/home">
                   <IonIcon icon={homeOutline} />
-                  <IonLabel>Home</IonLabel>
+                  {/* <IonLabel>Home</IonLabel> */}
                 </IonTabButton>
                 <IonTabButton tab="stats" href="/stats">
                   <IonIcon icon={statsChart} />
-                  <IonLabel>Stats</IonLabel>
+                  {/* <IonLabel>Stats</IonLabel> */}
                 </IonTabButton>
-                <IonTabButton>
-                  <IonLabel>Rules</IonLabel>
-                </IonTabButton>
+                <IonTabButton>{/* <IonLabel>Rules</IonLabel> */}</IonTabButton>
                 <IonTabButton tab="geolocation" href="/geolocation">
                   <IonIcon icon={person} />
-                  <IonLabel>Geolocation</IonLabel>
+                  {/* <IonLabel>Geolocation</IonLabel> */}
                 </IonTabButton>
                 <IonTabButton tab="scan" href="/scan">
                   <IonIcon icon={camera} />
-                  <IonLabel>Scan Ticket</IonLabel>
+                  {/* <IonLabel>Scan Ticket</IonLabel> */}
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>
