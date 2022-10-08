@@ -21,6 +21,7 @@ import { ReactElement } from 'react';
 import { ActionType, useStore } from 'stores/store';
 import { IRuleBase } from '../rules/RuleBase';
 import Rule from 'components/rules-engine/rule/Rule';
+import RulesEngine from 'components/rules-engine/RulesEngine';
 
 const RulesPage: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -41,13 +42,8 @@ const RulesPage: React.FC = () => {
               <IonTitle size="large">Rules</IonTitle>
             </IonToolbar>
           </IonHeader>
-          {renderRules()}
-          <IonButton expand="full" onClick={showModal}>
-            <IonIcon slot="icon-only" icon={add}></IonIcon>
-            <IonRippleEffect></IonRippleEffect>
-          </IonButton>
+          <RulesEngine></RulesEngine>
         </IonContent>
-        <AddRuleModal isOpenModal={isOpen} hideModal={hideModal} />
       </IonPage>
     </>
   );
