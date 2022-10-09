@@ -1,5 +1,5 @@
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
-import { getNumberFrequencies } from 'utils/lottery-utils';
+import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 
 describe('Lottery Utils', () => {
   it('Compute Number Frequencies', () => {
@@ -9,6 +9,7 @@ describe('Lottery Utils', () => {
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
+          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       },
@@ -17,6 +18,7 @@ describe('Lottery Utils', () => {
         series: {
           numbers: [5, 6, 7, 8, 9],
           extra: 25,
+          bitMask: arrayToBitMask([5, 6, 7, 8, 9]),
         },
         type: DrawType.MEGA,
       },
