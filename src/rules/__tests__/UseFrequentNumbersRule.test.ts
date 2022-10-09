@@ -1,6 +1,7 @@
 import { UseFrequentNumberRule } from 'rules/UseFrequentNumbersRule';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
+import { arrayToBitMask } from 'utils/lottery-utils';
 
 jest.mock('nanoid', () => {
   return { nanoid: () => '1234' };
@@ -14,6 +15,7 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
+          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       },
@@ -22,6 +24,7 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
+          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       },
@@ -39,6 +42,7 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
+          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       });
@@ -47,6 +51,7 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [6, 7, 8, 9, 10],
           extra: 25,
+          bitMask: arrayToBitMask([6, 7, 8, 9, 10]),
         },
         type: DrawType.MEGA,
       });
@@ -56,6 +61,7 @@ describe('Use Frequent Numbers Rule', () => {
       {
         numbers: [11, 12, 13, 14, 15],
         extra: 4,
+        bitMask: arrayToBitMask([11, 12, 13, 14, 15]),
       },
     ];
 
