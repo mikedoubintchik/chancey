@@ -1,3 +1,5 @@
+import { messaging } from 'config/firebase';
+import { onMessage } from 'firebase/messaging';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useCallback, useEffect } from 'react';
 import { getRulesBank } from 'rules/RuleUtils';
@@ -9,6 +11,11 @@ const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
   // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 8 ~ state', state);
   const { getHistoricalData } = useHistoricalData();
+
+  onMessage(messaging, (payload) => {
+    console.log('Message received. ', payload);
+    // ...
+  });
 
   const setupHistoricalDataStorage = useCallback(async () => {
     await createIonicStore('historical-data-mega');

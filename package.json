@@ -86,6 +86,7 @@
   },
   "scripts": {
     "start": "ionic serve",
+    "start:prod": "firebase serve -p 8081",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:ci": "react-scripts test --watchAll=false --json --passWithNoTests",
