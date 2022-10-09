@@ -34,10 +34,6 @@ export class UseFrequentNumberRule extends RuleBase {
     historicalData: Array<LotteryDrawModel>,
     lastDrawingsNumber: number = 300,
   ): number {
-    // let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
-    // let latestData = historicalData.slice(0, lastDrawingsNumber);
-    // let topNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
-    // this.topNumbers = topNumbers;
     let count = 0;
     this.historicalData.forEach((item) => {
       if (this.validateSeries(item.series)) {
@@ -49,29 +45,17 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   private validateSeries(series: SeriesModel): boolean {
-    // let mask = arrayToBitMask(topNumbers);
-    // let intersections = intersection(series.numbers, topNumbers);
-    // return intersections.length > 0;
     return (this.topFrequentNumbersMask & series.bitMask) > 0;
   }
 
-  filter(
-    serieses: Array<SeriesModel>,
-    historicalData: Array<LotteryDrawModel>,
-    lastDrawingsNumber: number = 300,
-  ): Array<SeriesModel> {
-    // let numberFrequencies = getNumberFrequencies(historicalData, lastDrawingsNumber);
-    // let latestData = historicalData.slice(0, lastDrawingsNumber);
-    // let topNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
-    // // console.log(numberFrequencies);
-    // this.topNumbers = topNumbers;
-    return serieses.filter((series) => {
-      // console.log(topNumbers);
-      // console.log(series.numbers);
-      // console.log(intersection<Array<number>>([[2], [2]]));
-      // console.log(intersection(series.numbers, topNumbers));
+  filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
+    let results = serieses.filter((series) => {
       return this.validateSeries(series);
     });
+    if (cache) {
+      this.postRuleCache = results;
+    }
+    return results;
   }
 
   validate(series: SeriesModel): boolean {

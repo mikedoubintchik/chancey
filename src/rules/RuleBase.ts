@@ -8,11 +8,13 @@ export interface IRuleBase {
   getInformation(): string;
   calculatePercentageForRecentDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumber: number): number;
   validate(series: SeriesModel): boolean;
+  filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
+  getPostRuleCache(): Array<SeriesModel> | null;
 }
 
 export class RuleBase implements IRuleBase {
   id = nanoid();
-
+  protected postRuleCache: Array<SeriesModel> | null = null;
   getDescription(): string {
     return '';
   }
@@ -30,5 +32,13 @@ export class RuleBase implements IRuleBase {
 
   validate(series: SeriesModel): boolean {
     return false;
+  }
+
+  getPostRuleCache(): Array<SeriesModel> | null {
+    return this.postRuleCache;
+  }
+
+  filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel> {
+    return [];
   }
 }
