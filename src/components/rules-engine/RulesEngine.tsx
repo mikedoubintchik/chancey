@@ -43,8 +43,8 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
 
   state.rules.map((rule) => {
     console.log(state.cache.length);
-    let cache = state.cache.filter((comb) => {
-      return rule.validate({ numbers: comb, extra: 0 });
+    let cache = state.cache.filter((seriesModel) => {
+      return rule.validate(seriesModel);
     });
     console.log(cache.length);
   });

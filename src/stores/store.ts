@@ -2,6 +2,7 @@ import { createContext, Dispatch, Reducer, useContext } from 'react';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { RuleType } from 'types/rules';
+import { SeriesModel } from 'types/series';
 import { IRuleBase } from '../rules/RuleBase';
 
 export enum ActionType {
@@ -22,7 +23,7 @@ export interface IReducer {
   ticketText: TicketPhotoType['ticketText'];
   rule: IRuleBase;
   id: IRuleBase['id'];
-  cache: number[][];
+  cache: Array<SeriesModel>;
   historicalData: Array<LotteryDrawModel>;
   rulesBank: Array<IRuleBase>;
 }
@@ -31,7 +32,7 @@ export type InitialStateType = {
   user: UserType | null;
   ticketPhotos: TicketPhotoType[];
   rules: IRuleBase[];
-  cache: number[][];
+  cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
 };

@@ -1,11 +1,12 @@
 import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { getNumberFrequencies } from 'utils/lottery-utils';
+import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
 export class UseFrequentNumberRule extends RuleBase {
   private topFrequentCount: number = 10;
   private topFrequentNumbers: number[];
+  private topFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 300, topFrequentCount = 10) {
     super();
@@ -14,6 +15,11 @@ export class UseFrequentNumberRule extends RuleBase {
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     this.topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
+    console.log(
+      '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 18 ~ UseFrequentNumberRule ~ constructor ~ topFrequentNumbers',
+      this.topFrequentNumbers,
+    );
+    this.topFrequentNumbersMask = arrayToBitMask(this.topFrequentNumbers);
   }
 
   override getDescription(): string {
@@ -34,7 +40,7 @@ export class UseFrequentNumberRule extends RuleBase {
     // this.topNumbers = topNumbers;
     let count = 0;
     this.historicalData.forEach((item) => {
-      if (this.validateSeries(item.series, this.topFrequentNumbers)) {
+      if (this.validateSeries(item.series)) {
         count += 1;
       }
     });
@@ -42,9 +48,11 @@ export class UseFrequentNumberRule extends RuleBase {
     return count / lastDrawingsNumber;
   }
 
-  private validateSeries(series: SeriesModel, topNumbers: Array<number>): boolean {
-    let intersections = intersection(series.numbers, topNumbers);
-    return intersections.length > 0;
+  private validateSeries(series: SeriesModel): boolean {
+    // let mask = arrayToBitMask(topNumbers);
+    // let intersections = intersection(series.numbers, topNumbers);
+    // return intersections.length > 0;
+    return (this.topFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(
@@ -62,11 +70,11 @@ export class UseFrequentNumberRule extends RuleBase {
       // console.log(series.numbers);
       // console.log(intersection<Array<number>>([[2], [2]]));
       // console.log(intersection(series.numbers, topNumbers));
-      return this.validateSeries(series, this.topFrequentNumbers);
+      return this.validateSeries(series);
     });
   }
 
   validate(series: SeriesModel): boolean {
-    return this.validateSeries(series, this.topFrequentNumbers);
+    return this.validateSeries(series);
   }
 }

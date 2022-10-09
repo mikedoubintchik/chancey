@@ -9,7 +9,11 @@ export const parseMegaRecord = (record: Array<string>): LotteryDrawModel => {
   let date = new Date(record[8]);
   let numbers = record[9].split(' ').map((n: string) => parseInt(n));
   let extra = parseInt(record[10]);
-  var ldm: LotteryDrawModel = { type: DrawType.MEGA, date: date, series: { numbers: numbers, extra: extra } };
+  var ldm: LotteryDrawModel = {
+    type: DrawType.MEGA,
+    date: date,
+    series: { numbers: numbers, extra: extra, bitMask: arrayToBitMask(numbers) },
+  };
   return ldm;
 };
 
@@ -17,7 +21,11 @@ export const getDefaultLDM = (): LotteryDrawModel => {
   let date = new Date();
   let numbers = [0, 0, 0, 0, 0];
   let extra = 0;
-  var ldm: LotteryDrawModel = { type: DrawType.MEGA, date: date, series: { numbers: numbers, extra: extra } };
+  var ldm: LotteryDrawModel = {
+    type: DrawType.MEGA,
+    date: date,
+    series: { numbers: numbers, extra: extra, bitMask: arrayToBitMask(numbers) },
+  };
   return ldm;
 };
 
@@ -44,4 +52,12 @@ export const getNumberFrequencies = (
     };
   });
   return sortedFrequenciesList;
+};
+
+export const arrayToBitMask = (arr: number[]) => {
+  let mask = BigInt(0);
+  arr.forEach((n) => {
+    mask |= BigInt(1) << BigInt(n - 1);
+  });
+  return mask;
 };
