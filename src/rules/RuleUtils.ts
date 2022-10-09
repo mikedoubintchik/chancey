@@ -1,8 +1,9 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { IRuleBase } from './RuleBase';
 import { UseFrequentNumberRule } from './UseFrequentNumbersRule';
+import { UseLeastFrequentNumberRule } from './UseLeastFrequentNumbersRule';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
-  return [new UseFrequentNumberRule(historicalData)];
+  return [new UseFrequentNumberRule(historicalData), new UseLeastFrequentNumberRule(historicalData)];
 };

@@ -1,33 +1,32 @@
-import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
-export class UseFrequentNumberRule extends RuleBase {
-  private topFrequentCount: number = 10;
-  private topFrequentNumbers: number[];
-  private topFrequentNumbersMask: bigint;
+export class UseLeastFrequentNumberRule extends RuleBase {
+  private leastFrequentCount: number = 6;
+  private leastFrequentNumbers: number[];
+  private leastFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
-  constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
+  constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
     super();
-    this.topFrequentCount = topFrequentCount;
-    this.topFrequentNumbers = [];
+    this.leastFrequentCount = leastFrequentCount;
+    this.leastFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
-    this.topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
+    this.leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
     console.log(
-      '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 18 ~ UseFrequentNumberRule ~ constructor ~ topFrequentNumbers',
-      this.topFrequentNumbers,
+      '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
+      this.leastFrequentNumbers,
     );
-    this.topFrequentNumbersMask = arrayToBitMask(this.topFrequentNumbers);
+    this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 
   override getDescription(): string {
-    return `Use atleast one of the top ${this.topFrequentCount} frequent numbers in the last 10 drawings.`;
+    return `Use atleast one of the ${this.leastFrequentCount} least frequent numbers in the last 50 drawings.`;
   }
 
   override getInformation(): string {
-    return 'This rule will force the random series generator to produce combinations that have 1 or more for the top frequent numbers based on the recent 300 drawings.';
+    return 'This rule will force the random series generator to produce combinations that have 1 or more for the least frequent numbers based on the recent 50 drawings.';
   }
 
   override calculatePercentageForRecentDrawings(
@@ -45,7 +44,7 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   private validateSeries(series: SeriesModel): boolean {
-    return (this.topFrequentNumbersMask & series.bitMask) > 0;
+    return (this.leastFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
