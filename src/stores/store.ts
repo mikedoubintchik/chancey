@@ -4,7 +4,12 @@ import { TicketPhotoType, UserType } from 'types/profile';
 import { RuleType } from 'types/rules';
 import { SeriesModel } from 'types/series';
 import { IRuleBase } from '../rules/RuleBase';
+import Worker from 'web-worker';
+import { Message, MessageType } from '../workers/messages';
 
+const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
+  type: 'module',
+});
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
@@ -35,6 +40,7 @@ export type InitialStateType = {
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
+  rulesEngineWorker: Worker;
 };
 
 export const initialState: InitialStateType = {
@@ -44,6 +50,7 @@ export const initialState: InitialStateType = {
   cache: [],
   historicalData: [],
   rulesBank: [],
+  rulesEngineWorker: worker,
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {

@@ -4,16 +4,16 @@ import { arrayToBitMask } from './lottery-utils';
 
 export const getAllCombinations = (N = 70, k = 5) => {
   let start = Date.now();
-  console.log('start', start);
+  console.log('Started generating combinations...');
   let arr = [];
   for (let i = 0; i < N; i++) {
     arr.push(i + 1);
   }
   let combs = combinations(arr, k);
-  console.log('end', Date.now() - start, combs.length);
-  console.log(combs[123422]);
+  // console.log('end', Date.now() - start, combs.length);
+  // console.log(combs[123422]);
   start = Date.now();
-  console.log('start', start);
+  // console.log('start', start);
 
   // combs = getAllCombinations2(N, k);
   let scombs = combs.map((comb) => {
@@ -25,7 +25,7 @@ export const getAllCombinations = (N = 70, k = 5) => {
   });
   // console.log(combs[123422]);
   // let scombs = getAllCombinations2(N, k);
-  console.log('end', Date.now() - start, scombs.length);
+  console.log(`Total time to generate ${scombs.length} combinations ${Date.now() - start}(ms)`);
   return scombs;
 };
 

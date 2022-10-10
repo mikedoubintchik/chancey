@@ -6,6 +6,7 @@ import { getRulesBank } from 'rules/RuleUtils';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
 import { getAllCombinations } from 'utils/combinatorics';
+import { Message, MessageType } from 'workers/messages';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -39,13 +40,23 @@ const AsyncLoader: React.FC = () => {
         rulesBank,
       });
     }
-
-    if (state.cache.length === 0) {
-      const cache = getAllCombinations();
-      dispatch({
-        type: ActionType.INITIALIZE_CACHE,
-        cache,
-      });
+    if (state.historicalData.length > 0) {
+      const initRulesEngineListener = (event: any) => {
+        let m = event.data as Message;
+        if (m.type === MessageType.INIT_RULE_ENGINE_COMPLETE) {
+          console.log('Rules engine initialization complete - ', m.data);
+          state.rulesEngineWorker.removeEventListener('message', initRulesEngineListener);
+        }
+      };
+      state.rulesEngineWorker.addEventListener('message', initRulesEngineListener);
+      state.rulesEngineWorker.postMessage({
+        type: MessageType.INIT_RULE_ENGINE,
+        data: { historicalData: state.historicalData },
+      } as Message);
+      // state.rulesEngineWorker.postMessage({
+      //   type: MessageType.PROCESS_RULE,
+      //   data: { ruleIndex: 0, historicalData: state.historicalData },
+      // } as Message);
     }
   }, [getHistoricalData, dispatch, state]);
 
