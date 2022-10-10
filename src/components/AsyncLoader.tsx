@@ -41,22 +41,23 @@ const AsyncLoader: React.FC = () => {
       });
     }
     if (state.historicalData.length > 0) {
-      const initRulesEngineListener = (event: any) => {
-        let m = event.data as Message;
-        if (m.type === MessageType.INIT_RULE_ENGINE_COMPLETE) {
-          console.log('Rules engine initialization complete - ', m.data);
-          state.rulesEngineWorker.removeEventListener('message', initRulesEngineListener);
-        }
-      };
-      state.rulesEngineWorker.addEventListener('message', initRulesEngineListener);
-      state.rulesEngineWorker.postMessage({
-        type: MessageType.INIT_RULE_ENGINE,
-        data: { historicalData: state.historicalData },
-      } as Message);
+      await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
+      // const initRulesEngineListener = (event: any) => {
+      //   let m = event.data as Message;
+      //   if (m.type === MessageType.INIT_RULE_ENGINE_COMPLETE) {
+      //     console.log('Rules engine initialization complete - ', m.data);
+      //     state.rulesEngineWorker.removeEventListener('message', initRulesEngineListener);
+      //   }
+      // };
+      // state.rulesEngineWorker.addEventListener('message', initRulesEngineListener);
       // state.rulesEngineWorker.postMessage({
-      //   type: MessageType.PROCESS_RULE,
-      //   data: { ruleIndex: 0, historicalData: state.historicalData },
+      //   type: MessageType.INIT_RULE_ENGINE,
+      //   data: { historicalData: state.historicalData },
       // } as Message);
+      // // state.rulesEngineWorker.postMessage({
+      // //   type: MessageType.PROCESS_RULE,
+      // //   data: { ruleIndex: 0, historicalData: state.historicalData },
+      // // } as Message);
     }
   }, [getHistoricalData, dispatch, state]);
 

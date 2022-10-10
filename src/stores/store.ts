@@ -6,10 +6,13 @@ import { SeriesModel } from 'types/series';
 import { IRuleBase } from '../rules/RuleBase';
 import Worker from 'web-worker';
 import { Message, MessageType } from '../workers/messages';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
   type: 'module',
 });
+const ruleEngineClient = new RuleEngineClient(worker);
+
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
@@ -40,7 +43,7 @@ export type InitialStateType = {
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
-  rulesEngineWorker: Worker;
+  ruleEngineClient: RuleEngineClient;
 };
 
 export const initialState: InitialStateType = {
@@ -50,7 +53,7 @@ export const initialState: InitialStateType = {
   cache: [],
   historicalData: [],
   rulesBank: [],
-  rulesEngineWorker: worker,
+  ruleEngineClient: ruleEngineClient,
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
