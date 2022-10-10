@@ -1,28 +1,27 @@
 import { createContext, Dispatch, Reducer, useContext } from 'react';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { TicketPhotoType, UserType } from 'types/profile';
-import { RuleType } from 'types/rules';
 import { SeriesModel } from 'types/series';
-import { IRuleBase } from '../rules/RuleBase';
 import Worker from 'web-worker';
-import { Message, MessageType } from '../workers/messages';
-import { RuleEngineClient } from 'rules/RuleEngineClient';
+import { IRuleBase } from '../rules/RuleBase';
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
   type: 'module',
 });
-const ruleEngineClient = new RuleEngineClient(worker);
+RuleEngineClient.initInstance(worker);
 
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
   UPDATE_TICKET_PHOTOS = 'UPDATE_TICKET_PHOTOS',
   UPDATE_TICKET_PHOTOS_TEXT = 'UPDATE_TICKET_PHOTOS_TEXT',
-  ADD_RULE = 'ADD_RULE',
+  ADD_ENGINE_RULE = 'ADD_ENGINE_RULE',
   REMOVE_RULE = 'REMOVE_RULE',
   INITIALIZE_CACHE = 'INITIALIZE_CACHE',
   UPDATE_HISTORICAL_DATA = 'UPDATE_HISTORICAL_DATA',
   INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
+  UPDATE_RULES_STATE = 'UPDATE_RULES_STATE',
 }
 export interface IReducer {
   type: ActionType;
@@ -43,7 +42,6 @@ export type InitialStateType = {
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
-  ruleEngineClient: RuleEngineClient;
 };
 
 export const initialState: InitialStateType = {
@@ -53,7 +51,6 @@ export const initialState: InitialStateType = {
   cache: [],
   historicalData: [],
   rulesBank: [],
-  ruleEngineClient: ruleEngineClient,
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
@@ -76,7 +73,7 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       updatedTickets.push(updatedTicket);
       return { ...state, ticketPhotos: updatedTickets };
     }
-    case ActionType.ADD_RULE: {
+    case ActionType.ADD_ENGINE_RULE: {
       return { ...state, rules: [...state.rules, action.rule] };
     }
     case ActionType.REMOVE_RULE: {
@@ -92,6 +89,13 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     }
     case ActionType.INITIALIZE_RULES_BANK: {
       return { ...state, rulesBank: action.rulesBank };
+    }
+    case ActionType.UPDATE_RULES_STATE: {
+      const updatedRules = state.rules.map((rule) => {
+        rule.setProcessing(true);
+        return rule;
+      });
+      return { ...state, rules: updatedRules };
     }
     default:
       return state;

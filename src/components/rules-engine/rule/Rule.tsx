@@ -9,7 +9,7 @@ interface IRuleProps {
 }
 const Rule: React.FC<IRuleProps> = ({ rule, processing }) => {
   const { state, dispatch } = useStore();
-  console.log('🚀 ~ file: Rule.tsx ~ line 15 ~ processing', processing);
+  // console.log('🚀 ~ file: Rule.tsx ~ line 15 ~ processing', processing);
 
   return (
     <IonCard class="rule-item">

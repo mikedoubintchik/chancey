@@ -51,7 +51,7 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
             expand="full"
             onClick={() => {
               dispatch({
-                type: ActionType.ADD_RULE,
+                type: ActionType.ADD_ENGINE_RULE,
                 rule,
               });
 
@@ -66,7 +66,12 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
     );
   };
 
-  const renderRules = (): ReactElement[] => state.rulesBank.map((rule) => <Rule key={rule.id} rule={rule} />);
+  const renderRules = (): ReactElement[] =>
+    state.rulesBank
+      .filter((rule) => {
+        return state.rules.findIndex((userRule) => userRule.id === rule.id) === -1;
+      })
+      .map((rule) => <Rule key={rule.id} rule={rule} />);
 
   return (
     <Modal isOpen={isOpenModal} hideModal={hideModal}>

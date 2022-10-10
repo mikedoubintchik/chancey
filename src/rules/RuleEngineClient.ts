@@ -7,6 +7,8 @@ interface IWorkerMessageEvent {
   data: Message;
 }
 export class RuleEngineClient {
+  private static privateInstance: RuleEngineClient;
+
   private ruleEngineWorker: Worker;
   private messageListenerCallbackHandler: any;
   private initialized: boolean = false;
@@ -62,5 +64,16 @@ export class RuleEngineClient {
         }
       }, 500);
     });
+  }
+
+  public static initInstance(ruleEngineWorker: Worker): RuleEngineClient {
+    if (!RuleEngineClient.privateInstance) {
+      RuleEngineClient.privateInstance = new RuleEngineClient(ruleEngineWorker);
+    }
+
+    return RuleEngineClient.privateInstance;
+  }
+  public static get instance(): RuleEngineClient {
+    return RuleEngineClient.privateInstance;
   }
 }

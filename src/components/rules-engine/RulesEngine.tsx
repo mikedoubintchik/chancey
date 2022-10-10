@@ -3,7 +3,8 @@ import useModal from 'hooks/useModal';
 import { add, infiniteOutline } from 'ionicons/icons';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
-import { useStore } from 'stores/store';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
+import { ActionType, useStore } from 'stores/store';
 import AddRuleModal from './add-rule-modal/AddRuleModal';
 import FlowEnd from './flow-end/FlowEnd';
 import FlowSeparator from './flow-separator/FlowSeparator';
@@ -16,12 +17,14 @@ interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const { state, dispatch } = useStore();
   const [working, setWorking] = useState<boolean>(true);
-  // console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
+  console.log('🚀 ~ file: RulesEngine.tsx ~ line 15 ~ state', state);
 
   const { isOpen, showModal, hideModal } = useModal();
 
-  const renderRules = (): ReactElement[] =>
-    state.rules.map((rule: IRuleBase) => (
+  // const [, updateRulesState] = useState({});
+  // const forceUpdate = useCallback(() => updateRulesState({}), []);
+  const renderRules = (rules: Array<IRuleBase>): ReactElement[] =>
+    rules.map((rule: IRuleBase) => (
       <>
         <Rule key={rule.id} rule={rule} processing={rule.processing} />
         <FlowSeparator></FlowSeparator>
@@ -29,6 +32,9 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
     ));
 
   let cache = state.cache;
+  // state.rules.forEach((rule) => {
+  //   rule.setProcessing(true);
+  // });
   // state.rules.forEach((rule) => {
   //   // console.log(state.cache.length);
   //   let postRuleCache = rule.getPostRuleCache();
@@ -41,10 +47,20 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   // });
 
   const initialize = useCallback(async () => {
-    await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
+    // await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
     setWorking(false);
-    await state.ruleEngineClient.processRules(state.rules.map((rule) => rule.id));
-  }, [state]);
+    // let ruleIds = state.rules.map((rule) => rule.id);
+    // dispatch({
+    //   type: ActionType.UPDATE_RULES_STATE,
+    //   rules: state.rules,
+    // });
+    // await RuleEngineClient.instance.processRules(ruleIds);
+    // state.rules.forEach((rule) => {
+    //   rule.setProcessing(false);
+    // });
+    // console.log('updating state');
+    // forceUpdate();
+  }, []);
 
   useEffect(() => {
     initialize();
@@ -70,7 +86,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
       <>
         <FlowStart></FlowStart>
         <FlowSeparator></FlowSeparator>
-        {renderRules()}
+        {renderRules(state.rules)}
         <IonCard class="rule-item">
           <IonButton expand="full" onClick={showModal} fill="clear">
             <IonIcon slot="icon-only" icon={add}></IonIcon>

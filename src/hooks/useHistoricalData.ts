@@ -15,7 +15,7 @@ export function useHistoricalData() {
       const queryLatest = query(historicalDataRef, orderBy('date', 'desc'), limit(1));
       const res = await getDocs(queryLatest);
       if (res.empty) {
-        console.log('getLatestMegaResults - no matching documents.');
+        // console.log('getLatestMegaResults - no matching documents.');
         return undefined;
       } else {
         let data = res.docs[0].data();
@@ -38,7 +38,7 @@ export function useHistoricalData() {
     if (tryCacheFirst) {
       const data = await get('historical-data-mega');
       if (data?.length) {
-        console.log('loaded history from cache');
+        // console.log('loaded history from cache');
         return data;
       }
     }
@@ -48,7 +48,7 @@ export function useHistoricalData() {
     const res = await getDocs(queryLatest);
     const historicalData: Array<LotteryDrawModel> = [];
     if (res.empty) {
-      console.log('getHistoricalData - no matching documents.');
+      // console.log('getHistoricalData - no matching documents.');
     } else {
       res.docs.forEach((doc) => {
         let data = doc.data();

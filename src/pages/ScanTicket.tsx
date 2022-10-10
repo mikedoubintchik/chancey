@@ -21,7 +21,7 @@ import { ActionType, useStore } from 'stores/store';
 
 const ScanTicket: React.FC = () => {
   const { state, dispatch } = useStore();
-  console.log('🚀 ~ file: ScanTicket.tsx ~ line 21 ~ state', state);
+  // console.log('🚀 ~ file: ScanTicket.tsx ~ line 21 ~ state', state);
   const { photos, takePhoto } = usePhotoGallery();
   const { readNumbersFromTicket } = useFirebase();
 

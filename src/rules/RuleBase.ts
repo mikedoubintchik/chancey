@@ -12,11 +12,13 @@ export interface IRuleBase {
   getPostRuleCache(): Array<SeriesModel> | null;
 
   readonly processing: boolean;
+  setProcessing(processing: boolean): void;
 }
 
 export class RuleBase implements IRuleBase {
   id = nanoid();
   protected postRuleCache: Array<SeriesModel> | null = null;
+  protected isProcessing: boolean = false;
   getDescription(): string {
     return '';
   }
@@ -44,7 +46,11 @@ export class RuleBase implements IRuleBase {
     return [];
   }
 
+  setProcessing(processing: boolean) {
+    this.isProcessing = processing;
+  }
+
   get processing(): boolean {
-    return true;
+    return this.isProcessing;
   }
 }

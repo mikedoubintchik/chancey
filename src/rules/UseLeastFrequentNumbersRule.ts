@@ -14,10 +14,10 @@ export class UseLeastFrequentNumberRule extends RuleBase {
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     this.leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
-    console.log(
-      '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
-      this.leastFrequentNumbers,
-    );
+    // console.log(
+    //   '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
+    //   this.leastFrequentNumbers,
+    // );
     this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 

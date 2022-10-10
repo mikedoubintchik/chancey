@@ -11,7 +11,7 @@ const StatsPage: React.FC = () => {
   const [_showLast, setShowLast] = useState(10);
 
   const handleChage = (event: any) => {
-    console.log(event.detail.value);
+    // console.log(event.detail.value);
     setShowLast(parseInt(event.detail.value));
   };
   return (

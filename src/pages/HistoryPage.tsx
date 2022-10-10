@@ -20,7 +20,7 @@ const HistoryPage: React.FC = () => {
   // TODO: fix any
   // refresh historical data every 10 seconds
   const refreshHistoricalData = (e: any) => {
-    console.log('refreshing historical data');
+    // console.log('refreshing historical data');
     refresh();
 
     setTimeout(() => {

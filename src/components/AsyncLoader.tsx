@@ -1,12 +1,9 @@
-import { messaging } from 'config/firebase';
-import { onMessage } from 'firebase/messaging';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useCallback, useEffect } from 'react';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { getRulesBank } from 'rules/RuleUtils';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
-import { getAllCombinations } from 'utils/combinatorics';
-import { Message, MessageType } from 'workers/messages';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -28,7 +25,7 @@ const AsyncLoader: React.FC = () => {
         historicalData,
       });
     }
-    if (state.rulesBank.length === 0) {
+    if (state.rulesBank.length === 0 && historicalData.length > 0) {
       const rulesBank = getRulesBank(historicalData);
       dispatch({
         type: ActionType.INITIALIZE_RULES_BANK,
@@ -36,7 +33,7 @@ const AsyncLoader: React.FC = () => {
       });
     }
     if (state.historicalData.length > 0) {
-      await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
+      await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
     }
   }, [getHistoricalData, dispatch, state]);
 
