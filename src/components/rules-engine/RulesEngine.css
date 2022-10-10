@@ -2,14 +2,20 @@
   padding: 10px;
 }
 .loading-container {
-      display: flex;
-         flex-direction: column;
-        align-items: center;
-        height: 100%;
-        justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
 
 
 }
+.loading-label {
+  font-size: larger;
+  font-weight: lighter;
+  color: var(--ion-color-primary)
+}
+
 .loading-icon {
   margin: 10px;
 

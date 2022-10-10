@@ -70,7 +70,9 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
     return (
       <>
         <div className="loading-container">
-          <IonLabel color="primary">Initilizing Rule Engine</IonLabel>
+          <IonLabel class="loading-label" color="primary">
+            Initilizing Rule Engine
+          </IonLabel>
           <IonLabel class="flow-start-border loading-icon">
             <IonIcon size="large" icon={infiniteOutline} color="primary" />
           </IonLabel>
