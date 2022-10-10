@@ -1,33 +1,16 @@
-import {
-  IonButton,
-  IonCard,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonPage,
-  IonProgressBar,
-  IonRippleEffect,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
-import Header from 'components/Header';
-import SideMenu from 'components/SideMenu';
+import { IonButton, IonCard, IonIcon, IonLabel, IonRippleEffect } from '@ionic/react';
 import useModal from 'hooks/useModal';
-import { add, diamondOutline, infiniteOutline, trashBinOutline } from 'ionicons/icons';
-import { IRuleBase } from 'rules/RuleBase';
-import { ActionType, useStore } from 'stores/store';
+import { add, infiniteOutline } from 'ionicons/icons';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
-import Rule from './rule/Rule';
+import { IRuleBase } from 'rules/RuleBase';
+import { useStore } from 'stores/store';
 import AddRuleModal from './add-rule-modal/AddRuleModal';
-import FlowStart from './flow-start/FlowStart';
-import './RulesEngine.css';
-import FlowSeparator from './flow-separator/FlowSeparator';
 import FlowEnd from './flow-end/FlowEnd';
+import FlowSeparator from './flow-separator/FlowSeparator';
+import FlowStart from './flow-start/FlowStart';
 import FlowSummary from './flow-summary/FlowSummary';
-import { getAllCombinations } from 'utils/combinatorics';
-import { SeriesModel } from 'types/series';
+import Rule from './rule/Rule';
+import './RulesEngine.css';
 
 interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
@@ -40,22 +23,22 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const renderRules = (): ReactElement[] =>
     state.rules.map((rule: IRuleBase) => (
       <>
-        <Rule key={rule.id} rule={rule} />
+        <Rule key={rule.id} rule={rule} processing={rule.processing} />
         <FlowSeparator></FlowSeparator>
       </>
     ));
 
   let cache = state.cache;
-  state.rules.forEach((rule) => {
-    // console.log(state.cache.length);
-    let postRuleCache = rule.getPostRuleCache();
-    if (postRuleCache == null) {
-      console.log('filtering cache');
-      cache = rule.filter(cache, true);
-    } else {
-      cache = postRuleCache;
-    }
-  });
+  // state.rules.forEach((rule) => {
+  //   // console.log(state.cache.length);
+  //   let postRuleCache = rule.getPostRuleCache();
+  //   if (postRuleCache == null) {
+  //     console.log('filtering cache');
+  //     cache = rule.filter(cache, true);
+  //   } else {
+  //     cache = postRuleCache;
+  //   }
+  // });
 
   const initialize = useCallback(async () => {
     await state.ruleEngineClient.initializeRuleEngine(state.historicalData);

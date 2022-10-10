@@ -10,6 +10,8 @@ export interface IRuleBase {
   validate(series: SeriesModel): boolean;
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
   getPostRuleCache(): Array<SeriesModel> | null;
+
+  readonly processing: boolean;
 }
 
 export class RuleBase implements IRuleBase {
@@ -40,5 +42,9 @@ export class RuleBase implements IRuleBase {
 
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel> {
     return [];
+  }
+
+  get processing(): boolean {
+    return true;
   }
 }
