@@ -43,6 +43,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const initialize = useCallback(async () => {
     await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
     setWorking(false);
+    await state.ruleEngineClient.processRules(state.rules.map((rule) => rule.id));
   }, [state]);
 
   useEffect(() => {

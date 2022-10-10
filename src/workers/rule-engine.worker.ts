@@ -20,9 +20,13 @@ onmessage = (event) => {
       data: { cacheSize: cache.length, rulesBankSize: rulesBank.length },
     } as Message);
   }
-  if (m.type === MessageType.PROCESS_RULE) {
-    let ruleIndex = m.data.ruleIndex;
-    console.log(m.data);
+  if (m.type === MessageType.PROCESS_RULES) {
+    let ruleIds = m.data.ruleIds;
+    console.log(ruleIds);
+    postMessage({
+      type: MessageType.PROCESS_RULES_COMPLETE,
+      data: { ruleIds: ruleIds },
+    } as Message);
     // console.log(`processing rule index ${ruleIndex}`);
   }
 };
