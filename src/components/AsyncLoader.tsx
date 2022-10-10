@@ -13,12 +13,7 @@ const AsyncLoader: React.FC = () => {
   // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 8 ~ state', state);
   const { getHistoricalData } = useHistoricalData();
 
-  onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
-    // ...
-  });
-
-  const setupHistoricalDataStorage = useCallback(async () => {
+  const initializeApplicationData = useCallback(async () => {
     await createIonicStore('historical-data-mega');
     let historicalData = await get('historical-data-mega');
 
@@ -42,28 +37,12 @@ const AsyncLoader: React.FC = () => {
     }
     if (state.historicalData.length > 0) {
       await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
-      // const initRulesEngineListener = (event: any) => {
-      //   let m = event.data as Message;
-      //   if (m.type === MessageType.INIT_RULE_ENGINE_COMPLETE) {
-      //     console.log('Rules engine initialization complete - ', m.data);
-      //     state.rulesEngineWorker.removeEventListener('message', initRulesEngineListener);
-      //   }
-      // };
-      // state.rulesEngineWorker.addEventListener('message', initRulesEngineListener);
-      // state.rulesEngineWorker.postMessage({
-      //   type: MessageType.INIT_RULE_ENGINE,
-      //   data: { historicalData: state.historicalData },
-      // } as Message);
-      // // state.rulesEngineWorker.postMessage({
-      // //   type: MessageType.PROCESS_RULE,
-      // //   data: { ruleIndex: 0, historicalData: state.historicalData },
-      // // } as Message);
     }
   }, [getHistoricalData, dispatch, state]);
 
   useEffect(() => {
-    setupHistoricalDataStorage();
-  }, [setupHistoricalDataStorage]);
+    initializeApplicationData();
+  }, [initializeApplicationData]);
   return <></>;
 };
 

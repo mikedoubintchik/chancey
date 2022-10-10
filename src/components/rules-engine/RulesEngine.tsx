@@ -7,6 +7,7 @@ import {
   IonItem,
   IonLabel,
   IonPage,
+  IonProgressBar,
   IonRippleEffect,
   IonTitle,
   IonToolbar,
@@ -14,10 +15,10 @@ import {
 import Header from 'components/Header';
 import SideMenu from 'components/SideMenu';
 import useModal from 'hooks/useModal';
-import { add, diamondOutline, trashBinOutline } from 'ionicons/icons';
+import { add, diamondOutline, infiniteOutline, trashBinOutline } from 'ionicons/icons';
 import { IRuleBase } from 'rules/RuleBase';
 import { ActionType, useStore } from 'stores/store';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import Rule from './rule/Rule';
 import AddRuleModal from './add-rule-modal/AddRuleModal';
 import FlowStart from './flow-start/FlowStart';
@@ -31,7 +32,7 @@ import { SeriesModel } from 'types/series';
 interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const { state, dispatch } = useStore();
-
+  const [working, setWorking] = useState<boolean>(true);
   // console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
 
   const { isOpen, showModal, hideModal } = useModal();
@@ -54,29 +55,52 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
     } else {
       cache = postRuleCache;
     }
-    // console.log('cache size post rule', cache.length);
   });
-  // console.log('cache size post rule', cache.length);
 
-  return (
-    <>
-      <FlowStart></FlowStart>
-      <FlowSeparator></FlowSeparator>
-      {renderRules()}
-      <IonCard class="rule-item">
-        <IonButton expand="full" onClick={showModal} fill="clear">
-          <IonIcon slot="icon-only" icon={add}></IonIcon>
-          <IonRippleEffect></IonRippleEffect>
-        </IonButton>
-      </IonCard>
+  const initialize = useCallback(async () => {
+    await state.ruleEngineClient.initializeRuleEngine(state.historicalData);
+    setWorking(false);
+  }, [state]);
 
-      <FlowSeparator></FlowSeparator>
-      <FlowEnd></FlowEnd>
-      <FlowSeparator></FlowSeparator>
-      <FlowSummary postRuleCombsCount={cache.length}></FlowSummary>
-      <AddRuleModal isOpenModal={isOpen} hideModal={hideModal} />
-    </>
-  );
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
+  const renderLoadingScreen = () => {
+    return (
+      <>
+        <div className="loading-container">
+          <IonLabel color="primary">Initilizing Rule Engine</IonLabel>
+          <IonLabel class="flow-start-border loading-icon">
+            <IonIcon size="large" icon={infiniteOutline} color="primary" />
+          </IonLabel>
+        </div>
+      </>
+    );
+  };
+
+  const renderRulesEngine = () => {
+    return (
+      <>
+        <FlowStart></FlowStart>
+        <FlowSeparator></FlowSeparator>
+        {renderRules()}
+        <IonCard class="rule-item">
+          <IonButton expand="full" onClick={showModal} fill="clear">
+            <IonIcon slot="icon-only" icon={add}></IonIcon>
+            <IonRippleEffect></IonRippleEffect>
+          </IonButton>
+        </IonCard>
+
+        <FlowSeparator></FlowSeparator>
+        <FlowEnd></FlowEnd>
+        <FlowSeparator></FlowSeparator>
+        <FlowSummary postRuleCombsCount={cache.length}></FlowSummary>
+        <AddRuleModal isOpenModal={isOpen} hideModal={hideModal} />
+      </>
+    );
+  };
+  return <>{working ? renderLoadingScreen() : renderRulesEngine()}</>;
 };
 
 export default RulesEngine;
