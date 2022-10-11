@@ -1,6 +1,8 @@
-import { IonCard, IonIcon, IonItem, IonLabel } from '@ionic/react';
+import { IonCard, IonIcon, IonItem, IonLabel, IonLoading, IonProgressBar, IonSpinner } from '@ionic/react';
 import { trashBinOutline } from 'ionicons/icons';
+import { useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { ActionType, useStore } from 'stores/store';
 import './Rule.css';
 interface IRuleProps {
@@ -8,22 +10,38 @@ interface IRuleProps {
 }
 const Rule: React.FC<IRuleProps> = ({ rule }) => {
   const { state, dispatch } = useStore();
-  console.log('🚀 ~ file: RulesPage.tsx ~ line 15 ~ state', state);
+  const [deleting, setDeleting] = useState(false);
+
+  // console.log('🚀 ~ file: Rule.tsx ~ line 15 ~ processing', processing);
 
   return (
     <IonCard class="rule-item">
       <IonItem>
         <IonLabel>{rule.getDescription()}</IonLabel>
-        <IonIcon
-          icon={trashBinOutline}
-          slot="end"
-          onClick={() =>
-            dispatch({
-              type: ActionType.REMOVE_RULE,
-              id: rule.id,
-            })
-          }
-        ></IonIcon>
+        {deleting ? (
+          <IonSpinner color="primary" name="circular"></IonSpinner>
+        ) : (
+          <IonIcon
+            icon={trashBinOutline}
+            slot="end"
+            onClick={async () => {
+              setDeleting(true);
+              let postProcessingChances = await RuleEngineClient.instance.unprocessRule(rule.id);
+              rule.setPostProcessingChances(postProcessingChances);
+              //dispatch
+              //hide load indicator
+              setDeleting(false);
+              //loadindicator
+              //calc with async await
+              //dispatch
+              //hide load indicator
+              dispatch({
+                type: ActionType.REMOVE_RULE,
+                rule: rule,
+              });
+            }}
+          ></IonIcon>
+        )}
       </IonItem>
     </IonCard>
   );

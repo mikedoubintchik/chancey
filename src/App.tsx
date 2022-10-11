@@ -38,8 +38,8 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
-  console.log('Initializing app');
-  console.log('returning app component');
+  // console.log('Initializing app');
+  // console.log('returning app component');
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {/* splash */}

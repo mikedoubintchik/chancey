@@ -46,7 +46,7 @@ const NumberRanges: React.FC<NumberRangesProps> = ({ showLast }) => {
   const [_mode, setMode] = useState<StatsFrameMode>(StatsFrameMode.DISPLAY);
   const [_chartState, setChartState] = useState(getDefaultState());
   const { getHistoricalData } = useHistoricalData();
-  console.log('refreshing numbers freq');
+  // console.log('refreshing numbers freq');
 
   const updateStats = (data: LotteryDrawModel[]) => {
     let ranges = new Array(data[0].series.numbers.length).fill([0, 0, 0, 0, 0]);
@@ -78,7 +78,7 @@ const NumberRanges: React.FC<NumberRangesProps> = ({ showLast }) => {
   }, [showLast]);
 
   const onModeChangeRequest = (mode: StatsFrameMode) => {
-    console.log('onModeChangeRequest');
+    // console.log('onModeChangeRequest');
     setMode(mode);
   };
   return (

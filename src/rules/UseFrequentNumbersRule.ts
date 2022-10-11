@@ -10,15 +10,16 @@ export class UseFrequentNumberRule extends RuleBase {
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
     super();
+    this.privateid = 'UseFrequentNumberRule';
     this.topFrequentCount = topFrequentCount;
     this.topFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     this.topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
-    console.log(
-      '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 18 ~ UseFrequentNumberRule ~ constructor ~ topFrequentNumbers',
-      this.topFrequentNumbers,
-    );
+    // console.log(
+    //   '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 18 ~ UseFrequentNumberRule ~ constructor ~ topFrequentNumbers',
+    //   this.topFrequentNumbers,
+    // );
     this.topFrequentNumbersMask = arrayToBitMask(this.topFrequentNumbers);
   }
 

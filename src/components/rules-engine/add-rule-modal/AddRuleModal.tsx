@@ -6,71 +6,95 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
+  IonLoading,
   IonPopover,
   IonRippleEffect,
 } from '@ionic/react';
 import Modal from 'components/modals/Modal';
 import usePopover from 'hooks/usePopover';
 import { informationCircleOutline } from 'ionicons/icons';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { ActionType, useStore } from 'stores/store';
 
 import { IRuleBase } from 'rules/RuleBase';
-
+import './AddRuleModal.css';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 interface IModal {
   isOpenModal: boolean;
   hideModal: () => void;
 }
 const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
-  const popover = useRef<HTMLIonPopoverElement>(null);
-  const { isOpen, showPopover, hidePopover } = usePopover();
   const { state, dispatch } = useStore();
   console.log('🚀 ~ file: AddRuleModal.tsx ~ line 28 ~ state', state);
-
-  const openPopover = (e: any) => {
-    popover.current!.event = e;
-    showPopover();
-  };
-
+  const [showLoading, setShowLoading] = useState(false);
   interface IRuleProps {
     rule: IRuleBase;
   }
 
-  const Rule: React.FC<IRuleProps> = ({ rule }) => (
-    <IonCard>
-      <IonItem>
-        <IonLabel>Use at least one of the top 10 frequent numbers in the last 400 draws</IonLabel>
-        <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
-      </IonItem>
-      <IonPopover ref={popover} isOpen={isOpen} onDidDismiss={hidePopover}>
-        <IonContent class="ion-padding">{rule.getInformation()}</IonContent>
-      </IonPopover>
+  const Rule: React.FC<IRuleProps> = ({ rule }) => {
+    const popover = useRef<HTMLIonPopoverElement>(null);
+    const { isOpen, showPopover, hidePopover } = usePopover();
+    const openPopover = (e: any) => {
+      popover.current!.event = e;
+      showPopover();
+    };
+    return (
+      <IonCard>
+        <IonItem>
+          <IonLabel>{rule.getDescription()}</IonLabel>
+          <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
+        </IonItem>
+        <IonPopover ref={popover} isOpen={isOpen} onDidDismiss={hidePopover}>
+          <IonContent class="ion-padding">{rule.getInformation()}</IonContent>
+        </IonPopover>
 
-      <IonCardContent>
-        <IonButton
-          expand="full"
-          onClick={() => {
-            dispatch({
-              type: ActionType.ADD_RULE,
-              rule,
-            });
+        <IonCardContent>
+          <IonButton
+            expand="full"
+            onClick={async () => {
+              //loadindicator
+              setShowLoading(true);
+              //calc with async await
+              let postProcessingChances = await RuleEngineClient.instance.processRule(rule.id);
+              rule.setPostProcessingChances(postProcessingChances);
+              //dispatch
+              //hide load indicator
+              setShowLoading(false);
+              dispatch({
+                type: ActionType.ADD_ENGINE_RULE,
+                rule,
+              });
 
-            hideModal();
-          }}
-        >
-          Add Rule
-          <IonRippleEffect></IonRippleEffect>
-        </IonButton>
-      </IonCardContent>
-    </IonCard>
-  );
+              hideModal();
+            }}
+          >
+            Add Rule
+            <IonRippleEffect></IonRippleEffect>
+          </IonButton>
+        </IonCardContent>
+      </IonCard>
+    );
+  };
 
-  const renderRules = (): ReactElement[] => state.rulesBank.map((rule) => <Rule key={rule.id} rule={rule} />);
+  const renderRules = (): ReactElement[] =>
+    state.rulesBank
+      .filter((rule) => {
+        //filtering out the user selected rules
+        return state.rules.findIndex((userRule) => userRule.id === rule.id) === -1;
+      })
+      .map((rule) => <Rule key={rule.id} rule={rule} />);
 
   return (
     <Modal isOpen={isOpenModal} hideModal={hideModal}>
       <h1>Add Rule</h1>
       {renderRules()}
+      <IonLoading
+        cssClass="loading-indicator"
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Adding rule...'}
+        spinner="circular"
+      />
     </Modal>
   );
 };

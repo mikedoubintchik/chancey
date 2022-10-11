@@ -9,15 +9,16 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
     super();
+    this.privateid = 'UseLeastFrequentNumberRule';
     this.leastFrequentCount = leastFrequentCount;
     this.leastFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     this.leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
-    console.log(
-      '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
-      this.leastFrequentNumbers,
-    );
+    // console.log(
+    //   '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
+    //   this.leastFrequentNumbers,
+    // );
     this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 
