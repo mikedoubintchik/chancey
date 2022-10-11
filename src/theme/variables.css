@@ -1,6 +1,12 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
+@font-face {
+  font-family: "SF Pro Rounded";
+  font-style: normal;
+  font-weight: 300;
 
+  src: url("./../../public/assets/fonts/SF-Pro-Rounded-Regular.ttf")
+}
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
@@ -74,8 +80,14 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
-}
 
+
+  --ion-font-family: 'SF Pro Rounded' !important;
+
+}
+ion-card {
+  border-radius:15px;
+}
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors
