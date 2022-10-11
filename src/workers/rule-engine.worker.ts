@@ -91,7 +91,8 @@ const unprocessRule = (ruleId: string) => {
         let ruleIndex = rulesBank.findIndex((rule) => currRuleId === rule.id);
         if (ruleIndex > -1) {
           let rule = rulesBank[ruleIndex];
-          postProcessCache[i].cache = rule.filter(postProcessCache[i - 1].cache, false);
+          let inputCache = i > 0 ? postProcessCache[i - 1].cache : cache;
+          postProcessCache[i].cache = rule.filter(inputCache, false);
         }
       }
       //finaly fall to return last
