@@ -17,7 +17,7 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
   return (
     <IonCard class="rule-item">
       <IonItem>
-        <IonLabel>{rule.getDescription()}</IonLabel>
+        {rule.getDescription()}
         {deleting ? (
           <IonSpinner color="primary" name="circular"></IonSpinner>
         ) : (
@@ -28,13 +28,8 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
               setDeleting(true);
               let postProcessingResponse = await RuleEngineClient.instance.unprocessRule(rule.id);
               rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
-              //dispatch
-              //hide load indicator
               setDeleting(false);
-              //loadindicator
-              //calc with async await
-              //dispatch
-              //hide load indicator
+
               dispatch({
                 type: ActionType.REMOVE_RULE,
                 rule: rule,

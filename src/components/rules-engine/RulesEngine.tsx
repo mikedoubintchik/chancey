@@ -62,7 +62,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
 
   const renderRulesEngine = () => {
     return (
-      <>
+      <div className="rule-engine-root">
         <FlowStart></FlowStart>
         <FlowSeparator></FlowSeparator>
         {state.rules.length > 0 && renderRules(state.rules)}
@@ -78,7 +78,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
         <FlowSeparator></FlowSeparator>
         <FlowSummary postRuleCombsCount={state.finalChances}></FlowSummary>
         <AddRuleModal isOpenModal={isOpen} hideModal={hideModal} />
-      </>
+      </div>
     );
   };
   return <>{working ? renderLoadingScreen() : renderRulesEngine()}</>;
