@@ -97,7 +97,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
         <FlowSeparator></FlowSeparator>
         <FlowEnd></FlowEnd>
         <FlowSeparator></FlowSeparator>
-        <FlowSummary postRuleCombsCount={cache.length}></FlowSummary>
+        <FlowSummary postRuleCombsCount={state.finalChances}></FlowSummary>
         <AddRuleModal isOpenModal={isOpen} hideModal={hideModal} />
       </>
     );

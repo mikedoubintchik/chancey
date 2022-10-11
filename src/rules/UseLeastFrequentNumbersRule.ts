@@ -9,6 +9,7 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
     super();
+    this.privateid = 'UseLeastFrequentNumberRule';
     this.leastFrequentCount = leastFrequentCount;
     this.leastFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);

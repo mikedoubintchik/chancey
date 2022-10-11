@@ -13,6 +13,7 @@ export class RuleEngineClient {
   private messageListenerCallbackHandler: any;
   private initialized: boolean = false;
   private processingRules: boolean = false;
+  private postProcessingResult: number = 0;
 
   constructor(ruleEngineWorker: Worker) {
     this.ruleEngineWorker = ruleEngineWorker;
@@ -26,8 +27,9 @@ export class RuleEngineClient {
       console.log('Rules engine initialization complete - ', message.data);
       this.initialized = true;
     }
-    if (message.type === MessageType.PROCESS_RULES_COMPLETE) {
+    if (message.type === MessageType.PROCESS_RULE_COMPLETE) {
       console.log('Rules engine rule processing complete - ', message.data);
+      this.postProcessingResult = message.data.countAfterRuleProcessing as number;
       this.processingRules = false;
     }
   }
@@ -50,17 +52,17 @@ export class RuleEngineClient {
       }
     });
   }
-  public async processRules(ruleIds: Array<string>) {
-    return new Promise<void>((resolve, reject) => {
+  public async processRule(ruleId: string) {
+    return new Promise<number>((resolve, reject) => {
       this.processingRules = true;
       this.ruleEngineWorker.postMessage({
-        type: MessageType.PROCESS_RULES,
-        data: { ruleIds: ruleIds },
+        type: MessageType.PROCESS_RULE,
+        data: { ruleId: ruleId },
       } as Message);
       let intervalHander = setInterval(() => {
         if (this.processingRules === false) {
           clearInterval(intervalHander);
-          resolve();
+          resolve(this.postProcessingResult);
         }
       }, 500);
     });

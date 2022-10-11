@@ -43,6 +43,7 @@ export type InitialStateType = {
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
+  finalChances: number;
 };
 
 export const initialState: InitialStateType = {
@@ -52,6 +53,7 @@ export const initialState: InitialStateType = {
   cache: [],
   historicalData: [],
   rulesBank: [],
+  finalChances: 0,
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
@@ -76,7 +78,8 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     }
     case ActionType.ADD_ENGINE_RULE: {
       //
-      return { ...state, rules: [...state.rules, action.rule] };
+
+      return { ...state, finalChances: action.rule.postProcessingChances, rules: [...state.rules, action.rule] };
     }
     case ActionType.REMOVE_RULE: {
       const updatedRules = state.rules.filter(({ id }) => id !== action.id);

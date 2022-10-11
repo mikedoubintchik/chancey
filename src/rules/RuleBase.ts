@@ -3,19 +3,23 @@ import { SeriesModel } from 'types/series';
 import { LotteryDrawModel } from './../types/lottery-draw';
 
 export interface IRuleBase {
-  id: string;
+  readonly id: string;
+  readonly postProcessingChances: number;
   getDescription(): string;
   getInformation(): string;
   calculatePercentageForRecentDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumber: number): number;
   validate(series: SeriesModel): boolean;
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
   getPostRuleCache(): Array<SeriesModel> | null;
+
+  setPostProcessingChances(chances: number): void;
 }
 
 export class RuleBase implements IRuleBase {
-  id = nanoid();
+  protected privateid: string = 'RuleBase';
   protected postRuleCache: Array<SeriesModel> | null = null;
   protected isProcessing: boolean = true;
+  protected privatePostProcessingChances = 0;
   getDescription(): string {
     return '';
   }
@@ -41,5 +45,17 @@ export class RuleBase implements IRuleBase {
 
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel> {
     return [];
+  }
+
+  setPostProcessingChances(chances: number): void {
+    this.privatePostProcessingChances = chances;
+  }
+
+  get id(): string {
+    return this.privateid;
+  }
+
+  get postProcessingChances(): number {
+    return this.privatePostProcessingChances;
   }
 }

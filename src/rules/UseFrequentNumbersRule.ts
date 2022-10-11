@@ -10,6 +10,7 @@ export class UseFrequentNumberRule extends RuleBase {
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
     super();
+    this.privateid = 'UseFrequentNumberRule';
     this.topFrequentCount = topFrequentCount;
     this.topFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
