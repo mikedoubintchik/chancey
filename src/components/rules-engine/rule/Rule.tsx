@@ -22,6 +22,10 @@ const Rule: React.FC<IRuleProps> = ({ rule, processing }) => {
             icon={trashBinOutline}
             slot="end"
             onClick={() =>
+              //loadindicator
+              //calc with async await
+              //dispatch
+              //hide load indicator
               dispatch({
                 type: ActionType.REMOVE_RULE,
                 id: rule.id,

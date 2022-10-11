@@ -47,7 +47,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   // });
 
   const initialize = useCallback(async () => {
-    // await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
+    await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
     setWorking(false);
     // let ruleIds = state.rules.map((rule) => rule.id);
     // dispatch({
@@ -86,7 +86,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
       <>
         <FlowStart></FlowStart>
         <FlowSeparator></FlowSeparator>
-        {renderRules(state.rules)}
+        {state.rules.length > 0 && renderRules(state.rules)}
         <IonCard class="rule-item">
           <IonButton expand="full" onClick={showModal} fill="clear">
             <IonIcon slot="icon-only" icon={add}></IonIcon>

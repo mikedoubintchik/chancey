@@ -18,7 +18,7 @@ export interface IRuleBase {
 export class RuleBase implements IRuleBase {
   id = nanoid();
   protected postRuleCache: Array<SeriesModel> | null = null;
-  protected isProcessing: boolean = false;
+  protected isProcessing: boolean = true;
   getDescription(): string {
     return '';
   }

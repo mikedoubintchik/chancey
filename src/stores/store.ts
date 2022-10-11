@@ -1,5 +1,6 @@
 import { createContext, Dispatch, Reducer, useContext } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
+import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { SeriesModel } from 'types/series';
@@ -74,6 +75,7 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, ticketPhotos: updatedTickets };
     }
     case ActionType.ADD_ENGINE_RULE: {
+      //
       return { ...state, rules: [...state.rules, action.rule] };
     }
     case ActionType.REMOVE_RULE: {
@@ -84,8 +86,10 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, cache: action.cache };
     }
     case ActionType.UPDATE_HISTORICAL_DATA: {
+      const rulesBank = getRulesBank(action.historicalData);
+      RuleEngineClient.instance.initializeRuleEngine(action.historicalData).then(() => {});
       // console.log('🚀 ~ file: store.ts ~ line 80 ~ action.historicalData', action.historicalData);
-      return { ...state, historicalData: action.historicalData };
+      return { ...state, rulesBank: rulesBank, historicalData: action.historicalData };
     }
     case ActionType.INITIALIZE_RULES_BANK: {
       return { ...state, rulesBank: action.rulesBank };

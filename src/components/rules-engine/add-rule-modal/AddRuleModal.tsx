@@ -50,6 +50,10 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
           <IonButton
             expand="full"
             onClick={() => {
+              //loadindicator
+              //calc with async await
+              //dispatch
+              //hide load indicator
               dispatch({
                 type: ActionType.ADD_ENGINE_RULE,
                 rule,
@@ -69,6 +73,7 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
   const renderRules = (): ReactElement[] =>
     state.rulesBank
       .filter((rule) => {
+        //filtering out the user selected rules
         return state.rules.findIndex((userRule) => userRule.id === rule.id) === -1;
       })
       .map((rule) => <Rule key={rule.id} rule={rule} />);

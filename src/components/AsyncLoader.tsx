@@ -11,6 +11,7 @@ const AsyncLoader: React.FC = () => {
   const { getHistoricalData } = useHistoricalData();
 
   const initializeApplicationData = useCallback(async () => {
+    console.log('Creating ionic store in initializeApplicationData');
     await createIonicStore('historical-data-mega');
     let historicalData = await get('historical-data-mega');
 
@@ -19,23 +20,17 @@ const AsyncLoader: React.FC = () => {
       set('historical-data-mega', historicalData);
     }
     // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 14 ~ setupHistoricalDataStorage ~ historicalData', historicalData);
-    if (state.historicalData.length === 0) {
+    if (state.historicalData.length === 0 && historicalData.length > 0) {
       dispatch({
         type: ActionType.UPDATE_HISTORICAL_DATA,
         historicalData,
       });
     }
-    if (state.rulesBank.length === 0 && historicalData.length > 0) {
-      const rulesBank = getRulesBank(historicalData);
-      dispatch({
-        type: ActionType.INITIALIZE_RULES_BANK,
-        rulesBank,
-      });
-    }
-    if (state.historicalData.length > 0) {
-      await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
-    }
-  }, [getHistoricalData, dispatch, state]);
+
+    // if (historicalData.length > 0) {
+    //   await RuleEngineClient.instance.initializeRuleEngine(historicalData);
+    // }
+  }, []);
 
   useEffect(() => {
     initializeApplicationData();
