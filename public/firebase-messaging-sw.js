@@ -5,13 +5,15 @@
 // 'npm run snippets'.
 
 // [START messaging_init_in_sw_modular]
-import { initializeApp } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging/sw';
+// import { initializeApp } from 'firebase/app';
+// import { getMessaging } from 'firebase/messaging/sw';
+importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js');
 
 // Initialize the Firebase app in the service worker by passing in
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
-const firebaseApp = initializeApp({
+firebase.initializeApp({
   apiKey: 'AIzaSyAFNUXDhCCgOZ8ZBozsfHOJnFXizrjxB68',
   authDomain: 'tune-363401.firebaseapp.com',
   databaseURL: 'https://tune-363401-default-rtdb.firebaseio.com',
@@ -24,5 +26,15 @@ const firebaseApp = initializeApp({
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.
-const messaging = getMessaging(firebaseApp);
-// [END messaging_init_in_sw_modular]
+const messaging = firebase.messaging(); // [END messaging_init_in_sw_modular]
+
+messaging.onBackgroundMessage(function (payload) {
+  console.log('Received background message ', payload);
+
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
