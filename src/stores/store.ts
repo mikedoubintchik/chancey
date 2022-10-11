@@ -22,7 +22,7 @@ export enum ActionType {
   INITIALIZE_CACHE = 'INITIALIZE_CACHE',
   UPDATE_HISTORICAL_DATA = 'UPDATE_HISTORICAL_DATA',
   INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
-  UPDATE_RULES_STATE = 'UPDATE_RULES_STATE',
+  UPDATE_CHANCES = 'UPDATE_CHANCES',
 }
 export interface IReducer {
   type: ActionType;
@@ -34,6 +34,7 @@ export interface IReducer {
   cache: Array<SeriesModel>;
   historicalData: Array<LotteryDrawModel>;
   rulesBank: Array<IRuleBase>;
+  finalChances: number;
 }
 
 export type InitialStateType = {
@@ -82,8 +83,8 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, finalChances: action.rule.postProcessingChances, rules: [...state.rules, action.rule] };
     }
     case ActionType.REMOVE_RULE: {
-      const updatedRules = state.rules.filter(({ id }) => id !== action.id);
-      return { ...state, rules: updatedRules };
+      const updatedRules = state.rules.filter(({ id }) => id !== action.rule.id);
+      return { ...state, finalChances: action.rule.postProcessingChances, rules: updatedRules };
     }
     case ActionType.INITIALIZE_CACHE: {
       return { ...state, cache: action.cache };
@@ -97,11 +98,8 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     case ActionType.INITIALIZE_RULES_BANK: {
       return { ...state, rulesBank: action.rulesBank };
     }
-    case ActionType.UPDATE_RULES_STATE: {
-      const updatedRules = state.rules.map((rule) => {
-        return rule;
-      });
-      return { ...state, rules: updatedRules };
+    case ActionType.UPDATE_CHANCES: {
+      return { ...state, finalChances: action.finalChances };
     }
     default:
       return state;

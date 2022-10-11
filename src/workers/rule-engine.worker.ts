@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
+import { lstat } from 'fs';
 import { IRuleBase } from 'rules/RuleBase';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
@@ -39,6 +40,16 @@ onmessage = (event) => {
     } as Message);
     // console.log(`processing rule index ${ruleIndex}`);
   }
+  if (m.type === MessageType.UN_PROCESS_RULE) {
+    let ruleId = m.data.ruleId;
+    // console.log(ruleIds);
+    let countAfterRuleProcessing = unprocessRule(ruleId);
+    postMessage({
+      type: MessageType.UN_PROCESS_RULE_COMPLETE,
+      data: { countAfterRuleProcessing: countAfterRuleProcessing },
+    } as Message);
+    // console.log(`processing rule index ${ruleIndex}`);
+  }
 };
 
 const processRule = (ruleId: string) => {
@@ -62,4 +73,34 @@ const processRule = (ruleId: string) => {
     return postFilterResults.length;
   }
   return cache.length;
+};
+
+const unprocessRule = (ruleId: string) => {
+  let index = -1;
+  index = postProcessCache.findIndex((record) => ruleId === record.ruleId);
+  if (index > -1) {
+    //remove post process results at index location
+    postProcessCache.splice(index, 1);
+    if (postProcessCache.length === 0) {
+      //last rule removed
+      return cache.length;
+    }
+    if (postProcessCache.length > index) {
+      //there are items left to process
+      for (let i = index; i < postProcessCache.length; i++) {
+        let currRuleId = postProcessCache[i].ruleId;
+        let ruleIndex = rulesBank.findIndex((rule) => currRuleId === rule.id);
+        if (ruleIndex > -1) {
+          let rule = rulesBank[ruleIndex];
+          postProcessCache[i].cache = rule.filter(postProcessCache[i - 1].cache, false);
+        }
+      }
+      //finaly fall to return last
+    } else {
+      //noop-fall to return last
+    }
+    //re process from index to end
+  }
+  //return last
+  return postProcessCache[postProcessCache.length - 1].cache.length; //return the last results
 };

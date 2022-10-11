@@ -32,6 +32,11 @@ export class RuleEngineClient {
       this.postProcessingResult = message.data.countAfterRuleProcessing as number;
       this.processingRules = false;
     }
+    if (message.type === MessageType.UN_PROCESS_RULE_COMPLETE) {
+      console.log('Rules engine rule removal complete - ', message.data);
+      this.postProcessingResult = message.data.countAfterRuleProcessing as number;
+      this.processingRules = false;
+    }
   }
 
   public async initializeRuleEngine(historicalData: Array<LotteryDrawModel>) {
@@ -52,11 +57,28 @@ export class RuleEngineClient {
       }
     });
   }
+
   public async processRule(ruleId: string) {
     return new Promise<number>((resolve, reject) => {
       this.processingRules = true;
       this.ruleEngineWorker.postMessage({
         type: MessageType.PROCESS_RULE,
+        data: { ruleId: ruleId },
+      } as Message);
+      let intervalHander = setInterval(() => {
+        if (this.processingRules === false) {
+          clearInterval(intervalHander);
+          resolve(this.postProcessingResult);
+        }
+      }, 500);
+    });
+  }
+
+  public async unprocessRule(ruleId: string) {
+    return new Promise<number>((resolve, reject) => {
+      this.processingRules = true;
+      this.ruleEngineWorker.postMessage({
+        type: MessageType.UN_PROCESS_RULE,
         data: { ruleId: ruleId },
       } as Message);
       let intervalHander = setInterval(() => {

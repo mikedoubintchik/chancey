@@ -49,17 +49,6 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const initialize = useCallback(async () => {
     // await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
     setWorking(false);
-    // let ruleIds = state.rules.map((rule) => rule.id);
-    // dispatch({
-    //   type: ActionType.UPDATE_RULES_STATE,
-    //   rules: state.rules,
-    // });
-    // await RuleEngineClient.instance.processRules(ruleIds);
-    // state.rules.forEach((rule) => {
-    //   rule.setProcessing(false);
-    // });
-    // console.log('updating state');
-    // forceUpdate();
   }, []);
 
   useEffect(() => {
