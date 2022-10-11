@@ -26,7 +26,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const renderRules = (rules: Array<IRuleBase>): ReactElement[] =>
     rules.map((rule: IRuleBase) => (
       <>
-        <Rule key={rule.id} rule={rule} processing={rule.processing} />
+        <Rule key={rule.id} rule={rule} />
         <FlowSeparator></FlowSeparator>
       </>
     ));
@@ -47,7 +47,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   // });
 
   const initialize = useCallback(async () => {
-    await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
+    // await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
     setWorking(false);
     // let ruleIds = state.rules.map((rule) => rule.id);
     // dispatch({

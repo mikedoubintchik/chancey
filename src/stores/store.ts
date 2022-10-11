@@ -96,7 +96,6 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     }
     case ActionType.UPDATE_RULES_STATE: {
       const updatedRules = state.rules.map((rule) => {
-        rule.setProcessing(true);
         return rule;
       });
       return { ...state, rules: updatedRules };

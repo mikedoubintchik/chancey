@@ -6,17 +6,19 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
+  IonLoading,
   IonPopover,
   IonRippleEffect,
 } from '@ionic/react';
 import Modal from 'components/modals/Modal';
 import usePopover from 'hooks/usePopover';
 import { informationCircleOutline } from 'ionicons/icons';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { ActionType, useStore } from 'stores/store';
 
 import { IRuleBase } from 'rules/RuleBase';
-
+import './AddRuleModal.css';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 interface IModal {
   isOpenModal: boolean;
   hideModal: () => void;
@@ -24,7 +26,7 @@ interface IModal {
 const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
   const { state, dispatch } = useStore();
   console.log('🚀 ~ file: AddRuleModal.tsx ~ line 28 ~ state', state);
-
+  const [showLoading, setShowLoading] = useState(false);
   interface IRuleProps {
     rule: IRuleBase;
   }
@@ -49,11 +51,14 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
         <IonCardContent>
           <IonButton
             expand="full"
-            onClick={() => {
+            onClick={async () => {
               //loadindicator
+              setShowLoading(true);
               //calc with async await
+              await RuleEngineClient.instance.processRules([rule.id]);
               //dispatch
               //hide load indicator
+              setShowLoading(false);
               dispatch({
                 type: ActionType.ADD_ENGINE_RULE,
                 rule,
@@ -82,6 +87,13 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
     <Modal isOpen={isOpenModal} hideModal={hideModal}>
       <h1>Add Rule</h1>
       {renderRules()}
+      <IonLoading
+        cssClass="loading-indicator"
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Adding rule...'}
+        spinner="circular"
+      />
     </Modal>
   );
 };
