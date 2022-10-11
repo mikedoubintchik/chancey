@@ -55,8 +55,8 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
               //loadindicator
               setShowLoading(true);
               //calc with async await
-              let postProcessingChances = await RuleEngineClient.instance.processRule(rule.id);
-              rule.setPostProcessingChances(postProcessingChances);
+              let postProcessingResponse = await RuleEngineClient.instance.processRule(rule.id);
+              rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
               //dispatch
               //hide load indicator
               setShowLoading(false);

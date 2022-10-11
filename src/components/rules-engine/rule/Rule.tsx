@@ -26,8 +26,8 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
             slot="end"
             onClick={async () => {
               setDeleting(true);
-              let postProcessingChances = await RuleEngineClient.instance.unprocessRule(rule.id);
-              rule.setPostProcessingChances(postProcessingChances);
+              let postProcessingResponse = await RuleEngineClient.instance.unprocessRule(rule.id);
+              rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
               //dispatch
               //hide load indicator
               setDeleting(false);

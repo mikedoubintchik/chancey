@@ -1,13 +1,12 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
-import { lstat } from 'fs';
 import { IRuleBase } from 'rules/RuleBase';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { getAllCombinations } from 'utils/combinatorics';
-import { MessageType, Message } from './messages';
+import { MessageType, Message, IInitRuleEngineResponse, IPostRuleProcessingResponse } from './messages';
 // declare const self: DedicatedWorkerGlobalScope;
 type CacheRecord = {
   ruleId: string;
@@ -27,7 +26,7 @@ onmessage = (event) => {
     cache = getAllCombinations();
     postMessage({
       type: MessageType.INIT_RULE_ENGINE_COMPLETE,
-      data: { cacheSize: cache.length, rulesBankSize: rulesBank.length },
+      data: { cacheSize: cache.length, rulesBankSize: rulesBank.length } as IInitRuleEngineResponse,
     } as Message);
   }
   if (m.type === MessageType.PROCESS_RULE) {
@@ -36,7 +35,7 @@ onmessage = (event) => {
     let countAfterRuleProcessing = processRule(ruleId);
     postMessage({
       type: MessageType.PROCESS_RULE_COMPLETE,
-      data: { countAfterRuleProcessing: countAfterRuleProcessing },
+      data: { cacheSize: countAfterRuleProcessing } as IPostRuleProcessingResponse,
     } as Message);
     // console.log(`processing rule index ${ruleIndex}`);
   }
@@ -46,7 +45,7 @@ onmessage = (event) => {
     let countAfterRuleProcessing = unprocessRule(ruleId);
     postMessage({
       type: MessageType.UN_PROCESS_RULE_COMPLETE,
-      data: { countAfterRuleProcessing: countAfterRuleProcessing },
+      data: { cacheSize: countAfterRuleProcessing } as IPostRuleProcessingResponse,
     } as Message);
     // console.log(`processing rule index ${ruleIndex}`);
   }

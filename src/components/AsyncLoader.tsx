@@ -26,10 +26,6 @@ const AsyncLoader: React.FC = () => {
         historicalData,
       });
     }
-
-    // if (historicalData.length > 0) {
-    //   await RuleEngineClient.instance.initializeRuleEngine(historicalData);
-    // }
   }, []);
 
   useEffect(() => {

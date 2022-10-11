@@ -1,7 +1,4 @@
-import { IonCard, IonGrid, IonIcon, IonItem, IonLabel, IonRow } from '@ionic/react';
-import { diamondOutline, infiniteOutline, trashBinOutline } from 'ionicons/icons';
-import { IRuleBase } from 'rules/RuleBase';
-import { ActionType, useStore } from 'stores/store';
+import { IonCard, IonItem } from '@ionic/react';
 import './FlowSummary.css';
 
 interface IFlowSummaryProps {

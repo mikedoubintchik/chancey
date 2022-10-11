@@ -48,10 +48,10 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
 
   const initialize = useCallback(async () => {
     if (!RuleEngineClient.instance.isInitialized) {
-      let finalChances = await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
+      let initResponse = await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
       dispatch({
         type: ActionType.UPDATE_CHANCES,
-        finalChances,
+        finalChances: initResponse?.cacheSize,
       });
     }
 

@@ -12,3 +12,12 @@ export type Message = {
   type: MessageType;
   data?: any;
 };
+
+export interface IInitRuleEngineResponse {
+  cacheSize: number;
+  rulesBankSize: number;
+}
+
+export interface IPostRuleProcessingResponse {
+  cacheSize: number;
+}
