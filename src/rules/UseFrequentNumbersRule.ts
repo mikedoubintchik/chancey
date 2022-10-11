@@ -50,6 +50,11 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
+    console.log(
+      '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 53 ~ UseFrequentNumberRule ~ filter ~ historical data length - ',
+      this.historicalData.length,
+    );
+
     let results = serieses.filter((series) => {
       return this.validateSeries(series);
     });

@@ -22,6 +22,7 @@ onmessage = (event) => {
   let m = event.data as Message;
   if (m.type === MessageType.INIT_RULE_ENGINE && cache.length === 0) {
     let historicalData = m.data.historicalData as Array<LotteryDrawModel>;
+    // console.log('🚀 ~ file: rule-engine.worker.ts ~ line 25 ~ historicalData', m.data);
     rulesBank = getRulesBank(historicalData);
     cache = getAllCombinations();
     postMessage({

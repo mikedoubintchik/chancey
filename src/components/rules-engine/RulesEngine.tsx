@@ -1,6 +1,6 @@
 import { IonButton, IonCard, IonIcon, IonLabel, IonRippleEffect } from '@ionic/react';
 import useModal from 'hooks/useModal';
-import { add, infiniteOutline } from 'ionicons/icons';
+import { add, ellipseSharp, infiniteOutline } from 'ionicons/icons';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
@@ -17,12 +17,10 @@ interface IRulesEngineProps {}
 const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const { state, dispatch } = useStore();
   const [working, setWorking] = useState<boolean>(true);
-  console.log('🚀 ~ file: RulesEngine.tsx ~ line 15 ~ state', state);
+  // console.log('🚀 ~ file: RulesEngine.tsx ~ line 15 ~ state', state);
 
   const { isOpen, showModal, hideModal } = useModal();
 
-  // const [, updateRulesState] = useState({});
-  // const forceUpdate = useCallback(() => updateRulesState({}), []);
   const renderRules = (rules: Array<IRuleBase>): ReactElement[] =>
     rules.map((rule: IRuleBase) => (
       <>
@@ -31,32 +29,17 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
       </>
     ));
 
-  let cache = state.cache;
-  // state.rules.forEach((rule) => {
-  //   rule.setProcessing(true);
-  // });
-  // state.rules.forEach((rule) => {
-  //   // console.log(state.cache.length);
-  //   let postRuleCache = rule.getPostRuleCache();
-  //   if (postRuleCache == null) {
-  //     console.log('filtering cache');
-  //     cache = rule.filter(cache, true);
-  //   } else {
-  //     cache = postRuleCache;
-  //   }
-  // });
-
   const initialize = useCallback(async () => {
-    if (!RuleEngineClient.instance.isInitialized) {
+    if (RuleEngineClient.instance.isInitialized) {
+      setWorking(false);
+    } else if (state.historicalData.length > 0) {
       let initResponse = await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
       dispatch({
         type: ActionType.UPDATE_CHANCES,
         finalChances: initResponse?.cacheSize,
       });
     }
-
-    setWorking(false);
-  }, []);
+  }, [state]);
 
   useEffect(() => {
     initialize();

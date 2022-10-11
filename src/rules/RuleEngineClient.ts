@@ -42,6 +42,10 @@ export class RuleEngineClient {
   }
 
   public async initializeRuleEngine(historicalData: Array<LotteryDrawModel>) {
+    // console.log(
+    //   '🚀 ~ file: RuleEngineClient.ts ~ line 45 ~ RuleEngineClient ~ initializeRuleEngine ~ historicalData',
+    //   historicalData,
+    // );
     this.ruleEngineWorker.postMessage({
       type: MessageType.INIT_RULE_ENGINE,
       data: { historicalData: historicalData },
