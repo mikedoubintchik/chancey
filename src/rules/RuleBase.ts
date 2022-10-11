@@ -13,6 +13,8 @@ export interface IRuleBase {
   getPostRuleCache(): Array<SeriesModel> | null;
 
   setPostProcessingChances(chances: number): void;
+
+  readonly postProcessingChancesLabel: string;
 }
 
 export class RuleBase implements IRuleBase {
@@ -57,5 +59,9 @@ export class RuleBase implements IRuleBase {
 
   get postProcessingChances(): number {
     return this.privatePostProcessingChances;
+  }
+
+  get postProcessingChancesLabel(): string {
+    return Math.round((1 - (this.privatePostProcessingChances * 25) / 302575350) * 100) + '%';
   }
 }
