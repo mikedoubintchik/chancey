@@ -25,6 +25,7 @@ export class RuleEngineClient {
     let message = event.data as Message; //convinience
     if (message.type === MessageType.INIT_RULE_ENGINE_COMPLETE) {
       console.log('Rules engine initialization complete - ', message.data);
+      this.postProcessingResult = message.data.cacheSize as number;
       this.initialized = true;
     }
     if (message.type === MessageType.PROCESS_RULE_COMPLETE) {
@@ -44,14 +45,14 @@ export class RuleEngineClient {
       type: MessageType.INIT_RULE_ENGINE,
       data: { historicalData: historicalData },
     } as Message);
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       if (this.initialized) {
-        resolve();
+        resolve(this.postProcessingResult);
       } else {
         let intervalHander = setInterval(() => {
           if (this.initialized) {
             clearInterval(intervalHander);
-            resolve();
+            resolve(this.postProcessingResult);
           }
         }, 500);
       }
@@ -88,6 +89,10 @@ export class RuleEngineClient {
         }
       }, 500);
     });
+  }
+
+  get isInitialized(): boolean {
+    return this.initialized;
   }
 
   public static initInstance(ruleEngineWorker: Worker): RuleEngineClient {

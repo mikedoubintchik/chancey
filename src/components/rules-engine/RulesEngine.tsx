@@ -47,7 +47,14 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   // });
 
   const initialize = useCallback(async () => {
-    // await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
+    if (!RuleEngineClient.instance.isInitialized) {
+      let finalChances = await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
+      dispatch({
+        type: ActionType.UPDATE_CHANCES,
+        finalChances,
+      });
+    }
+
     setWorking(false);
   }, []);
 
