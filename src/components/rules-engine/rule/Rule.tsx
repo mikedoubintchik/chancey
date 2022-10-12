@@ -13,7 +13,7 @@ import {
   IonRow,
   IonSpinner,
 } from '@ionic/react';
-import { trashBinOutline } from 'ionicons/icons';
+import { arrowUp, trashBinOutline } from 'ionicons/icons';
 import { useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
@@ -72,6 +72,7 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
           <IonCol></IonCol>
           <IonCol style={{ flex: '0' }}>
             <IonChip color="success">
+              <IonIcon icon={arrowUp} class="percentage-arrow-icon"></IonIcon>
               {formatPercentage(rule.postProcessingSnapshot?.percentageOfImprovementFromPrevState)}%
             </IonChip>
           </IonCol>
