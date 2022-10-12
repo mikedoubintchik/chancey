@@ -5,33 +5,42 @@ import { LotteryDrawModel } from './../types/lottery-draw';
 
 export interface IRuleBase {
   readonly id: string;
-
-  getDescription(): string;
-  getInformation(): string;
+  readonly name: string;
+  readonly description: string;
+  readonly information: string;
+  // getDescription(): string;
+  // getInformation(): string;
   calculatePercentageForRecentDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumber: number): number;
   validate(series: SeriesModel): boolean;
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
-  // getPostRuleCache(): Array<SeriesModel> | null;
 
-  // setPostProcessingChances(chances: number): void;
-
-  // readonly postProcessingChancesLabel: string;
   readonly postProcessingSnapshot: IPostProcessRuleSnapshot | null;
   setPostProcessingSnapshot(snapShot: IPostProcessRuleSnapshot): void;
 }
 
 export class RuleBase implements IRuleBase {
   protected privateid: string = 'RuleBase';
+  protected privateName: string = 'RuleBase';
+  protected privateDescription: string = 'RuleBase';
+  protected privateInformation: string = 'RuleBase';
+
   protected postRuleCache: Array<SeriesModel> | null = null;
   private privatePostProcessingSnapshot: IPostProcessRuleSnapshot | null = null;
-  // protected isProcessing: boolean = true;
-  // protected privatePostProcessingChances = 0;
-  getDescription(): string {
-    return '';
+
+  get id(): string {
+    return this.privateid;
   }
 
-  getInformation(): string {
-    return '';
+  get name(): string {
+    return this.privateName;
+  }
+
+  get description(): string {
+    return this.privateDescription;
+  }
+
+  get information(): string {
+    return this.privateInformation;
   }
 
   calculatePercentageForRecentDrawings(
@@ -52,22 +61,6 @@ export class RuleBase implements IRuleBase {
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel> {
     return [];
   }
-
-  // setPostProcessingChances(chances: number): void {
-  //   this.privatePostProcessingChances = chances;
-  // }
-
-  get id(): string {
-    return this.privateid;
-  }
-
-  // get postProcessingChances(): number {
-  //   return this.privatePostProcessingChances;
-  // }
-
-  // get postProcessingChancesLabel(): string {
-  //   return Math.round((1 - (this.privatePostProcessingChances * 25) / 302575350) * 100) + '%';
-  // }
 
   setPostProcessingSnapshot(snapShot: IPostProcessRuleSnapshot): void {
     this.privatePostProcessingSnapshot = snapShot;

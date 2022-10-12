@@ -11,6 +11,7 @@ export class UseFrequentNumberRule extends RuleBase {
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
     super();
     this.privateid = 'UseFrequentNumberRule';
+    this.privateName = 'Top 10 Frequent';
     this.topFrequentCount = topFrequentCount;
     this.topFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
@@ -23,11 +24,11 @@ export class UseFrequentNumberRule extends RuleBase {
     this.topFrequentNumbersMask = arrayToBitMask(this.topFrequentNumbers);
   }
 
-  override getDescription(): string {
+  override get description(): string {
     return `Use atleast one of the top ${this.topFrequentCount} frequent numbers in the last 10 drawings.`;
   }
 
-  override getInformation(): string {
+  override get information(): string {
     return 'This rule will force the random series generator to produce combinations that have 1 or more for the top frequent numbers based on the recent 300 drawings.';
   }
 

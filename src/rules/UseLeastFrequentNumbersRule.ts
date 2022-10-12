@@ -10,6 +10,7 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
     super();
     this.privateid = 'UseLeastFrequentNumberRule';
+    this.privateName = 'Six Infrequent';
     this.leastFrequentCount = leastFrequentCount;
     this.leastFrequentNumbers = [];
     this.historicalData = historicalData.slice(0, lastDrawingsCount);
@@ -22,11 +23,11 @@ export class UseLeastFrequentNumberRule extends RuleBase {
     this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 
-  override getDescription(): string {
+  override get description(): string {
     return `Use atleast one of the ${this.leastFrequentCount} least frequent numbers in the last 50 drawings.`;
   }
 
-  override getInformation(): string {
+  override get information(): string {
     return 'This rule will force the random series generator to produce combinations that have 1 or more for the least frequent numbers based on the recent 50 drawings.';
   }
 

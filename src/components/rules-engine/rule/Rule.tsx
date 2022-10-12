@@ -38,7 +38,7 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
           {/*  */}
           <IonCol>
             <IonLabel>
-              <h2>{rule.getDescription()}</h2>
+              <h2>{rule.description}</h2>
             </IonLabel>
           </IonCol>
           <IonCol style={{ flex: '0' }}>

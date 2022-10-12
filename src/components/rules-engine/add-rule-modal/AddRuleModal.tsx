@@ -41,11 +41,11 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
     return (
       <IonCard>
         <IonItem>
-          <IonLabel>{rule.getDescription()}</IonLabel>
+          <IonLabel>{rule.description}</IonLabel>
           <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
         </IonItem>
         <IonPopover ref={popover} isOpen={isOpen} onDidDismiss={hidePopover}>
-          <IonContent class="ion-padding">{rule.getInformation()}</IonContent>
+          <IonContent class="ion-padding">{rule.information}</IonContent>
         </IonPopover>
 
         <IonCardContent>
