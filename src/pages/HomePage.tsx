@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
             )}
           </IonCard>
         </IonContent>
-        <Modal isOpen={isOpen} hideModal={hideModal}>
+        <Modal isOpen={isOpen} hideModal={hideModal} title="Previous Drawings">
           <HistoryPage></HistoryPage>
         </Modal>
       </IonPage>

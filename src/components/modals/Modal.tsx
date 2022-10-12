@@ -1,23 +1,27 @@
-import { IonButton, IonButtons, IonContent, IonHeader, IonModal, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonModal, IonTitle, IonToolbar } from '@ionic/react';
+import { closeOutline } from 'ionicons/icons';
 import { ReactNode } from 'react';
 
 interface IModal {
   isOpen: boolean;
   hideModal: () => void;
   children?: ReactNode;
+  title: string;
 }
 
 const Modal: React.FC<IModal> = (props) => {
-  const { isOpen, hideModal, children } = props;
+  const { isOpen, hideModal, children, title } = props;
 
   return (
     <IonModal isOpen={isOpen}>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Modal</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={hideModal}>Close</IonButton>
+          <IonButtons slot="start">
+            <IonButton shape="round" fill="clear" onClick={() => hideModal()}>
+              <IonIcon icon={closeOutline}></IonIcon>
+            </IonButton>
           </IonButtons>
+          <IonTitle slot="">{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">{children}</IonContent>

@@ -1,14 +1,18 @@
 import {
   IonButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonContent,
+  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
   IonLoading,
   IonPopover,
   IonRippleEffect,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import Modal from 'components/modals/Modal';
 import usePopover from 'hooks/usePopover';
@@ -90,8 +94,7 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
       .map((rule) => <Rule key={rule.id} rule={rule} />);
 
   return (
-    <Modal isOpen={isOpenModal} hideModal={hideModal}>
-      <h1>Add Rule</h1>
+    <Modal isOpen={isOpenModal} hideModal={hideModal} title="Add Rule">
       {renderRules()}
       <IonLoading
         cssClass="loading-indicator"
