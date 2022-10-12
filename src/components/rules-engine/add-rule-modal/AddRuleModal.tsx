@@ -56,13 +56,18 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
               setShowLoading(true);
               //calc with async await
               let postProcessingResponse = await RuleEngineClient.instance.processRule(rule.id);
-              rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
+              console.log(
+                '🚀 ~ file: AddRuleModal.tsx ~ line 59 ~ onClick={ ~ postProcessingResponse',
+                postProcessingResponse,
+              );
+              // rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
               //dispatch
               //hide load indicator
               setShowLoading(false);
               dispatch({
                 type: ActionType.ADD_ENGINE_RULE,
-                rule,
+                rule: rule,
+                postProcessingSnapshots: postProcessingResponse.ruleSnapShots,
               });
 
               hideModal();

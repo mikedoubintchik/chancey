@@ -5,6 +5,7 @@ import { LotteryDrawModel } from 'types/lottery-draw';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { SeriesModel } from 'types/series';
 import Worker from 'web-worker';
+import { IPostProcessRuleSnapshot } from 'workers/messages';
 import { IRuleBase } from '../rules/RuleBase';
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
@@ -34,7 +35,9 @@ export interface IReducer {
   cache: Array<SeriesModel>;
   historicalData: Array<LotteryDrawModel>;
   rulesBank: Array<IRuleBase>;
+  initialChances: number;
   finalChances: number;
+  postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
 }
 
 export type InitialStateType = {
@@ -44,7 +47,9 @@ export type InitialStateType = {
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
   rulesBank: IRuleBase[];
+  initialChances: number;
   finalChances: number;
+  // postProcessingSnapshot: [];
 };
 
 export const initialState: InitialStateType = {
@@ -54,7 +59,9 @@ export const initialState: InitialStateType = {
   cache: [],
   historicalData: [],
   rulesBank: [],
+  initialChances: 0,
   finalChances: 0,
+  // postProcessingSnapshot: [],
 };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
@@ -78,13 +85,38 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, ticketPhotos: updatedTickets };
     }
     case ActionType.ADD_ENGINE_RULE: {
-      //
-
-      return { ...state, finalChances: action.rule.postProcessingChances, rules: [...state.rules, action.rule] };
+      let modifiedRules = [...state.rules, action.rule];
+      action.postProcessingSnapshots.forEach((snap) => {
+        let ruleIndex = modifiedRules.findIndex((rule) => rule.id === snap.ruleId);
+        if (ruleIndex > -1) {
+          modifiedRules[ruleIndex].setPostProcessingSnapshot(snap);
+        }
+      });
+      let finalChances =
+        action.rule.postProcessingSnapshot != null ? action.rule.postProcessingSnapshot.postProcessCacheSize : 0;
+      return {
+        ...state,
+        finalChances: finalChances,
+        rules: modifiedRules,
+      };
     }
     case ActionType.REMOVE_RULE: {
       const updatedRules = state.rules.filter(({ id }) => id !== action.rule.id);
-      return { ...state, finalChances: action.rule.postProcessingChances, rules: updatedRules };
+      let finalChances = state.initialChances;
+      if (updatedRules.length > 0) {
+        action.postProcessingSnapshots.forEach((snap) => {
+          let ruleIndex = updatedRules.findIndex((rule) => rule.id === snap.ruleId);
+          if (ruleIndex > -1) {
+            updatedRules[ruleIndex].setPostProcessingSnapshot(snap);
+          }
+        });
+        let lastRulePostProcessingSnapshot = updatedRules[updatedRules.length - 1].postProcessingSnapshot;
+        if (lastRulePostProcessingSnapshot != null) {
+          finalChances = lastRulePostProcessingSnapshot.postProcessCacheSize;
+        }
+      }
+
+      return { ...state, finalChances: finalChances, rules: updatedRules };
     }
     case ActionType.INITIALIZE_CACHE: {
       return { ...state, cache: action.cache };
@@ -101,7 +133,11 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, rulesBank: action.rulesBank };
     }
     case ActionType.UPDATE_CHANCES: {
-      return { ...state, finalChances: action.finalChances };
+      let initialChances = state.initialChances;
+      if (action.initialChances) {
+        initialChances = action.initialChances;
+      }
+      return { ...state, initialChances: initialChances, finalChances: action.finalChances };
     }
     default:
       return state;

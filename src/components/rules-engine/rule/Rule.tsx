@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { ActionType, useStore } from 'stores/store';
+import { formatPercentage } from 'utils/lottery-utils';
 import './Rule.css';
 interface IRuleProps {
   rule: IRuleBase;
@@ -49,12 +50,13 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
                 onClick={async () => {
                   setDeleting(true);
                   let postProcessingResponse = await RuleEngineClient.instance.unprocessRule(rule.id);
-                  rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
+                  // rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
                   setDeleting(false);
 
                   dispatch({
                     type: ActionType.REMOVE_RULE,
                     rule: rule,
+                    postProcessingSnapshots: postProcessingResponse.ruleSnapShots,
                   });
                 }}
               >
@@ -69,7 +71,9 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
         <IonRow>
           <IonCol></IonCol>
           <IonCol style={{ flex: '0' }}>
-            <IonChip color="success">{rule.postProcessingChancesLabel}</IonChip>
+            <IonChip color="success">
+              {formatPercentage(rule.postProcessingSnapshot?.percentageOfImprovementFromPrevState)}%
+            </IonChip>
           </IonCol>
         </IonRow>
       </IonGrid>

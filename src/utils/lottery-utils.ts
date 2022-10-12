@@ -61,3 +61,11 @@ export const arrayToBitMask = (arr: number[]) => {
   });
   return mask;
 };
+
+export const formatPercentage = (decimal: number | null | undefined) => {
+  if (decimal === null || decimal === undefined) {
+    return 0;
+  } else {
+    return Math.round(decimal * 100);
+  }
+};

@@ -36,6 +36,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
       let initResponse = await RuleEngineClient.instance.initializeRuleEngine(state.historicalData);
       dispatch({
         type: ActionType.UPDATE_CHANCES,
+        initialChances: initResponse?.cacheSize,
         finalChances: initResponse?.cacheSize,
       });
     }

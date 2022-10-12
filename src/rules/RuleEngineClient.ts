@@ -13,7 +13,7 @@ export class RuleEngineClient {
   private messageListenerCallbackHandler: any;
   private initialized: boolean = false;
   private processingRules: boolean = false;
-  private postProcessingResponse: IPostRuleProcessingResponse | null = null;
+  private postProcessingResponse: IPostRuleProcessingResponse = { ruleSnapShots: [] };
   private initRuleEngineResponse: IInitRuleEngineResponse | null = null;
 
   constructor(ruleEngineWorker: Worker) {
@@ -65,7 +65,7 @@ export class RuleEngineClient {
   }
 
   public async processRule(ruleId: string) {
-    return new Promise<IPostRuleProcessingResponse | null>((resolve, reject) => {
+    return new Promise<IPostRuleProcessingResponse>((resolve, reject) => {
       this.processingRules = true;
       this.ruleEngineWorker.postMessage({
         type: MessageType.PROCESS_RULE,
@@ -81,7 +81,7 @@ export class RuleEngineClient {
   }
 
   public async unprocessRule(ruleId: string) {
-    return new Promise<IPostRuleProcessingResponse | null>((resolve, reject) => {
+    return new Promise<IPostRuleProcessingResponse>((resolve, reject) => {
       this.processingRules = true;
       this.ruleEngineWorker.postMessage({
         type: MessageType.UN_PROCESS_RULE,

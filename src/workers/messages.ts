@@ -18,6 +18,13 @@ export interface IInitRuleEngineResponse {
   rulesBankSize: number;
 }
 
+export interface IPostProcessRuleSnapshot {
+  ruleId: string;
+  postProcessCacheSize: number;
+  percentageOfImprovementFromBase: number;
+  percentageOfImprovementFromPrevState: number;
+}
 export interface IPostRuleProcessingResponse {
-  cacheSize: number;
+  // cacheSize: number;
+  ruleSnapShots: Array<IPostProcessRuleSnapshot>;
 }
