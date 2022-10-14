@@ -19,7 +19,7 @@ const StatsPage: React.FC = () => {
       <SideMenu />
       <IonPage id="main-content">
         <Header />
-        <IonToolbar>
+        <IonToolbar class="solid-clear">
           <IonSelect onIonChange={handleChage} interface="popover" placeholder="Recent Drawings" value={_showLast}>
             <IonSelectOption value={10}>Last 10 Drawings</IonSelectOption>
             <IonSelectOption value={50}>Last 50 Drawings</IonSelectOption>

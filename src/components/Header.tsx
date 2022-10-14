@@ -20,7 +20,7 @@ const Header: React.FC<IHeader> = ({ pageTitle }) => {
 
   return (
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar class="solid-clear">
         {/* <IonButtons slot="start">
           <IonBackButton defaultHref="home" />
         </IonButtons> */}

@@ -32,7 +32,7 @@
   animation: scaleUp 0.2s linear;
 }
 
-ion-toolbar {
+ion-toolbar.solid-clear {
   --background: var(--ion-background-color);
 }
 
