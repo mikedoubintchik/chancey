@@ -2,7 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, diamondOutline, homeOutline, person, statsChart } from 'ionicons/icons';
+import { camera, diamondOutline, homeOutline, infiniteOutline, person, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
@@ -78,7 +78,10 @@ const App: React.FC = () => {
                 <IonIcon icon={statsChart} />
               </IonTabButton>
               <IonTabButton tab="rules" href="/rules">
-                <IonIcon icon={diamondOutline} style={{ border: '1px solid', borderRadius: '100%', padding: '10px' }} />
+                <IonIcon
+                  icon={infiniteOutline}
+                  style={{ border: '1px solid', borderRadius: '100%', padding: '10px' }}
+                />
               </IonTabButton>
               <IonTabButton tab="geolocation" href="/geolocation">
                 <IonIcon icon={person} />

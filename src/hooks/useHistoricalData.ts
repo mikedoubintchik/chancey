@@ -6,6 +6,7 @@ import { httpsCallable } from 'firebase/functions';
 import axios from 'axios';
 
 import { get } from 'stores/IonicStorage';
+import { arrayToBitMask } from 'utils/lottery-utils';
 export function useHistoricalData() {
   const getLatestMegaResults = async () => {
     try {
@@ -59,6 +60,7 @@ export function useHistoricalData() {
           series: {
             numbers: data.series.numbers,
             extra: data.series.extra,
+            bitMask: arrayToBitMask(data.series.numbers),
           },
         } as LotteryDrawModel);
       });

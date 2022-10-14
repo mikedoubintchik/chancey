@@ -15,6 +15,7 @@ import { informationCircleOutline } from 'ionicons/icons';
 import { useRef } from 'react';
 
 import { IRuleBase } from 'rules/RuleBase';
+import { formatPercentage } from 'utils/lottery-utils';
 
 interface IRuleProps {
   rule: IRuleBase;
@@ -33,12 +34,18 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested }) => {
     <IonCard>
       <IonCardHeader>
         <IonItem lines="none">
-          <IonLabel>{rule.name}</IonLabel>
+          <IonLabel color="primary">{rule.name}</IonLabel>
           <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
         </IonItem>
       </IonCardHeader>
       <IonCardContent>
         <IonItem lines="none">{rule.description}</IonItem>
+        <IonItem lines="none">
+          <IonLabel color="medium" class="ion-text-wrap">
+            This rule applied to {formatPercentage(rule.calculatePercentageForRecentDrawings(300))}% of recent 300
+            drawings
+          </IonLabel>
+        </IonItem>
         <IonItem>
           <IonButton
             slot="end"

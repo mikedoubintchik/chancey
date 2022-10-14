@@ -32,10 +32,7 @@ export class UseFrequentNumberRule extends RuleBase {
     return 'This rule will force the random series generator to produce combinations that have 1 or more for the top frequent numbers based on the recent 300 drawings.';
   }
 
-  override calculatePercentageForRecentDrawings(
-    historicalData: Array<LotteryDrawModel>,
-    lastDrawingsNumber: number = 300,
-  ): number {
+  override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
     this.historicalData.forEach((item) => {
       if (this.validateSeries(item.series)) {

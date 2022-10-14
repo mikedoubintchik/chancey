@@ -10,7 +10,7 @@ export interface IRuleBase {
   readonly information: string;
   // getDescription(): string;
   // getInformation(): string;
-  calculatePercentageForRecentDrawings(historicalData: Array<LotteryDrawModel>, lastDrawingsNumber: number): number;
+  calculatePercentageForRecentDrawings(lastDrawingsNumber: number): number;
   validate(series: SeriesModel): boolean;
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
 
@@ -43,10 +43,7 @@ export class RuleBase implements IRuleBase {
     return this.privateInformation;
   }
 
-  calculatePercentageForRecentDrawings(
-    historicalData: Array<LotteryDrawModel>,
-    lastDrawingsNumber: number = 300,
-  ): number {
+  calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     return 0;
   }
 
