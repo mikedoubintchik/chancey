@@ -21,9 +21,9 @@ const Header: React.FC<IHeader> = ({ pageTitle }) => {
   return (
     <IonHeader>
       <IonToolbar>
-        <IonButtons slot="start">
+        {/* <IonButtons slot="start">
           <IonBackButton defaultHref="home" />
-        </IonButtons>
+        </IonButtons> */}
         <IonButtons slot="end">
           <IonMenuToggle>
             <IonButton>
@@ -31,7 +31,7 @@ const Header: React.FC<IHeader> = ({ pageTitle }) => {
             </IonButton>
           </IonMenuToggle>
         </IonButtons>
-        <IonTitle>{pageTitle || (state.user ? `Hello ${state.user.displayName}!` : 'Please Login')}</IonTitle>
+        {/* <IonTitle>{pageTitle || (state.user ? `Hello ${state.user.displayName}!` : 'Please Login')}</IonTitle> */}
       </IonToolbar>
     </IonHeader>
   );

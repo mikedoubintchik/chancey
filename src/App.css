@@ -1,0 +1,41 @@
+.app-tab-bar {
+  padding-top: 10px;
+  border-radius: 20px 20px 0px 0px;
+  padding-bottom: 10px;
+}
+@keyframes scaleUp {
+  from {
+    scale: 1;
+  }
+
+  to {
+    scale: 1.2;
+  }
+}
+@keyframes scaleDown {
+  from {
+    scale: 1.2;
+  }
+
+  to {
+    scale: 1;
+  }
+}
+
+.app-tab-bar > ion-tab-button > ion-icon {
+  scale: 1;
+  animation: scaleDown 0.2s linear;
+}
+
+.app-tab-bar > .tab-selected > ion-icon {
+  scale: 1.2;
+  animation: scaleUp 0.2s linear;
+}
+
+ion-toolbar {
+  --background: var(--ion-background-color);
+}
+
+.header-md::after {
+  background-image: none;
+}

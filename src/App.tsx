@@ -27,7 +27,7 @@ import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import './App.css';
 import AsyncLoader from 'components/AsyncLoader';
 import RulesPage from 'pages/RulesPage';
 import { Reducer, useReducer } from 'react';
@@ -70,7 +70,7 @@ const App: React.FC = () => {
                 <Redirect to="/home" />
               </Route>
             </IonRouterOutlet>
-            <IonTabBar slot="bottom">
+            <IonTabBar slot="bottom" class="app-tab-bar">
               <IonTabButton tab="home" href="/home">
                 <IonIcon icon={homeOutline} />
               </IonTabButton>
