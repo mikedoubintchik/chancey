@@ -4,5 +4,3 @@ describe('Use Frequent Numbers Rule', () => {
     expect(x).toEqual(5);
   });
 });
-
-export {};

@@ -13,6 +13,8 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, onBackgroundMessage } from 'firebase/messaging/sw';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -78,3 +80,26 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+const firebaseApp = initializeApp({
+  apiKey: 'AIzaSyAFNUXDhCCgOZ8ZBozsfHOJnFXizrjxB68',
+  authDomain: 'tune-363401.firebaseapp.com',
+  databaseURL: 'https://tune-363401-default-rtdb.firebaseio.com',
+  projectId: 'tune-363401',
+  storageBucket: 'tune-363401.appspot.com',
+  messagingSenderId: '56916722998',
+  appId: '1:56916722998:web:eab8aabe27baf7dd38df97',
+  measurementId: 'G-04W0XTXMJ4',
+});
+
+const messaging = getMessaging(firebaseApp);
+onBackgroundMessage(messaging, (payload) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png',
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});

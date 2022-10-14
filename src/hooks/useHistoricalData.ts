@@ -1,9 +1,7 @@
-import { db, functions } from 'config/firebase';
+import { db } from 'config/firebase';
 
-import { collection, doc, getDocs, setDoc, addDoc, query, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
-import { httpsCallable } from 'firebase/functions';
-import axios from 'axios';
 
 import { get } from 'stores/IonicStorage';
 export function useHistoricalData() {
@@ -30,7 +28,7 @@ export function useHistoricalData() {
         } as LotteryDrawModel;
       }
     } catch ({ code, message, details }) {
-      console.error(code, message, details);
+      console.error('error / getLatestMegaResults', code, message, details);
     }
   };
 

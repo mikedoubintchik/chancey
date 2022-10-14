@@ -1,14 +1,15 @@
+import { getPlatforms } from '@ionic/react';
+import { messaging } from 'config/firebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
-import { useCallback, useEffect } from 'react';
-import { RuleEngineClient } from 'rules/RuleEngineClient';
-import { getRulesBank } from 'rules/RuleUtils';
+import { useNativePushNotification } from 'hooks/useNativePushNotifications';
+import { useCallback, useEffect, useState } from 'react';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
-  // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 8 ~ state', state);
   const { getHistoricalData } = useHistoricalData();
+  const { setupPushNotificationsForMobile, setupPushNotificationsForWeb } = useNativePushNotification();
 
   const initializeApplicationData = useCallback(async () => {
     console.log('Creating ionic store in initializeApplicationData');
@@ -19,7 +20,7 @@ const AsyncLoader: React.FC = () => {
       historicalData = await getHistoricalData();
       set('historical-data-mega', historicalData);
     }
-    // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 14 ~ setupHistoricalDataStorage ~ historicalData', historicalData);
+
     if (state.historicalData.length === 0 && historicalData.length > 0) {
       dispatch({
         type: ActionType.UPDATE_HISTORICAL_DATA,
@@ -31,6 +32,17 @@ const AsyncLoader: React.FC = () => {
   useEffect(() => {
     initializeApplicationData();
   }, [initializeApplicationData]);
+
+  useEffect(() => {
+    if (getPlatforms().includes('desktop') && messaging) {
+      setupPushNotificationsForWeb(messaging);
+    }
+
+    if (getPlatforms().includes('mobile')) {
+      setupPushNotificationsForMobile();
+    }
+  }, [setupPushNotificationsForWeb, setupPushNotificationsForMobile]);
+
   return <></>;
 };
 

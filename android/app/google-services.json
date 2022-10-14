@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "56916722998",
+    "firebase_url": "https://tune-363401-default-rtdb.firebaseio.com",
+    "project_id": "tune-363401",
+    "storage_bucket": "tune-363401.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56916722998:android:46d8101d7f847ecb38df97",
+        "android_client_info": {
+          "package_name": "com.robinhoods.tune"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56916722998-bnoqks3icv6pfgqub77bskiihp6lar5u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.robinhoods.tune",
+            "certificate_hash": "ba25b183c320b725d6813d6a7315a9abbe9c5e8e"
+          }
+        },
+        {
+          "client_id": "56916722998-a7b8smt7majdjugmq18has9nvoiqnmbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZGedOrj6YIgt0I6DGeUlqG1qSZgfYRb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56916722998-a7b8smt7majdjugmq18has9nvoiqnmbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
