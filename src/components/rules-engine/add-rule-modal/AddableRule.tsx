@@ -2,6 +2,7 @@ import {
   IonButton,
   IonCard,
   IonCardContent,
+  IonCardHeader,
   IonContent,
   IonIcon,
   IonItem,
@@ -30,26 +31,32 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested }) => {
 
   return (
     <IonCard>
-      <IonItem>
-        <IonLabel>{rule.description}</IonLabel>
-        <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
-      </IonItem>
+      <IonCardHeader>
+        <IonItem lines="none">
+          <IonLabel>{rule.name}</IonLabel>
+          <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
+        </IonItem>
+      </IonCardHeader>
+      <IonCardContent>
+        <IonItem lines="none">{rule.description}</IonItem>
+        <IonItem>
+          <IonButton
+            slot="end"
+            shape="round"
+            // expand="full"
+            onClick={async () => {
+              //loadindicator
+              onAddRuleRequested(rule);
+            }}
+          >
+            Add Rule
+            <IonRippleEffect></IonRippleEffect>
+          </IonButton>
+        </IonItem>
+      </IonCardContent>
       <IonPopover ref={popover} isOpen={isOpen} onDidDismiss={hidePopover}>
         <IonContent class="ion-padding">{rule.information}</IonContent>
       </IonPopover>
-
-      <IonCardContent>
-        <IonButton
-          expand="full"
-          onClick={async () => {
-            //loadindicator
-            onAddRuleRequested(rule);
-          }}
-        >
-          Add Rule
-          <IonRippleEffect></IonRippleEffect>
-        </IonButton>
-      </IonCardContent>
     </IonCard>
   );
 };
