@@ -19,7 +19,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
   const [working, setWorking] = useState<boolean>(true);
   // console.log('🚀 ~ file: RulesEngine.tsx ~ line 15 ~ state', state);
 
-  const { isOpen, showModal, hideModal } = useModal();
+  const [isOpen, showModal, hideModal] = useModal();
 
   const renderRules = (rules: Array<IRuleBase>): ReactElement[] =>
     rules.map((rule: IRuleBase) => (

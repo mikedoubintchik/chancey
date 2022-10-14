@@ -12,7 +12,7 @@ import HistoryPage from './HistoryPage';
 const HomePage: React.FC = () => {
   const { getLatestMegaResults } = useHistoricalData();
   const [latestResult, setLatestResult] = useState<LotteryDrawModel | undefined>(undefined);
-  const { isOpen, showModal, hideModal } = useModal();
+  const [isOpen, showModal, hideModal] = useModal();
 
   useEffect(() => {
     getLatestMegaResults().then((data) => setLatestResult(data));

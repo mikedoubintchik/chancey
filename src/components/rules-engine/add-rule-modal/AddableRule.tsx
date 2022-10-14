@@ -20,8 +20,9 @@ import { formatPercentage } from 'utils/lottery-utils';
 interface IRuleProps {
   rule: IRuleBase;
   onAddRuleRequested(rule: IRuleBase): void;
+  onRuleInformationRequested(rule: IRuleBase): void;
 }
-const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested }) => {
+const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested, onRuleInformationRequested }) => {
   const popover = useRef<HTMLIonPopoverElement>(null);
   const { isOpen, showPopover, hidePopover } = usePopover();
 
@@ -35,7 +36,7 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested }) => {
       <IonCardHeader>
         <IonItem lines="none">
           <IonLabel color="primary">{rule.name}</IonLabel>
-          <IonIcon onClick={openPopover} icon={informationCircleOutline} slot="end" />
+          <IonIcon onClick={() => onRuleInformationRequested(rule)} icon={informationCircleOutline} slot="end" />
         </IonItem>
       </IonCardHeader>
       <IonCardContent>
