@@ -30,7 +30,7 @@ describe('Use Frequent Numbers Rule', () => {
       },
     ];
     let rule = new UseFrequentNumberRule(history);
-    let precentage = rule.calculatePercentageForRecentDrawings(history, 2);
+    let precentage = rule.calculatePercentageForRecentDrawings(2);
     expect(precentage).toEqual(1);
   });
 
