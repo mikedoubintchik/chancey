@@ -40,7 +40,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
         finalChances: initResponse?.cacheSize,
       });
     }
-  }, [state]);
+  }, [state, dispatch]);
 
   useEffect(() => {
     initialize();

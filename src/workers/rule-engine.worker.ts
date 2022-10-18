@@ -22,7 +22,7 @@ type CacheRecord = {
 let initialCache: Array<SeriesModel> = [];
 let rulesBank: Array<IRuleBase> = [];
 let postProcessCache: Array<CacheRecord> = [];
-
+// console.log('loaded worker file');
 postMessage({ type: MessageType.WORKER_LOADED, data: {} } as Message);
 onmessage = (event) => {
   let m = event.data as Message;
