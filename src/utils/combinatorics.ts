@@ -1,4 +1,4 @@
-import { combinations } from 'simple-statistics';
+import { combinations, factorial } from 'simple-statistics';
 import { SeriesModel } from 'types/series';
 import { arrayToBitMask } from './lottery-utils';
 
@@ -54,6 +54,7 @@ export const getAllCombinations2 = (maxN = 70, sLen = 5) => {
   return totalCombs;
 };
 
+//combinations iterator
 export const combinator = (maxN = 70, sLen = 5, predicate: (comb: number[]) => boolean) => {
   let result: any = [];
   result.length = sLen; //n=2
@@ -85,4 +86,73 @@ export const combinator = (maxN = 70, sLen = 5, predicate: (comb: number[]) => b
   combine(array, result.length, 0);
 
   return count;
+};
+
+//all combinations size r with max number n (1..n)
+export const nCr = (n: number, r: number) => {
+  let f;
+  f = (n: number) => factorial(n);
+  return f(n) / f(r) / f(n - r);
+};
+
+export const getIndexForCombination = (comb: number[], maxN: number = 70, sLen: number = 5) => {
+  let n = maxN;
+  let k = sLen;
+  let r = nCr(n, k);
+
+  for (let i = 0, _pj_a = k; i < _pj_a; i += 1) {
+    if (n - comb[i] < k - i) {
+      continue;
+    }
+
+    r = r - nCr(n - comb[i], k - i);
+  }
+
+  return Number(r) - 1;
+};
+
+export const getIndexForCombinationWithExb = (
+  comb: number[],
+  maxN: number = 70,
+  maxPB: number = 25,
+  sLen: number = 5,
+) => {
+  let combN = comb.slice(0, comb.length - 1);
+  let combIndex = getIndexForCombination(combN, maxN, sLen);
+  combIndex = combIndex * maxPB + (comb[comb.length - 1] - 1);
+  return combIndex;
+};
+
+// /*
+// returns the i-th combination of k numbers chosen from 1,2,...,n
+// */
+export const getCombinationForIndex = (i: number, maxN = 70, sLen = 5) => {
+  i += 1;
+  let n = maxN;
+  let k = sLen;
+  let c, cs, j, r;
+  c = [];
+  r = i;
+  j = 0;
+
+  for (var s = 1, _pj_a = k + 1; s < _pj_a; s += 1) {
+    cs = j + 1;
+
+    while (r - nCr(n - cs, k - s) > 0) {
+      r -= nCr(n - cs, k - s);
+      cs += 1;
+    }
+
+    c.push(cs);
+    j = cs;
+  }
+  return c;
+};
+
+export const getCombinationWithExbForIndex = (i: number, maxN: number = 70, maxPB: number = 25, sLen: number = 5) => {
+  let currentExb = (i % maxPB) + 1;
+  i = (i - (i % maxPB)) / maxPB;
+  let comb = getCombinationForIndex(i, maxN, sLen);
+  comb.push(currentExb);
+  return comb;
 };

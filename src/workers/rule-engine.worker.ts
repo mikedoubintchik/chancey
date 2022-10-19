@@ -5,26 +5,18 @@ import { IRuleBase } from 'rules/RuleBase';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { combinator } from 'utils/combinatorics';
+import { combinator, getCombinationForIndex, getCombinationWithExbForIndex, nCr } from 'utils/combinatorics';
 import {
+  IGenerateDrawResponse,
   IInitRuleEngineResponse,
   IPostProcessRuleSnapshot,
   IPostRuleProcessingResponse,
   Message,
   MessageType,
 } from './messages';
-// declare const self: DedicatedWorkerGlobalScope;
-// type CacheRecord = {
-//   ruleId: string;
-//   cache: Array<SeriesModel>;
-// };
 
-// let initialCache: Array<SeriesModel> = [];
 let rulesBank: Array<IRuleBase> = [];
-// let postProcessCache: Array<CacheRecord> = [];
-
 let initialTotalCombs = 0;
-//let postProcessingCombsCount = 0;
 let userRuleIds: string[] = [];
 
 // console.log('loaded worker file');
@@ -57,9 +49,6 @@ onmessage = (event) => {
   }
   if (m.type === MessageType.UN_PROCESS_RULE) {
     let ruleId = m.data.ruleId;
-    // console.log(ruleIds);
-    // unprocessRule(ruleId);
-    // let postProcessRuleSnapshots = getPostProcessRuleSnapshots();
     let removalIndex = userRuleIds.indexOf(ruleId);
     if (removalIndex > -1) {
       userRuleIds.splice(removalIndex, 1);
@@ -71,83 +60,33 @@ onmessage = (event) => {
     } as Message);
     // console.log(`processing rule index ${ruleIndex}`);
   }
+  if (m.type === MessageType.GENERATE_DRAW) {
+    let count = m.data.count;
+    let drawings = generateDrawings(count);
+    postMessage({
+      type: MessageType.GENERATE_DRAW_COMPLETE,
+      data: { drawings: drawings } as IGenerateDrawResponse,
+    } as Message);
+  }
 };
 
-// const processRule = (ruleId: string) => {
-//   let index = -1;
-//   index = postProcessCache.findIndex((record) => ruleId === record.ruleId);
-//   if (index === -1) {
-//     index = rulesBank.findIndex((rule) => ruleId === rule.id);
-
-//     if (index > -1) {
-//       let rule = rulesBank[index];
-//       let postFilterResults: Array<SeriesModel> = [];
-//       if (postProcessCache.length > 0) {
-//         postFilterResults = rule.filter(postProcessCache[postProcessCache.length - 1].cache, false);
-//       } else {
-//         postFilterResults = rule.filter(initialCache, false);
-//       }
-//       postProcessCache.push({ ruleId: ruleId, cache: postFilterResults });
-//       // return postFilterResults.length;
-//     }
-//   }
-//   // return cache.length;
-// };
-
-// const unprocessRule = (ruleId: string) => {
-//   let index = -1;
-//   index = postProcessCache.findIndex((record) => ruleId === record.ruleId);
-//   if (index > -1) {
-//     //remove post process results at index location
-//     postProcessCache.splice(index, 1);
-
-//     if (postProcessCache.length > index) {
-//       //there are items left to process
-//       for (let i = index; i < postProcessCache.length; i++) {
-//         let currRuleId = postProcessCache[i].ruleId;
-//         let ruleIndex = rulesBank.findIndex((rule) => currRuleId === rule.id);
-//         if (ruleIndex > -1) {
-//           let rule = rulesBank[ruleIndex];
-//           let inputCache = i > 0 ? postProcessCache[i - 1].cache : initialCache;
-//           postProcessCache[i].cache = rule.filter(inputCache, false);
-//         }
-//       }
-//     }
-//   }
-// };
-
-// const getPostProcessRuleSnapshots = (): Array<IPostProcessRuleSnapshot> => {
-//   let prevRecordCacheSize = initialCache.length;
-//   let postProcessRuleSnapshots = postProcessCache.map((item, index) => {
-//     if (index > 0) {
-//       prevRecordCacheSize = postProcessCache[index - 1].cache.length;
-//     }
-//     return {
-//       ruleId: item.ruleId,
-//       postProcessCacheSize: item.cache.length,
-//       percentageOfImprovementFromBase: 1 - item.cache.length / initialCache.length,
-//       percentageOfImprovementFromPrevState: 1 - item.cache.length / prevRecordCacheSize,
-//     } as IPostProcessRuleSnapshot;
-//   });
-//   return postProcessRuleSnapshots;
-// };
-
-// export interface IPostProcessRuleSnapshot {
-//   ruleId: string;
-//   postProcessCacheSize: number;
-//   percentageOfImprovementFromBase: number;
-//   percentageOfImprovementFromPrevState: number;
-// }
-const processRules = () => {
+const getUserRules = () => {
   let userRules: Array<IRuleBase> = [];
-  const perRuleValidCount: Map<string, number> = new Map<string, number>();
-  let report: Array<IPostProcessRuleSnapshot> = [];
   userRuleIds.forEach((ruleId) => {
     let index = rulesBank.findIndex((rule) => ruleId === rule.id);
     if (index > -1) {
       userRules.push(rulesBank[index]);
-      perRuleValidCount.set(ruleId, 0);
     }
+  });
+  return userRules;
+};
+
+const processRules = () => {
+  let userRules: Array<IRuleBase> = getUserRules();
+  const perRuleValidCount: Map<string, number> = new Map<string, number>();
+  let report: Array<IPostProcessRuleSnapshot> = [];
+  userRules.forEach((rule) => {
+    perRuleValidCount.set(rule.id, 0);
   });
 
   const valdate = (comb: number[]) => {
@@ -158,12 +97,9 @@ const processRules = () => {
         let valid = rule.validate({ numbers: comb, extra: 0 } as SeriesModel);
         if (valid) {
           totalValids += 1;
-          // if (!prevRuleWasValid) {
           let count = perRuleValidCount.get(rule.id);
           if (count === undefined) count = 0;
           perRuleValidCount.set(rule.id, count + 1);
-          // prevRuleWasValid = true;
-          // }
         } else {
           prevRuleWasValid = false;
         }
@@ -185,4 +121,34 @@ const processRules = () => {
     prevStateTotalCombs = value;
   });
   return report;
+};
+
+const generateDrawings = (count: number) => {
+  let userRules: Array<IRuleBase> = getUserRules();
+  let maxIndex = nCr(70, 5) * 25;
+  let finalCombs: Array<SeriesModel> = [];
+  const validForAllRules = (numbers: number[], extra: number) => {
+    let totalValids = 0;
+    userRules.forEach((rule) => {
+      let valid = rule.validate({ numbers: numbers, extra: extra } as SeriesModel);
+      if (valid) {
+        totalValids += 1;
+      }
+    });
+    return totalValids === userRules.length;
+  };
+
+  for (let i = 0; i < count; i++) {
+    let randIndex = (Math.random() * (maxIndex - 1)) | 0;
+    let comb = getCombinationWithExbForIndex(randIndex, 70, 5);
+    let numbers = comb.slice(0, 5);
+    let extra = comb[comb.length - 1];
+    while (validForAllRules(numbers, extra) === false) {
+      randIndex = (Math.random() * (maxIndex - 1)) | 0;
+      comb = getCombinationWithExbForIndex(randIndex, 70, 5);
+    }
+    let seriesModel: SeriesModel = { numbers: numbers, extra: extra };
+    finalCombs.push(seriesModel);
+  }
+  return finalCombs;
 };

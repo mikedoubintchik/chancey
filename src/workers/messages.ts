@@ -1,3 +1,5 @@
+import { SeriesModel } from 'types/series';
+
 export enum MessageType {
   WORKER_LOADED,
   INIT_RULE_ENGINE,
@@ -6,6 +8,8 @@ export enum MessageType {
   PROCESS_RULE_COMPLETE,
   UN_PROCESS_RULE,
   UN_PROCESS_RULE_COMPLETE,
+  GENERATE_DRAW,
+  GENERATE_DRAW_COMPLETE,
 }
 
 export type Message = {
@@ -27,4 +31,9 @@ export interface IPostProcessRuleSnapshot {
 export interface IPostRuleProcessingResponse {
   // cacheSize: number;
   ruleSnapShots: Array<IPostProcessRuleSnapshot>;
+}
+
+export interface IGenerateDrawResponse {
+  // cacheSize: number;
+  drawings: Array<SeriesModel>;
 }

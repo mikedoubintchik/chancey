@@ -12,7 +12,7 @@ export const parseMegaRecord = (record: Array<string>): LotteryDrawModel => {
   var ldm: LotteryDrawModel = {
     type: DrawType.MEGA,
     date: date,
-    series: { numbers: numbers, extra: extra, bitMask: arrayToBitMask(numbers) },
+    series: { numbers: numbers, extra: extra }, //bitMask: arrayToBitMask(numbers)
   };
   return ldm;
 };
@@ -24,7 +24,7 @@ export const getDefaultLDM = (): LotteryDrawModel => {
   var ldm: LotteryDrawModel = {
     type: DrawType.MEGA,
     date: date,
-    series: { numbers: numbers, extra: extra, bitMask: arrayToBitMask(numbers) },
+    series: { numbers: numbers, extra: extra }, //bitMask: arrayToBitMask(numbers)
   };
   return ldm;
 };
