@@ -41,8 +41,12 @@ const DrawingsGenerator: React.FC<DrawingsGeneratorProps> = ({ count, showMax })
     setGenerating(!generating);
   };
   const renderDrawings = () => {
-    return [...drawings].reverse().map((drawing) => {
-      return <Series key={drawing.numbers.join('-')} numbers={drawing.numbers} extra={drawing.extra} />;
+    return [...drawings].reverse().map((drawing, index) => {
+      return (
+        <div key={drawing.numbers.join('-')} style={{ opacity: 1 / (1 + index) + 0.25, paddingBottom: 10 }}>
+          <Series numbers={drawing.numbers} extra={drawing.extra} />
+        </div>
+      );
     });
   };
   return (
