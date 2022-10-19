@@ -53,3 +53,36 @@ export const getAllCombinations2 = (maxN = 70, sLen = 5) => {
 
   return totalCombs;
 };
+
+export const combinator = (maxN = 70, sLen = 5, predicate: (comb: number[]) => boolean) => {
+  let result: any = [];
+  result.length = sLen; //n=2
+  var array = [];
+  for (var i = 1; i < maxN + 1; i++) {
+    array.push(i);
+  }
+  var count: number = 0;
+
+  function combine(input: any, len: any, start: any) {
+    if (len === 0) {
+      let comb = [...result];
+      if (predicate(comb)) {
+        count += 1;
+      }
+      // totalComb.push([...result]);
+      // totalCombs.push({
+      //   numbers: [...result],
+      //   extra: 0,
+      //   bitMask: arrayToBitMask([...result]),
+      // } as SeriesModel);
+      return;
+    }
+    for (let i = start; i <= input.length - len; i++) {
+      result[result.length - len] = input[i];
+      combine(input, len - 1, i + 1);
+    }
+  }
+  combine(array, result.length, 0);
+
+  return count;
+};

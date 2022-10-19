@@ -43,7 +43,8 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   }
 
   private validateSeries(series: SeriesModel): boolean {
-    return (this.leastFrequentNumbersMask & series.bitMask) > 0;
+    return series.numbers.filter((val) => this.leastFrequentNumbers.indexOf(val) > -1).length > 0;
+    // return (this.leastFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {

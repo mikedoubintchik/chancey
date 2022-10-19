@@ -32,8 +32,14 @@ const AsyncLoader: React.FC = () => {
         type: ActionType.UPDATE_HISTORICAL_DATA,
         historicalData,
       });
+      let initResults = await RuleEngineClient.instance.initializeRuleEngine(historicalData);
+      dispatch({
+        type: ActionType.UPDATE_CHANCES,
+        initialChances: initResults?.cacheSize,
+        finalChances: initResults?.cacheSize,
+      });
     }
-  }, [dispatch, getHistoricalData]);
+  }, []);
 
   useEffect(() => {
     initializeApplicationData();

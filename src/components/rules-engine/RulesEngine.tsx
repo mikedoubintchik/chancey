@@ -23,10 +23,10 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
 
   const renderRules = (rules: Array<IRuleBase>): ReactElement[] =>
     rules.map((rule: IRuleBase) => (
-      <>
-        <Rule key={rule.id} rule={rule} />
+      <div key={rule.id}>
+        <Rule rule={rule} />
         <FlowSeparator></FlowSeparator>
-      </>
+      </div>
     ));
 
   const initialize = useCallback(async () => {

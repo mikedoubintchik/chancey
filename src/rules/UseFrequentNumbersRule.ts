@@ -44,7 +44,8 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   private validateSeries(series: SeriesModel): boolean {
-    return (this.topFrequentNumbersMask & series.bitMask) > 0;
+    return series.numbers.filter((val) => this.topFrequentNumbers.indexOf(val) > -1).length > 0;
+    // return (this.topFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {

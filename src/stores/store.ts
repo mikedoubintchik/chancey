@@ -123,10 +123,6 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
     }
     case ActionType.UPDATE_HISTORICAL_DATA: {
       const rulesBank = getRulesBank(action.historicalData);
-      // console.log('🚀 ~ file: store.ts ~ line 94 ~ action.historicalData', action.historicalData);
-      // console.log('hist data', action.historicalData.length);
-      RuleEngineClient.instance.initializeRuleEngine(action.historicalData).then(() => {});
-      // console.log('🚀 ~ file: store.ts ~ line 80 ~ action.historicalData', action.historicalData);
       return { ...state, rulesBank: rulesBank, historicalData: action.historicalData };
     }
     case ActionType.INITIALIZE_RULES_BANK: {
