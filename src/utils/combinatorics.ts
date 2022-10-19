@@ -91,7 +91,12 @@ export const combinator = (maxN = 70, sLen = 5, predicate: (comb: number[]) => b
 //all combinations size r with max number n (1..n)
 export const nCr = (n: number, r: number) => {
   let f;
-  f = (n: number) => factorial(n);
+
+  f = (n: number) => {
+    // if (n < 0) console.log(n);
+    let fact = factorial(Math.abs(n));
+    return fact * Math.sign(n);
+  };
   return f(n) / f(r) / f(n - r);
 };
 

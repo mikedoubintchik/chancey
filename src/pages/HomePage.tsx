@@ -1,4 +1,5 @@
 import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
+import DrawingsGenerator from 'components/drawings-generator/DrawingsGenerator';
 import Header from 'components/Header';
 
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
@@ -7,7 +8,7 @@ import SideMenu from 'components/SideMenu';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import useModal from 'hooks/useModal';
 import { useEffect, useState } from 'react';
-import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
+import { LotteryDrawModel } from 'types/lottery-draw';
 import HistoryPage from './HistoryPage';
 const HomePage: React.FC = () => {
   const { getLatestMegaResults } = useHistoricalData();
@@ -37,6 +38,7 @@ const HomePage: React.FC = () => {
               <LotteryDraw draw={latestResult} />
             )}
           </IonCard>
+          <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator>
         </IonContent>
         <Modal isOpen={isOpen} hideModal={hideModal} title="Previous Drawings">
           <HistoryPage></HistoryPage>

@@ -14,12 +14,12 @@ const AsyncLoader: React.FC = () => {
     console.log('Creating ionic store in initializeApplicationData');
     await createIonicStore('historical-data-mega');
     let historicalData = await get('historical-data-mega');
-    console.log('🚀 ~ file: AsyncLoader.tsx ~ line 17 ~ initializeApplicationData ~ historicalData', historicalData);
+    // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 17 ~ initializeApplicationData ~ historicalData', historicalData);
 
     if (historicalData === null) {
       historicalData = await getHistoricalData();
       // if (historicalData.length > 0) {
-      console.log('🚀 ~ file: AsyncLoader.tsx ~ line 23 ~ initializeApplicationData ~ historicalData', historicalData);
+      // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 23 ~ initializeApplicationData ~ historicalData', historicalData);
       if (historicalData.length > 0) {
         set('historical-data-mega', historicalData);
       }

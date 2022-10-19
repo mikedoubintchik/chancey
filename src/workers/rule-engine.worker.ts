@@ -62,6 +62,8 @@ onmessage = (event) => {
   }
   if (m.type === MessageType.GENERATE_DRAW) {
     let count = m.data.count;
+    console.log('🚀 ~ file: rule-engine.worker.ts ~ line 65 ~ count', count);
+
     let drawings = generateDrawings(count);
     postMessage({
       type: MessageType.GENERATE_DRAW_COMPLETE,
@@ -125,7 +127,8 @@ const processRules = () => {
 
 const generateDrawings = (count: number) => {
   let userRules: Array<IRuleBase> = getUserRules();
-  let maxIndex = nCr(70, 5) * 25;
+  let maxIndex = Math.round(nCr(70, 5)) * 25;
+  console.log('🚀 ~ file: rule-engine.worker.ts ~ line 131 ~ generateDrawings ~ maxIndex', maxIndex);
   let finalCombs: Array<SeriesModel> = [];
   const validForAllRules = (numbers: number[], extra: number) => {
     let totalValids = 0;
@@ -140,12 +143,17 @@ const generateDrawings = (count: number) => {
 
   for (let i = 0; i < count; i++) {
     let randIndex = (Math.random() * (maxIndex - 1)) | 0;
-    let comb = getCombinationWithExbForIndex(randIndex, 70, 5);
+    console.log('🚀 ~ file: rule-engine.worker.ts ~ line 145 ~ generateDrawings ~ randIndex', randIndex);
+
+    let comb = getCombinationWithExbForIndex(randIndex, 70, 25, 5);
     let numbers = comb.slice(0, 5);
     let extra = comb[comb.length - 1];
     while (validForAllRules(numbers, extra) === false) {
       randIndex = (Math.random() * (maxIndex - 1)) | 0;
+      console.log('🚀 ~ file: rule-engine.worker.ts ~ line 153 ~ generateDrawings ~ randIndex', randIndex);
       comb = getCombinationWithExbForIndex(randIndex, 70, 5);
+      numbers = comb.slice(0, 5);
+      extra = comb[comb.length - 1];
     }
     let seriesModel: SeriesModel = { numbers: numbers, extra: extra };
     finalCombs.push(seriesModel);
