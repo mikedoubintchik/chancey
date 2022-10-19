@@ -1,6 +1,12 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import Worker from 'web-worker';
-import { IInitRuleEngineResponse, IPostRuleProcessingResponse, Message, MessageType } from '../workers/messages';
+import {
+  IGenerateDrawResponse,
+  IInitRuleEngineResponse,
+  IPostRuleProcessingResponse,
+  Message,
+  MessageType,
+} from '../workers/messages';
 import { IRuleBase } from './RuleBase';
 
 interface IWorkerMessageEvent {
@@ -13,9 +19,10 @@ export class RuleEngineClient {
   private messageListenerCallbackHandler: any;
   private initialized: boolean = false;
   private processingRules: boolean = false;
+  private generatingDrawings: boolean = false;
   private postProcessingResponse: IPostRuleProcessingResponse = { ruleSnapShots: [] };
   private initRuleEngineResponse: IInitRuleEngineResponse | null = null;
-
+  private generateDrawingsResponse: IGenerateDrawResponse = { drawings: [] };
   constructor(ruleEngineWorker: Worker) {
     this.ruleEngineWorker = ruleEngineWorker;
     this.messageListenerCallbackHandler = this.handleMessage.bind(this);
@@ -38,6 +45,11 @@ export class RuleEngineClient {
       console.log('Rules engine rule removal complete - ', message.data);
       this.postProcessingResponse = message.data as IPostRuleProcessingResponse;
       this.processingRules = false;
+    }
+    if (message.type === MessageType.GENERATE_DRAW_COMPLETE) {
+      console.log('Rules engine generated drawings - ', message.data);
+      this.generateDrawingsResponse = message.data as IGenerateDrawResponse;
+      this.generatingDrawings = false;
     }
   }
 
@@ -91,6 +103,22 @@ export class RuleEngineClient {
         if (this.processingRules === false) {
           clearInterval(intervalHander);
           resolve(this.postProcessingResponse);
+        }
+      }, 500);
+    });
+  }
+
+  public async generateDrawings(count: number) {
+    return new Promise<IGenerateDrawResponse>((resolve, reject) => {
+      this.generatingDrawings = true;
+      this.ruleEngineWorker.postMessage({
+        type: MessageType.GENERATE_DRAW,
+        data: { count: count },
+      } as Message);
+      let intervalHander = setInterval(() => {
+        if (this.generatingDrawings === false) {
+          clearInterval(intervalHander);
+          resolve(this.generateDrawingsResponse);
         }
       }, 500);
     });
