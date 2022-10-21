@@ -149,9 +149,11 @@ const generateDrawings = (count: number) => {
     let numbers = comb.slice(0, 5);
     let extra = comb[comb.length - 1];
     while (validForAllRules(numbers, extra) === false) {
+      console.log('🚀 ~ file: rule-engine.worker.ts ~ line 153 ~ generateDrawings ~ rejected randIndex', randIndex);
+      console.log('🚀 ~ file: rule-engine.worker.ts ~ line 152 ~ generateDrawings ~ numbers, extra', numbers, extra);
+
       randIndex = (Math.random() * (maxIndex - 1)) | 0;
-      console.log('🚀 ~ file: rule-engine.worker.ts ~ line 153 ~ generateDrawings ~ randIndex', randIndex);
-      comb = getCombinationWithExbForIndex(randIndex, 70, 5);
+      comb = getCombinationWithExbForIndex(randIndex, 70, 25, 5);
       numbers = comb.slice(0, 5);
       extra = comb[comb.length - 1];
     }
