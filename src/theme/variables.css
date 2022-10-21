@@ -85,9 +85,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-font-family: 'SF Pro Rounded' !important;
 
 }
-ion-card {
-  border-radius:15px;
-}
+
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors

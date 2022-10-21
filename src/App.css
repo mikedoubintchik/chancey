@@ -39,3 +39,11 @@ ion-toolbar.solid-clear {
 .header-md::after {
   background-image: none;
 }
+
+ion-card {
+  border-radius: 15px;
+}
+
+ion-modal ion-content {
+  --ion-padding: 0px;
+}
