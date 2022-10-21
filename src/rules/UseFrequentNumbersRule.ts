@@ -5,6 +5,7 @@ import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
 export class UseFrequentNumberRule extends RuleBase {
   private topFrequentCount: number = 10;
+  private lastDrawingsCount: number = 10;
   private topFrequentNumbers: number[];
   private topFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
@@ -13,14 +14,12 @@ export class UseFrequentNumberRule extends RuleBase {
     this.privateid = 'UseFrequentNumberRule';
     this.privateName = 'Top 10 Frequent';
     this.topFrequentCount = topFrequentCount;
+    this.lastDrawingsCount = lastDrawingsCount;
     this.topFrequentNumbers = [];
-    this.historicalData = historicalData.slice(0, lastDrawingsCount);
+    this.historicalData = historicalData;
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     this.topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
-    // console.log(
-    //   '🚀 ~ file: UseFrequentNumbersRule.ts ~ line 18 ~ UseFrequentNumberRule ~ constructor ~ topFrequentNumbers',
-    //   this.topFrequentNumbers,
-    // );
+
     this.topFrequentNumbersMask = arrayToBitMask(this.topFrequentNumbers);
   }
 
@@ -34,18 +33,21 @@ export class UseFrequentNumberRule extends RuleBase {
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
-    this.historicalData.forEach((item) => {
-      if (this.validateSeries(item.series)) {
+    for (let i = 1; i < lastDrawingsNumber; i++) {
+      let historicalSlice = this.historicalData.slice(i, i + 10);
+      let numberFrequencies = getNumberFrequencies(historicalSlice, this.lastDrawingsCount);
+      let topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
+      let seriesToVal = this.historicalData[i - 1];
+      if (this.validateSeries(seriesToVal.series, topFrequentNumbers)) {
         count += 1;
       }
-    });
+    }
 
     return count / lastDrawingsNumber;
   }
 
-  private validateSeries(series: SeriesModel): boolean {
-    return series.numbers.filter((val) => this.topFrequentNumbers.indexOf(val) > -1).length > 0;
-    // return (this.topFrequentNumbersMask & series.bitMask) > 0;
+  private validateSeries(series: SeriesModel, topFrequentNums: number[]): boolean {
+    return series.numbers.filter((val) => topFrequentNums.indexOf(val) > -1).length > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
@@ -55,7 +57,7 @@ export class UseFrequentNumberRule extends RuleBase {
     );
 
     let results = serieses.filter((series) => {
-      return this.validateSeries(series);
+      return this.validateSeries(series, this.topFrequentNumbers);
     });
     if (cache) {
       this.postRuleCache = results;
@@ -64,6 +66,6 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   validate(series: SeriesModel): boolean {
-    return this.validateSeries(series);
+    return this.validateSeries(series, this.topFrequentNumbers);
   }
 }
