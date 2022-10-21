@@ -4,6 +4,7 @@ import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
 export class UseLeastFrequentNumberRule extends RuleBase {
   private leastFrequentCount: number = 6;
+  private lastDrawingsCount: number = 50;
   private leastFrequentNumbers: number[];
   private leastFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
@@ -12,44 +13,50 @@ export class UseLeastFrequentNumberRule extends RuleBase {
     this.privateid = 'UseLeastFrequentNumberRule';
     this.privateName = 'Six Infrequent';
     this.leastFrequentCount = leastFrequentCount;
+    this.lastDrawingsCount = lastDrawingsCount;
     this.leastFrequentNumbers = [];
-    this.historicalData = historicalData.slice(0, lastDrawingsCount);
+    this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
+    numberFrequencies.reverse();
     this.leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
-    // console.log(
-    //   '🚀 ~ file: UseLeastFrequentNumberRule.ts ~ line 18 ~ UseLeastFrequentNumberRule ~ constructor ~ leastFrequentNumbers',
-    //   this.leastFrequentNumbers,
-    // );
+
     this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 
   override get description(): string {
-    return `Use atleast one of the ${this.leastFrequentCount} least frequent numbers in the last 50 drawings.`;
+    return `Exclude all of the ${this.leastFrequentCount} least frequent numbers in the last 50 drawings.`;
   }
 
   override get information(): string {
-    return 'This rule will force the random series generator to produce combinations that have 1 or more for the least frequent numbers based on the recent 50 drawings.';
+    return `This rule will force the random series generator to produce combinations that have none of the ${this.leastFrequentCount} least frequent numbers based on the recent 50 drawings.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
-    this.historicalData.forEach((item) => {
-      if (this.validateSeries(item.series)) {
+    let totalIterations = 0;
+    for (let i = 1; i < lastDrawingsNumber && i + this.lastDrawingsCount <= this.historicalData.length; i++) {
+      let historicalSlice = this.historicalData.slice(i, i + this.lastDrawingsCount);
+      let numberFrequencies = getNumberFrequencies(historicalSlice, this.lastDrawingsCount);
+      numberFrequencies.reverse();
+      let leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
+      let seriesToVal = this.historicalData[i - 1];
+      if (this.validateSeries(seriesToVal.series, leastFrequentNumbers)) {
         count += 1;
       }
-    });
+      totalIterations += 1;
+    }
 
-    return count / lastDrawingsNumber;
+    return count / totalIterations;
   }
 
-  private validateSeries(series: SeriesModel): boolean {
-    return series.numbers.filter((val) => this.leastFrequentNumbers.indexOf(val) > -1).length > 0;
+  private validateSeries(series: SeriesModel, leastFrequentNums: number[]): boolean {
+    return series.numbers.filter((val) => leastFrequentNums.indexOf(val) === -1).length === series.numbers.length;
     // return (this.leastFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
     let results = serieses.filter((series) => {
-      return this.validateSeries(series);
+      return this.validateSeries(series, this.leastFrequentNumbers);
     });
     if (cache) {
       this.postRuleCache = results;
@@ -58,6 +65,6 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   }
 
   validate(series: SeriesModel): boolean {
-    return this.validateSeries(series);
+    return this.validateSeries(series, this.leastFrequentNumbers);
   }
 }
