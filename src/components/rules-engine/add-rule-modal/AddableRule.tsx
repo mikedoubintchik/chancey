@@ -1,7 +1,8 @@
 import { IonButton, IonCard, IonIcon, IonItem, IonLabel, IonRippleEffect } from '@ionic/react';
+import Ball from 'components/ball/Ball';
 import { informationCircleOutline } from 'ionicons/icons';
 
-import { IRuleBase } from 'rules/RuleBase';
+import { IRuleBase, RuleTarget } from 'rules/RuleBase';
 import { formatPercentage } from 'utils/lottery-utils';
 
 interface IRuleProps {
@@ -24,6 +25,15 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested, onRuleInf
         </IonLabel>
       </IonItem>
       <IonItem>
+        <div className="rule-type-indicator">
+          <Ball num={-1} hollow={rule.ruleTarget === RuleTarget.EXTRA} />
+          <Ball num={-1} hollow={rule.ruleTarget === RuleTarget.EXTRA} />
+          <Ball num={-1} hollow={rule.ruleTarget === RuleTarget.EXTRA} />
+          <Ball num={-1} hollow={rule.ruleTarget === RuleTarget.EXTRA} />
+          <Ball num={-1} hollow={rule.ruleTarget === RuleTarget.EXTRA} />
+          <Ball num={-1} color="#BD4F46" hollow={rule.ruleTarget === RuleTarget.NUMBERS} />
+        </div>
+
         <IonButton
           slot="end"
           shape="round"

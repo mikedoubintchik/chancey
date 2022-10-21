@@ -2,7 +2,7 @@ import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
-import { RuleBase } from './RuleBase';
+import { RuleBase, RuleTarget } from './RuleBase';
 export class UseFrequentNumberRule extends RuleBase {
   private topFrequentCount: number = 10;
   private lastDrawingsCount: number = 10;
@@ -10,7 +10,7 @@ export class UseFrequentNumberRule extends RuleBase {
   private topFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
-    super();
+    super(RuleTarget.NUMBERS);
     this.privateid = 'UseFrequentNumberRule';
     this.privateName = 'Top 10 Frequent';
     this.topFrequentCount = topFrequentCount;

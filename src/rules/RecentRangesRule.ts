@@ -2,14 +2,14 @@ import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { arrayToBitMask, getNumberFrequencies, getRanges } from 'utils/lottery-utils';
-import { RuleBase } from './RuleBase';
+import { RuleBase, RuleTarget } from './RuleBase';
 import { min, max } from 'simple-statistics';
 export class RecentRangesRule extends RuleBase {
   private recentRangesCount: number = 12;
   private ranges: Array<{ min: number; max: number }> = new Array<{ min: number; max: number }>();
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, recentRangesCount = 12) {
-    super();
+    super(RuleTarget.NUMBERS);
     this.privateid = 'RecentRangesRule';
     this.privateName = 'Recent 12 Ranges';
     this.recentRangesCount = recentRangesCount;

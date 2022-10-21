@@ -1,7 +1,7 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
-import { RuleBase } from './RuleBase';
+import { RuleBase, RuleTarget } from './RuleBase';
 export class UseLeastFrequentNumberRule extends RuleBase {
   private leastFrequentCount: number = 6;
   private lastDrawingsCount: number = 50;
@@ -9,7 +9,7 @@ export class UseLeastFrequentNumberRule extends RuleBase {
   private leastFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
-    super();
+    super(RuleTarget.NUMBERS);
     this.privateid = 'UseLeastFrequentNumberRule';
     this.privateName = 'Six Infrequent';
     this.leastFrequentCount = leastFrequentCount;
