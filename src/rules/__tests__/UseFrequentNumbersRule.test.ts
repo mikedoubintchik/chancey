@@ -1,36 +1,74 @@
 import { UseFrequentNumberRule } from 'rules/UseFrequentNumbersRule';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask } from 'utils/lottery-utils';
 
 jest.mock('nanoid', () => {
   return { nanoid: () => '1234' };
 });
 
 describe('Use Frequent Numbers Rule', () => {
-  it('Calculates percentage in recent drawings', () => {
+  it('Calculates 0% for percentage in recent drawings', () => {
+    let history: Array<LotteryDrawModel> = [
+      {
+        date: new Date(),
+        series: {
+          numbers: [6, 7, 8, 9, 10],
+          extra: 25,
+        },
+        type: DrawType.MEGA,
+      },
+      {
+        date: new Date(),
+        series: {
+          numbers: [1, 2, 3, 4, 5],
+          extra: 25,
+        },
+        type: DrawType.MEGA,
+      },
+      {
+        date: new Date(),
+        series: {
+          numbers: [1, 2, 3, 4, 5],
+          extra: 25,
+        },
+        type: DrawType.MEGA,
+      },
+    ];
+    let rule = new UseFrequentNumberRule(history, 2, 5);
+    let precentage = rule.calculatePercentageForRecentDrawings(3);
+    expect(precentage).toEqual(0);
+  });
+
+  it('Calculates 100% for percentage in recent drawings', () => {
     let history: Array<LotteryDrawModel> = [
       {
         date: new Date(),
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
-          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       },
       {
         date: new Date(),
         series: {
+          numbers: [6, 7, 8, 9, 10],
+          extra: 25,
+        },
+        type: DrawType.MEGA,
+      },
+
+      {
+        date: new Date(),
+        series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
-          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       },
     ];
-    let rule = new UseFrequentNumberRule(history);
-    let precentage = rule.calculatePercentageForRecentDrawings(2);
+    let rule = new UseFrequentNumberRule(history, 2, 5);
+    let precentage = rule.calculatePercentageForRecentDrawings(3);
     expect(precentage).toEqual(1);
   });
 
@@ -42,7 +80,6 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [1, 2, 3, 4, 5],
           extra: 25,
-          bitMask: arrayToBitMask([1, 2, 3, 4, 5]),
         },
         type: DrawType.MEGA,
       });
@@ -51,7 +88,6 @@ describe('Use Frequent Numbers Rule', () => {
         series: {
           numbers: [6, 7, 8, 9, 10],
           extra: 25,
-          bitMask: arrayToBitMask([6, 7, 8, 9, 10]),
         },
         type: DrawType.MEGA,
       });
@@ -61,11 +97,10 @@ describe('Use Frequent Numbers Rule', () => {
       {
         numbers: [11, 12, 13, 14, 15],
         extra: 4,
-        bitMask: arrayToBitMask([11, 12, 13, 14, 15]),
       },
     ];
 
-    let filtered = rule.filter(serieses, historicalData, 2);
+    let filtered = rule.filter(serieses, false);
     expect(filtered.length).toEqual(0);
   });
 });

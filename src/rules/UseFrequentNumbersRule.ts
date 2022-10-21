@@ -33,17 +33,19 @@ export class UseFrequentNumberRule extends RuleBase {
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
-    for (let i = 1; i < lastDrawingsNumber; i++) {
-      let historicalSlice = this.historicalData.slice(i, i + 10);
+    let totalIterations = 0;
+    for (let i = 1; i < lastDrawingsNumber && i + this.lastDrawingsCount <= this.historicalData.length; i++) {
+      let historicalSlice = this.historicalData.slice(i, i + this.lastDrawingsCount);
       let numberFrequencies = getNumberFrequencies(historicalSlice, this.lastDrawingsCount);
       let topFrequentNumbers = numberFrequencies.slice(0, this.topFrequentCount).map((item) => item.number);
       let seriesToVal = this.historicalData[i - 1];
       if (this.validateSeries(seriesToVal.series, topFrequentNumbers)) {
         count += 1;
       }
+      totalIterations += 1;
     }
 
-    return count / lastDrawingsNumber;
+    return count / totalIterations;
   }
 
   private validateSeries(series: SeriesModel, topFrequentNums: number[]): boolean {
