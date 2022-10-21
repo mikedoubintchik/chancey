@@ -1,7 +1,7 @@
 import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
+import { arrayToBitMask, getNumberFrequencies, getRanges } from 'utils/lottery-utils';
 import { RuleBase } from './RuleBase';
 import { min, max } from 'simple-statistics';
 export class RecentRangesRule extends RuleBase {
@@ -14,21 +14,8 @@ export class RecentRangesRule extends RuleBase {
     this.privateName = 'Recent 12 Ranges';
     this.recentRangesCount = recentRangesCount;
 
-    this.historicalData = historicalData.slice(0, recentRangesCount);
-
-    let recentRanges: Array<Array<number>> = [];
-    for (let i = 0; i < 5; i++) {
-      recentRanges.push(new Array<number>());
-    }
-    this.historicalData.forEach((element) => {
-      for (let i = 0; i < 5; i++) {
-        recentRanges[i].push(element.series.numbers[i]);
-      }
-    });
-    recentRanges.forEach((rangeN) => {
-      let r = { min: min(rangeN), max: max(rangeN) };
-      this.ranges.push(r);
-    });
+    this.historicalData = historicalData;
+    this.ranges = getRanges(this.historicalData, this.recentRangesCount);
   }
 
   private getRangesDescription() {
@@ -46,19 +33,25 @@ export class RecentRangesRule extends RuleBase {
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
-    this.historicalData.forEach((item) => {
-      if (this.validateSeries(item.series)) {
+    let totalIterations = 0;
+    for (let i = 1; i < lastDrawingsNumber && i + this.recentRangesCount <= this.historicalData.length; i++) {
+      let historicalSlice = this.historicalData.slice(i, i + this.recentRangesCount);
+      let ranges = getRanges(historicalSlice, this.recentRangesCount);
+
+      let seriesToVal = this.historicalData[i - 1];
+      if (this.validateSeries(seriesToVal.series, ranges)) {
         count += 1;
       }
-    });
+      totalIterations += 1;
+    }
 
-    return count / lastDrawingsNumber;
+    return count / totalIterations;
   }
 
-  private validateSeries(series: SeriesModel): boolean {
+  private validateSeries(series: SeriesModel, ranges: Array<{ min: number; max: number }>): boolean {
     let valids = [];
     for (let i = 0; i < 5; i++) {
-      if (series.numbers[i] >= this.ranges[i].min && series.numbers[i] <= this.ranges[i].max) {
+      if (series.numbers[i] >= ranges[i].min && series.numbers[i] <= ranges[i].max) {
         valids.push(1);
       }
     }
@@ -67,7 +60,7 @@ export class RecentRangesRule extends RuleBase {
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
     let results = serieses.filter((series) => {
-      return this.validateSeries(series);
+      return this.validateSeries(series, this.ranges);
     });
     if (cache) {
       this.postRuleCache = results;
@@ -76,6 +69,6 @@ export class RecentRangesRule extends RuleBase {
   }
 
   validate(series: SeriesModel): boolean {
-    return this.validateSeries(series);
+    return this.validateSeries(series, this.ranges);
   }
 }
