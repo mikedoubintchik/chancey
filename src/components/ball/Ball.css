@@ -5,10 +5,31 @@
   border-radius: 50%;
   align-items: center;
   background-color: #CC9630;
+
+}
+
+.ball-container::after {
+  content: "";
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.1) 25%, rgba(0, 0, 0, 1));
+  filter: blur(1px);
 }
 .ball-number{
   flex: 1;
   text-align: center;
   color: white;
-  font-size: large;
+  font-size: 20px;
+}
+.ball-number-decor::before{
+  content: "";
+  position: absolute;
+  height: 23px;
+  width: 16px;
+  border-bottom: 1px solid white;
+  margin-left: -28px;
+  margin-top: -12px;
+  border-radius: 5%;
 }
