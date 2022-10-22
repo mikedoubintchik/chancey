@@ -1,6 +1,18 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonIcon, IonItem, IonLabel } from '@ionic/react';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPopover,
+  IonToolbar,
+} from '@ionic/react';
 import Series from 'components/series/Series';
-import { pauseOutline, playOutline } from 'ionicons/icons';
+import { ellipsisVerticalOutline, pauseOutline, playOutline } from 'ionicons/icons';
 import { useCallback, useEffect, useState } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { useStore } from 'stores/store';
@@ -60,15 +72,46 @@ const DrawingsGenerator: React.FC<DrawingsGeneratorProps> = ({ count, showMax })
   return (
     <IonCard>
       <IonCardHeader>
-        <IonItem lines="none">
-          <IonButton onClick={() => togglePlayMode()} fill="clear" shape="round" slot="start">
+        <IonToolbar>
+          <IonButton onClick={() => togglePlayMode()} fill="clear" shape="round" size="small" slot="start">
             <IonIcon icon={generating ? pauseOutline : playOutline} />
           </IonButton>
-          {generating && <IonLabel color="primary">Generating next drawing in {timeLeft}s...</IonLabel>}
-          {!generating && <IonLabel color="danger">Paused</IonLabel>}
-        </IonItem>
+          <IonButton id="drawing-gen-menu-button" fill="clear" shape="round" size="small" slot="end" color="medium">
+            <IonIcon icon={ellipsisVerticalOutline} />
+          </IonButton>
+          {generating && (
+            <IonLabel color="medium" slot="start">
+              Next drawing in {timeLeft}s...
+            </IonLabel>
+          )}
+          {!generating && (
+            <IonLabel color="danger" slot="start">
+              Paused
+            </IonLabel>
+          )}
+        </IonToolbar>
       </IonCardHeader>
       <IonCardContent>{renderDrawings()}</IonCardContent>
+      <IonPopover
+        class="drawings-generator-popover"
+        trigger="drawing-gen-menu-button"
+        dismissOnSelect={true}
+        size="auto"
+      >
+        <IonContent>
+          <IonList>
+            <IonItem
+              button={true}
+              detail={false}
+              onClick={() => {
+                setDrawings([]);
+              }}
+            >
+              Clear all
+            </IonItem>
+          </IonList>
+        </IonContent>
+      </IonPopover>
     </IonCard>
   );
 };

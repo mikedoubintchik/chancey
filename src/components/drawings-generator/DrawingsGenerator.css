@@ -1,0 +1,6 @@
+ion-popover.drawings-generator-popover {
+  --width: 200px;
+}
+ion-popover.drawings-generator-popover ion-item {
+  --min-height: 32px;
+}
