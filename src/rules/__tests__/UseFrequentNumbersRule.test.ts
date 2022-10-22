@@ -34,7 +34,7 @@ describe('Use Frequent Numbers Rule', () => {
         type: DrawType.MEGA,
       },
     ];
-    let rule = new UseFrequentNumberRule(history, 2, 5);
+    let rule = new UseFrequentNumberRule(history, 5, 2);
     let precentage = rule.calculatePercentageForRecentDrawings(3);
     expect(precentage).toEqual(0);
   });
@@ -67,7 +67,7 @@ describe('Use Frequent Numbers Rule', () => {
         type: DrawType.MEGA,
       },
     ];
-    let rule = new UseFrequentNumberRule(history, 2, 5);
+    let rule = new UseFrequentNumberRule(history, 5, 2);
     let precentage = rule.calculatePercentageForRecentDrawings(3);
     expect(precentage).toEqual(1);
   });

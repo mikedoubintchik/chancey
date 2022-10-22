@@ -8,10 +8,10 @@ export class ExcludeLeastFrequentNumberRule extends RuleBase {
   private leastFrequentNumbers: number[];
   private leastFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
-  constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 50, leastFrequentCount = 6) {
+  constructor(historicalData: Array<LotteryDrawModel>, leastFrequentCount = 6, lastDrawingsCount = 50) {
     super(RuleTarget.NUMBERS);
-    this.privateid = 'ExcludeLeastFrequentNumberRule';
-    this.privateName = 'Six Infrequent';
+    this.privateid = `Exclude${leastFrequentCount}x${lastDrawingsCount}LeastFrequentNumberRule`;
+    this.privateName = `${leastFrequentCount}x${lastDrawingsCount} Infrequent`;
     this.leastFrequentCount = leastFrequentCount;
     this.lastDrawingsCount = lastDrawingsCount;
     this.leastFrequentNumbers = [];
@@ -24,11 +24,11 @@ export class ExcludeLeastFrequentNumberRule extends RuleBase {
   }
 
   override get description(): string {
-    return `Exclude all of the ${this.leastFrequentCount} least frequent numbers in the last 50 drawings.`;
+    return `Exclude all of the ${this.leastFrequentCount} least frequent numbers in the last ${this.lastDrawingsCount} drawings.`;
   }
 
   override get information(): string {
-    return `This rule will force the random series generator to produce combinations that have none of the ${this.leastFrequentCount} least frequent numbers based on the recent 50 drawings.`;
+    return `This rule will force the random series generator to produce combinations that have none of the ${this.leastFrequentCount} least frequent numbers based on the recent ${this.lastDrawingsCount} drawings.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {

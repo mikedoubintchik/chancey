@@ -8,9 +8,13 @@ import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
   return [
-    new RecentRangesRule(historicalData),
-    new UseFrequentNumberRule(historicalData),
-    new ExcludeLeastFrequentNumberRule(historicalData),
-    new ExcludeRecentExtrasRule(historicalData),
+    new RecentRangesRule(historicalData, 10),
+    new RecentRangesRule(historicalData, 50),
+    new UseFrequentNumberRule(historicalData, 5),
+    new UseFrequentNumberRule(historicalData, 10),
+    new ExcludeLeastFrequentNumberRule(historicalData, 5),
+    new ExcludeLeastFrequentNumberRule(historicalData, 10),
+    new ExcludeRecentExtrasRule(historicalData, 5),
+    new ExcludeRecentExtrasRule(historicalData, 10),
   ];
 };

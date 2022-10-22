@@ -9,10 +9,10 @@ export class UseFrequentNumberRule extends RuleBase {
   private topFrequentNumbers: number[];
   private topFrequentNumbersMask: bigint;
   private historicalData: Array<LotteryDrawModel> = [];
-  constructor(historicalData: Array<LotteryDrawModel>, lastDrawingsCount = 10, topFrequentCount = 10) {
+  constructor(historicalData: Array<LotteryDrawModel>, topFrequentCount = 10, lastDrawingsCount = 10) {
     super(RuleTarget.NUMBERS);
-    this.privateid = 'UseFrequentNumberRule';
-    this.privateName = 'Top 10 Frequent';
+    this.privateid = `Use${topFrequentCount}x${lastDrawingsCount}FrequentNumberRule`;
+    this.privateName = `Top ${topFrequentCount}x${lastDrawingsCount} Frequent`;
     this.topFrequentCount = topFrequentCount;
     this.lastDrawingsCount = lastDrawingsCount;
     this.topFrequentNumbers = [];
@@ -24,11 +24,11 @@ export class UseFrequentNumberRule extends RuleBase {
   }
 
   override get description(): string {
-    return `Use atleast one of the top ${this.topFrequentCount} frequent numbers in the last 10 drawings.`;
+    return `Use atleast one of the top ${this.topFrequentCount} frequent numbers in the last ${this.lastDrawingsCount} drawings.`;
   }
 
   override get information(): string {
-    return 'This rule will force the random series generator to produce combinations that have 1 or more for the top frequent numbers based on the recent 300 drawings.';
+    return `This rule will force the random series generator to produce combinations that have 1 or more for the top ${this.topFrequentCount} frequent numbers based on the recent  ${this.lastDrawingsCount} drawings.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {

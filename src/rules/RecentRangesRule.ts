@@ -1,17 +1,15 @@
-import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies, getRanges } from 'utils/lottery-utils';
+import { getRanges } from 'utils/lottery-utils';
 import { RuleBase, RuleTarget } from './RuleBase';
-import { min, max } from 'simple-statistics';
 export class RecentRangesRule extends RuleBase {
   private recentRangesCount: number = 12;
   private ranges: Array<{ min: number; max: number }> = new Array<{ min: number; max: number }>();
   private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>, recentRangesCount = 12) {
     super(RuleTarget.NUMBERS);
-    this.privateid = 'RecentRangesRule';
-    this.privateName = 'Recent 12 Ranges';
+    this.privateid = `Recent${recentRangesCount}RangesRule`;
+    this.privateName = `Recent ${recentRangesCount} Ranges`;
     this.recentRangesCount = recentRangesCount;
 
     this.historicalData = historicalData;
@@ -28,7 +26,7 @@ export class RecentRangesRule extends RuleBase {
   }
 
   override get information(): string {
-    return 'This rule will force the random series generator to produce combinations that fall within the positional ranges of the last 12 drawings.';
+    return `This rule will force the random series generator to produce combinations that fall within the positional ranges of the last ${this.recentRangesCount} drawings.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {

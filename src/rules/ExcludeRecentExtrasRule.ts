@@ -9,8 +9,8 @@ export class ExcludeRecentExtrasRule extends RuleBase {
 
   constructor(historicalData: Array<LotteryDrawModel>, excludeRecentCount = 10) {
     super(RuleTarget.EXTRA);
-    this.privateid = 'ExcludeRecentExtrasRule';
-    this.privateName = 'Exclude Ten Extras';
+    this.privateid = `Exclude${excludeRecentCount}RecentExtrasRule`;
+    this.privateName = `Exclude ${excludeRecentCount} Extras`;
     this.excludeRecentCount = excludeRecentCount;
 
     this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
