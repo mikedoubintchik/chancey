@@ -86,16 +86,6 @@ const getUserRules = () => {
   return userRules;
 };
 
-const getFinalExtrasPool = (userRules: Array<IRuleBase>) => {
-  let finalExtrasPool = Array.from(Array(possibleExtrasCount).keys()).map((n) => n + 1);
-  userRules.forEach((rule) => {
-    if (rule.ruleTarget === RuleTarget.EXTRA) {
-      finalExtrasPool = finalExtrasPool.filter((n) => rule.validate({ numbers: [], extra: n }));
-    }
-  });
-  return finalExtrasPool;
-};
-
 const getExtrasPoolStateForRule = (userRule: IRuleBase, lastPoolState: Array<number>) => {
   let finalExtrasPool: number[] = lastPoolState;
 
@@ -114,24 +104,20 @@ const processRules = () => {
     perRuleValidCount.set(rule.id, 0);
   });
 
-  let initialExtrasPoolState = Array.from(Array(possibleExtrasCount).keys()).map((n) => n + 1);
-  // let finalExtrasPool = getFinalExtrasPool(userRules);
-
   // console.log('🚀 ~ file: rule-engine.worker.ts ~ line 109 ~ processRules ~ finalExtrasPool', finalExtrasPool);
   const valdate = (comb: number[]) => {
     let totalValids = 0;
     let prevRuleWasValid = true;
-    let lastExtrasPoolState = [...initialExtrasPoolState];
+
     userRules.forEach((rule) => {
       if (prevRuleWasValid) {
-        lastExtrasPoolState = getExtrasPoolStateForRule(rule, lastExtrasPoolState);
         let valid =
           rule.ruleTarget === RuleTarget.NUMBERS ? rule.validate({ numbers: comb, extra: 0 } as SeriesModel) : true;
         if (valid) {
           totalValids += 1;
           let count = perRuleValidCount.get(rule.id);
           if (count === undefined) count = 0;
-          perRuleValidCount.set(rule.id, count + 1 * lastExtrasPoolState.length);
+          perRuleValidCount.set(rule.id, count + 1);
         } else {
           prevRuleWasValid = false;
         }
@@ -140,13 +126,25 @@ const processRules = () => {
     return totalValids > 0;
   };
 
+  //calculate validity for all nubmer rules
   combinator(70, 5, valdate);
 
+  //perform second pass for extra number rules
+  let lastExtrasPoolState = Array.from(Array(possibleExtrasCount).keys()).map((n) => n + 1);
+
+  userRules.forEach((rule) => {
+    lastExtrasPoolState = getExtrasPoolStateForRule(rule, lastExtrasPoolState);
+    let count = perRuleValidCount.get(rule.id);
+    if (count === undefined) count = 0;
+    perRuleValidCount.set(rule.id, count * lastExtrasPoolState.length);
+  });
+
   let prevStateTotalCombs = initialTotalCombs;
-  console.log(
-    '🚀 ~ file: rule-engine.worker.ts ~ line 145 ~ perRuleValidCount.forEach ~ perRuleValidCount',
-    perRuleValidCount,
-  );
+  // console.log(
+  //   '🚀 ~ file: rule-engine.worker.ts ~ line 145 ~ perRuleValidCount.forEach ~ perRuleValidCount',
+  //   perRuleValidCount,
+  // );
+
   perRuleValidCount.forEach((value, ruleId) => {
     let postProcessCacheSize = value;
     report.push({
