@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
-import { IRuleBase } from 'rules/RuleBase';
+import { IRuleBase, RuleTarget } from 'rules/RuleBase';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
@@ -17,6 +17,7 @@ import {
 
 let rulesBank: Array<IRuleBase> = [];
 let initialTotalCombs = 0;
+let possibleExtrasCount = 25;
 let userRuleIds: string[] = [];
 
 // console.log('loaded worker file');
@@ -28,9 +29,11 @@ onmessage = (event) => {
     // console.log('🚀 ~ file: rule-engine.worker.ts ~ line 25 ~ historicalData', m.data);
     rulesBank = getRulesBank(historicalData);
 
-    initialTotalCombs = combinator(70, 5, (comb) => {
-      return true;
-    });
+    initialTotalCombs =
+      possibleExtrasCount *
+      combinator(70, 5, (comb) => {
+        return true;
+      });
     postMessage({
       type: MessageType.INIT_RULE_ENGINE_COMPLETE,
       data: { cacheSize: initialTotalCombs, rulesBankSize: rulesBank.length } as IInitRuleEngineResponse,
@@ -83,25 +86,52 @@ const getUserRules = () => {
   return userRules;
 };
 
+const getFinalExtrasPool = (userRules: Array<IRuleBase>) => {
+  let finalExtrasPool = Array.from(Array(possibleExtrasCount).keys()).map((n) => n + 1);
+  userRules.forEach((rule) => {
+    if (rule.ruleTarget === RuleTarget.EXTRA) {
+      finalExtrasPool = finalExtrasPool.filter((n) => rule.validate({ numbers: [], extra: n }));
+    }
+  });
+  return finalExtrasPool;
+};
+
+const getExtrasPoolStateForRule = (userRule: IRuleBase, lastPoolState: Array<number>) => {
+  let finalExtrasPool: number[] = lastPoolState;
+
+  if (userRule.ruleTarget === RuleTarget.EXTRA) {
+    finalExtrasPool = lastPoolState.filter((n) => userRule.validate({ numbers: [], extra: n }));
+  }
+  return finalExtrasPool;
+};
+
 const processRules = () => {
   let userRules: Array<IRuleBase> = getUserRules();
+  //this map represents the count of combinations that are valid by the rule represented by the rule id
   const perRuleValidCount: Map<string, number> = new Map<string, number>();
   let report: Array<IPostProcessRuleSnapshot> = [];
   userRules.forEach((rule) => {
     perRuleValidCount.set(rule.id, 0);
   });
 
+  let initialExtrasPoolState = Array.from(Array(possibleExtrasCount).keys()).map((n) => n + 1);
+  // let finalExtrasPool = getFinalExtrasPool(userRules);
+
+  // console.log('🚀 ~ file: rule-engine.worker.ts ~ line 109 ~ processRules ~ finalExtrasPool', finalExtrasPool);
   const valdate = (comb: number[]) => {
     let totalValids = 0;
     let prevRuleWasValid = true;
+    let lastExtrasPoolState = [...initialExtrasPoolState];
     userRules.forEach((rule) => {
       if (prevRuleWasValid) {
-        let valid = rule.validate({ numbers: comb, extra: 0 } as SeriesModel);
+        lastExtrasPoolState = getExtrasPoolStateForRule(rule, lastExtrasPoolState);
+        let valid =
+          rule.ruleTarget === RuleTarget.NUMBERS ? rule.validate({ numbers: comb, extra: 0 } as SeriesModel) : true;
         if (valid) {
           totalValids += 1;
           let count = perRuleValidCount.get(rule.id);
           if (count === undefined) count = 0;
-          perRuleValidCount.set(rule.id, count + 1);
+          perRuleValidCount.set(rule.id, count + 1 * lastExtrasPoolState.length);
         } else {
           prevRuleWasValid = false;
         }
@@ -113,15 +143,21 @@ const processRules = () => {
   combinator(70, 5, valdate);
 
   let prevStateTotalCombs = initialTotalCombs;
+  console.log(
+    '🚀 ~ file: rule-engine.worker.ts ~ line 145 ~ perRuleValidCount.forEach ~ perRuleValidCount',
+    perRuleValidCount,
+  );
   perRuleValidCount.forEach((value, ruleId) => {
+    let postProcessCacheSize = value;
     report.push({
       ruleId: ruleId,
-      postProcessCacheSize: value,
-      percentageOfImprovementFromBase: 1 - value / initialTotalCombs,
-      percentageOfImprovementFromPrevState: 1 - value / prevStateTotalCombs,
+      postProcessCacheSize: postProcessCacheSize,
+      percentageOfImprovementFromBase: 1 - postProcessCacheSize / initialTotalCombs,
+      percentageOfImprovementFromPrevState: 1 - postProcessCacheSize / prevStateTotalCombs,
     });
-    prevStateTotalCombs = value;
+    prevStateTotalCombs = postProcessCacheSize;
   });
+
   return report;
 };
 

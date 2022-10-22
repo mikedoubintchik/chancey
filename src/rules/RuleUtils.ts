@@ -2,13 +2,15 @@ import { LotteryDrawModel } from 'types/lottery-draw';
 import { RecentRangesRule } from './RecentRangesRule';
 import { IRuleBase } from './RuleBase';
 import { UseFrequentNumberRule } from './UseFrequentNumbersRule';
-import { UseLeastFrequentNumberRule } from './UseLeastFrequentNumbersRule';
+import { ExcludeLeastFrequentNumberRule } from './ExcludeLeastFrequentNumbersRule';
+import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
   return [
-    new UseFrequentNumberRule(historicalData),
-    new UseLeastFrequentNumberRule(historicalData),
     new RecentRangesRule(historicalData),
+    new UseFrequentNumberRule(historicalData),
+    new ExcludeLeastFrequentNumberRule(historicalData),
+    new ExcludeRecentExtrasRule(historicalData),
   ];
 };

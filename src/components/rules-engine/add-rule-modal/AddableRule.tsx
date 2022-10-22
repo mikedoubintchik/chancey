@@ -37,7 +37,8 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested, onRuleInf
         <IonButton
           slot="end"
           shape="round"
-          onClick={async () => {
+          onClick={async (event) => {
+            event.stopPropagation();
             onAddRuleRequested(rule);
           }}
         >
