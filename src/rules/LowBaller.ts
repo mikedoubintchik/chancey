@@ -1,25 +1,27 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase, RuleTarget } from './RuleBase';
-export class BirthdayRule extends RuleBase {
-  private birthday: Date = new Date();
+
+export class LowBallerRule extends RuleBase {
+  private maxNumber: number = 70;
   private historicalData: Array<LotteryDrawModel> = [];
-  constructor(historicalData: Array<LotteryDrawModel>, birthday: Date) {
+  constructor(historicalData: Array<LotteryDrawModel>, maxNumber = 35) {
     super(RuleTarget.NUMBERS);
-    this.privateid = `BirthdayRule`;
-    this.privateName = `Happy Birthday`;
-    this.birthday = birthday;
+    this.privateid = `LowBallerRule`;
+    this.privateName = `Low Baller`;
+    this.maxNumber = maxNumber;
 
     this.historicalData = historicalData;
   }
 
   override get description(): string {
-    return `Use day and month of your birtday.`;
+    return `Use nubmers that are smaller than  ${this.maxNumber + 1}.`;
   }
 
   override get information(): string {
-    return `This rule will force the random series generator to produce combinations that have the day and the month of your birthday.`;
+    return `This rule will force the random series generator to produce combinations that have numbers that are smaller than ${
+      this.maxNumber + 1
+    }.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
@@ -37,9 +39,7 @@ export class BirthdayRule extends RuleBase {
   }
 
   private validateSeries(series: SeriesModel): boolean {
-    let day = this.birthday.getDate();
-    let month = this.birthday.getMonth();
-    return series.numbers.indexOf(day) > -1 && series.numbers.indexOf(month) > -1;
+    return series.numbers[series.numbers.length - 1] <= this.maxNumber;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {

@@ -7,6 +7,8 @@ import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
 import { ExcludeAllOddsRule } from './ExcludeAllOddsRule';
 import { ExcludeAllEvensRule } from './ExcludeAllEvent';
 import { BirthdayRule } from './BirthdayRule';
+import { HighRollerRule } from './HighRoller';
+import { LowBallerRule } from './LowBaller';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
@@ -20,6 +22,8 @@ export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRu
     new ExcludeAllOddsRule(historicalData),
     new ExcludeAllEvensRule(historicalData),
     new BirthdayRule(historicalData, new Date(1977, 7, 8)),
+    new LowBallerRule(historicalData, 35),
+    new HighRollerRule(historicalData, 36),
     new ExcludeRecentExtrasRule(historicalData, 5),
     new ExcludeRecentExtrasRule(historicalData, 10),
   ];
