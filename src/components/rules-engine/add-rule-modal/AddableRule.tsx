@@ -11,6 +11,7 @@ interface IRuleProps {
   onRuleInformationRequested(rule: IRuleBase): void;
 }
 const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested, onRuleInformationRequested }) => {
+  const recentCount = 400; //how far back in history to calculate percentage
   return (
     <IonCard onClick={() => onRuleInformationRequested(rule)}>
       <IonItem lines="none">
@@ -20,8 +21,8 @@ const AddableRule: React.FC<IRuleProps> = ({ rule, onAddRuleRequested, onRuleInf
       <IonItem lines="none">{rule.description}</IonItem>
       <IonItem lines="none">
         <IonLabel color="medium" class="ion-text-wrap">
-          This rule applied to {formatPercentage(rule.calculatePercentageForRecentDrawings(300))}% of recent 300
-          drawings
+          This rule applied to {formatPercentage(rule.calculatePercentageForRecentDrawings(recentCount))}% of recent{' '}
+          {recentCount} drawings
         </IonLabel>
       </IonItem>
       <IonItem>

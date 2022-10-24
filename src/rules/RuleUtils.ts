@@ -6,6 +6,7 @@ import { ExcludeLeastFrequentNumberRule } from './ExcludeLeastFrequentNumbersRul
 import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
 import { ExcludeAllOddsRule } from './ExcludeAllOddsRule';
 import { ExcludeAllEvensRule } from './ExcludeAllEvent';
+import { BirthdayRule } from './BirthdayRule';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
@@ -18,7 +19,12 @@ export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRu
     new ExcludeLeastFrequentNumberRule(historicalData, 10),
     new ExcludeAllOddsRule(historicalData),
     new ExcludeAllEvensRule(historicalData),
+    new BirthdayRule(historicalData, new Date(1977, 7, 8)),
     new ExcludeRecentExtrasRule(historicalData, 5),
     new ExcludeRecentExtrasRule(historicalData, 10),
   ];
 };
+
+//avid subs -
+// new UseFrequentNumberRule(historicalData, 5, 40),
+//new ExcludeLeastFrequentNumberRule(historicalData, 5, 40),

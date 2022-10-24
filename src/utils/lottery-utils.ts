@@ -88,6 +88,6 @@ export const formatPercentage = (decimal: number | null | undefined) => {
   if (decimal === null || decimal === undefined) {
     return 0;
   } else {
-    return Math.round(decimal * 100);
+    return Math.round(decimal * 1000) / 10;
   }
 };
