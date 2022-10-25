@@ -16,20 +16,6 @@ export class ExcludeAllOddsRule extends RuleBase {
     return `This rule will force the random series generator to produce combinations that do not have all odd numbers.`;
   }
 
-  override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
-    let count = 0;
-    let totalIterations = 0;
-    for (let i = 0; i < lastDrawingsNumber; i++) {
-      let seriesToVal = this.historicalData[i];
-      if (this.validateSeries(seriesToVal.series)) {
-        count += 1;
-      }
-      totalIterations += 1;
-    }
-
-    return count / totalIterations;
-  }
-
   private validateSeries(series: SeriesModel): boolean {
     return series.numbers.filter((val) => val % 2 !== 0).length < series.numbers.length;
   }
