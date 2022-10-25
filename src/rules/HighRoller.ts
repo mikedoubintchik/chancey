@@ -4,14 +4,12 @@ import { RuleBase, RuleTarget } from './RuleBase';
 
 export class HighRollerRule extends RuleBase {
   private minNumber: number = 1;
-  private historicalData: Array<LotteryDrawModel> = [];
+
   constructor(historicalData: Array<LotteryDrawModel>, minNumber = 36) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `HighRollerRule`;
     this.privateName = `High Roller`;
     this.minNumber = minNumber;
-
-    this.historicalData = historicalData;
   }
 
   override get description(): string {
@@ -22,20 +20,6 @@ export class HighRollerRule extends RuleBase {
     return `This rule will force the random series generator to produce combinations that have numbers that are greater than ${
       this.minNumber - 1
     }.`;
-  }
-
-  override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
-    let count = 0;
-    let totalIterations = 0;
-    for (let i = 0; i < lastDrawingsNumber; i++) {
-      let seriesToVal = this.historicalData[i];
-      if (this.validateSeries(seriesToVal.series)) {
-        count += 1;
-      }
-      totalIterations += 1;
-    }
-
-    return count / totalIterations;
   }
 
   private validateSeries(series: SeriesModel): boolean {

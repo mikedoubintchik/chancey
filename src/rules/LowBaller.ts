@@ -4,14 +4,12 @@ import { RuleBase, RuleTarget } from './RuleBase';
 
 export class LowBallerRule extends RuleBase {
   private maxNumber: number = 70;
-  private historicalData: Array<LotteryDrawModel> = [];
+
   constructor(historicalData: Array<LotteryDrawModel>, maxNumber = 35) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `LowBallerRule`;
     this.privateName = `Low Baller`;
     this.maxNumber = maxNumber;
-
-    this.historicalData = historicalData;
   }
 
   override get description(): string {
@@ -22,20 +20,6 @@ export class LowBallerRule extends RuleBase {
     return `This rule will force the random series generator to produce combinations that have numbers that are smaller than ${
       this.maxNumber + 1
     }.`;
-  }
-
-  override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
-    let count = 0;
-    let totalIterations = 0;
-    for (let i = 0; i < lastDrawingsNumber; i++) {
-      let seriesToVal = this.historicalData[i];
-      if (this.validateSeries(seriesToVal.series)) {
-        count += 1;
-      }
-      totalIterations += 1;
-    }
-
-    return count / totalIterations;
   }
 
   private validateSeries(series: SeriesModel): boolean {

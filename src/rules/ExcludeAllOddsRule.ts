@@ -1,18 +1,11 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase, RuleTarget } from './RuleBase';
 export class ExcludeAllOddsRule extends RuleBase {
-  private leastFrequentNumbers: number[];
-
-  private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `ExcludeAllOddsRule`;
-    this.privateName = `Exclude All Odds`;
-
-    this.leastFrequentNumbers = [];
-    this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
+    this.privateName = `Can't Alls be Odd Balls`;
   }
 
   override get description(): string {

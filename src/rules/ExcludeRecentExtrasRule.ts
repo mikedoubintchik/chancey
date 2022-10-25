@@ -5,15 +5,13 @@ import { RuleBase, RuleTarget } from './RuleBase';
 export class ExcludeRecentExtrasRule extends RuleBase {
   private excludeRecentCount: number = 10;
   private extraBallNumbers: number[] = [];
-  private historicalData: Array<LotteryDrawModel> = [];
 
   constructor(historicalData: Array<LotteryDrawModel>, excludeRecentCount = 10) {
-    super(RuleTarget.EXTRA);
+    super(RuleTarget.EXTRA, historicalData);
     this.privateid = `Exclude${excludeRecentCount}RecentExtrasRule`;
     this.privateName = `Exclude ${excludeRecentCount} Extras`;
     this.excludeRecentCount = excludeRecentCount;
 
-    this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
     this.extraBallNumbers = historicalData
       .slice(0, this.excludeRecentCount)
       .map((model) => (model.series.extra === null ? -1 : model.series.extra));

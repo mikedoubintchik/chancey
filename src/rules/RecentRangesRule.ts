@@ -5,14 +5,13 @@ import { RuleBase, RuleTarget } from './RuleBase';
 export class RecentRangesRule extends RuleBase {
   private recentRangesCount: number = 12;
   private ranges: Array<{ min: number; max: number }> = new Array<{ min: number; max: number }>();
-  private historicalData: Array<LotteryDrawModel> = [];
+
   constructor(historicalData: Array<LotteryDrawModel>, recentRangesCount = 12) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `Recent${recentRangesCount}RangesRule`;
     this.privateName = `Recent ${recentRangesCount} Ranges`;
     this.recentRangesCount = recentRangesCount;
 
-    this.historicalData = historicalData;
     this.ranges = getRanges(this.historicalData, this.recentRangesCount);
   }
 

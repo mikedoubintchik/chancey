@@ -1,18 +1,12 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase, RuleTarget } from './RuleBase';
+
 export class ExcludeAllEvensRule extends RuleBase {
-  private leastFrequentNumbers: number[];
-
-  private historicalData: Array<LotteryDrawModel> = [];
   constructor(historicalData: Array<LotteryDrawModel>) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `ExcludeAllEvenssRule`;
-    this.privateName = `Exclude All Evens`;
-
-    this.leastFrequentNumbers = [];
-    this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
+    this.privateName = `Not All Event Stevens`;
   }
 
   override get description(): string {
@@ -21,20 +15,6 @@ export class ExcludeAllEvensRule extends RuleBase {
 
   override get information(): string {
     return `This rule will force the random series generator to produce combinations that do not have have all even numbers.`;
-  }
-
-  override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
-    let count = 0;
-    let totalIterations = 0;
-    for (let i = 0; i < lastDrawingsNumber; i++) {
-      let seriesToVal = this.historicalData[i];
-      if (this.validateSeries(seriesToVal.series)) {
-        count += 1;
-      }
-      totalIterations += 1;
-    }
-
-    return count / totalIterations;
   }
 
   private validateSeries(series: SeriesModel): boolean {

@@ -5,7 +5,7 @@ import { UseFrequentNumberRule } from './UseFrequentNumbersRule';
 import { ExcludeLeastFrequentNumberRule } from './ExcludeLeastFrequentNumbersRule';
 import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
 import { ExcludeAllOddsRule } from './ExcludeAllOddsRule';
-import { ExcludeAllEvensRule } from './ExcludeAllEvent';
+import { ExcludeAllEvensRule } from './ExcludeAllEvens';
 import { BirthdayRule } from './BirthdayRule';
 import { HighRollerRule } from './HighRoller';
 import { LowBallerRule } from './LowBaller';

@@ -1,26 +1,23 @@
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
+import { getNumberFrequencies } from 'utils/lottery-utils';
 import { RuleBase, RuleTarget } from './RuleBase';
 export class ExcludeLeastFrequentNumberRule extends RuleBase {
   private leastFrequentCount: number = 6;
   private lastDrawingsCount: number = 50;
   private leastFrequentNumbers: number[];
-  private leastFrequentNumbersMask: bigint;
-  private historicalData: Array<LotteryDrawModel> = [];
+
   constructor(historicalData: Array<LotteryDrawModel>, leastFrequentCount = 6, lastDrawingsCount = 50) {
-    super(RuleTarget.NUMBERS);
+    super(RuleTarget.NUMBERS, historicalData);
     this.privateid = `Exclude${leastFrequentCount}x${lastDrawingsCount}LeastFrequentNumberRule`;
     this.privateName = `${leastFrequentCount}x${lastDrawingsCount} Infrequent`;
     this.leastFrequentCount = leastFrequentCount;
     this.lastDrawingsCount = lastDrawingsCount;
     this.leastFrequentNumbers = [];
-    this.historicalData = historicalData; //.slice(0, lastDrawingsCount);
+
     let numberFrequencies = getNumberFrequencies(this.historicalData, lastDrawingsCount);
     numberFrequencies.reverse();
     this.leastFrequentNumbers = numberFrequencies.slice(0, this.leastFrequentCount).map((item) => item.number);
-
-    this.leastFrequentNumbersMask = arrayToBitMask(this.leastFrequentNumbers);
   }
 
   override get description(): string {
@@ -51,7 +48,6 @@ export class ExcludeLeastFrequentNumberRule extends RuleBase {
 
   private validateSeries(series: SeriesModel, leastFrequentNums: number[]): boolean {
     return series.numbers.filter((val) => leastFrequentNums.indexOf(val) === -1).length === series.numbers.length;
-    // return (this.leastFrequentNumbersMask & series.bitMask) > 0;
   }
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
