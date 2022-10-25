@@ -20,6 +20,7 @@ let initialTotalCombs = 0;
 let possibleExtrasCount = 25;
 let userRuleIds: string[] = [];
 
+let postRulesCombCount = 0;
 // console.log('loaded worker file');
 postMessage({ type: MessageType.WORKER_LOADED, data: {} } as Message);
 onmessage = (event) => {
@@ -34,6 +35,7 @@ onmessage = (event) => {
       combinator(70, 5, (comb) => {
         return true;
       });
+    postRulesCombCount = initialTotalCombs;
     postMessage({
       type: MessageType.INIT_RULE_ENGINE_COMPLETE,
       data: { cacheSize: initialTotalCombs, rulesBankSize: rulesBank.length } as IInitRuleEngineResponse,
@@ -155,11 +157,19 @@ const processRules = () => {
     });
     prevStateTotalCombs = postProcessCacheSize;
   });
-
+  // console.log(
+  //   '🚀 ~ file: rule-engine.worker.ts ~ line 157 ~ perRuleValidCount.forEach ~ prevStateTotalCombs',
+  //   prevStateTotalCombs,
+  // );
+  postRulesCombCount = prevStateTotalCombs;
   return report;
 };
 
 const generateDrawings = (count: number) => {
+  if (postRulesCombCount < 10) {
+    //some real low number
+    return [];
+  }
   let userRules: Array<IRuleBase> = getUserRules();
   let maxIndex = Math.round(nCr(70, 5)) * 25;
   console.log('🚀 ~ file: rule-engine.worker.ts ~ line 131 ~ generateDrawings ~ maxIndex', maxIndex);

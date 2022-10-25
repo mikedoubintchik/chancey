@@ -13,7 +13,9 @@ const FlowSummary: React.FC<IFlowSummaryProps> = ({ postRuleCombsCount }) => {
     <IonCard class="rule-item">
       <IonItem>Your chances to win the lottery are 1:{postRuleCombsCount}!</IonItem>
       <IonItem>
-        This improves your chances by {formatPercentage(1 - postRuleCombsCount / state.initialChances)}%
+        {postRuleCombsCount > 0 &&
+          `This improves your chances by ${formatPercentage(1 - postRuleCombsCount / state.initialChances)}%`}
+        {postRuleCombsCount < 1 && `Please remove some rules...`}
       </IonItem>
     </IonCard>
 
