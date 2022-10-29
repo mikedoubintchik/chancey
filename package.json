@@ -1,5 +1,6 @@
 {
   "name": "4tune",
+  "description": "Best lottery app out there",
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -27,6 +28,7 @@
     "@awesome-cordova-plugins/camera": "^5.45.0",
     "@awesome-cordova-plugins/core": "^5.45.0",
     "@awesome-cordova-plugins/geolocation": "^5.45.0",
+    "@capacitor-community/fcm": "3.0.0",
     "@capacitor/android": "4.3.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/camera": "^4.1.1",
@@ -36,7 +38,9 @@
     "@capacitor/ios": "4.3.0",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/preferences": "^4.0.1",
+    "@capacitor/push-notifications": "4.1.0",
     "@capacitor/status-bar": "4.0.1",
+    "@capacitor/toast": "4.0.1",
     "@fortawesome/fontawesome-svg-core": "6.2.0",
     "@fortawesome/free-brands-svg-icons": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.2.0",
@@ -98,16 +102,10 @@
     "prepush": "npm run test:ci",
     "functions:emulate": "cd functions && npm run serve",
     "functions:watch": "cd functions && npm run serve:watch",
-    "start:ios": "ionic capacitor run ios -l --external",
+    "start:ios": "GENERATE_SOURCEMAP=false ionic capacitor run ios -l -c --external",
     "build:android": "ionic capacitor copy android",
     "start:android": "GENERATE_SOURCEMAP=false ionic capacitor run android -l --host=$(ipconfig getifaddr en0)",
     "deploy": "ionic build --prod && firebase deploy"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -119,6 +117,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
   },
   "devDependencies": {
@@ -136,6 +140,5 @@
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "react-scripts": "5.0.1"
-  },
-  "description": "An Ionic project"
+  }
 }

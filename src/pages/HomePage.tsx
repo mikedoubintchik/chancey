@@ -32,11 +32,11 @@ const HomePage: React.FC = () => {
           </IonHeader>
           <IonCard onClick={() => showModal()}>
             <IonCardHeader style={{ textAlign: 'center' }}>Winning Numbers</IonCardHeader>
-            {latestResult === undefined ? (
+            {!latestResult && (
               <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
-            ) : (
-              <LotteryDraw draw={latestResult} />
             )}
+
+            {latestResult && <LotteryDraw draw={latestResult} />}
           </IonCard>
           <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator>
         </IonContent>
