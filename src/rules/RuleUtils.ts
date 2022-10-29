@@ -2,13 +2,36 @@ import { LotteryDrawModel } from 'types/lottery-draw';
 import { RecentRangesRule } from './RecentRangesRule';
 import { IRuleBase } from './RuleBase';
 import { UseFrequentNumberRule } from './UseFrequentNumbersRule';
-import { UseLeastFrequentNumberRule } from './UseLeastFrequentNumbersRule';
+import { ExcludeLeastFrequentNumberRule } from './ExcludeLeastFrequentNumbersRule';
+import { ExcludeRecentExtrasRule } from './ExcludeRecentExtrasRule';
+import { ExcludeAllOddsRule } from './ExcludeAllOddsRule';
+import { ExcludeAllEvensRule } from './ExcludeAllEvens';
+import { BirthdayRule } from './BirthdayRule';
+import { HighRollerRule } from './HighRoller';
+import { LowBallerRule } from './LowBaller';
+import { ExcludeRecentDrawingsNumbersRule } from './ExlcudeRecentDrawings';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
   // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
   return [
-    new UseFrequentNumberRule(historicalData),
-    new UseLeastFrequentNumberRule(historicalData),
-    new RecentRangesRule(historicalData),
+    new RecentRangesRule(historicalData, 10),
+    new RecentRangesRule(historicalData, 50),
+    new UseFrequentNumberRule(historicalData, 5),
+    new UseFrequentNumberRule(historicalData, 10),
+    new ExcludeLeastFrequentNumberRule(historicalData, 5),
+    new ExcludeLeastFrequentNumberRule(historicalData, 10),
+    new ExcludeAllOddsRule(historicalData),
+    new ExcludeAllEvensRule(historicalData),
+    new BirthdayRule(historicalData, new Date(1977, 7, 8)),
+    new LowBallerRule(historicalData, 35),
+    new HighRollerRule(historicalData, 36),
+    new ExcludeRecentDrawingsNumbersRule(historicalData, 2),
+    new ExcludeRecentDrawingsNumbersRule(historicalData, 3),
+    new ExcludeRecentExtrasRule(historicalData, 5),
+    new ExcludeRecentExtrasRule(historicalData, 10),
   ];
 };
+
+//avid subs -
+// new UseFrequentNumberRule(historicalData, 5, 40),
+//new ExcludeLeastFrequentNumberRule(historicalData, 5, 40),

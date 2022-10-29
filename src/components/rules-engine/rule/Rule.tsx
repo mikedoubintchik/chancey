@@ -1,6 +1,7 @@
 import {
   IonButton,
   IonCard,
+  IonCardContent,
   IonChip,
   IonCol,
   IonContent,
@@ -13,7 +14,7 @@ import {
   IonRow,
   IonSpinner,
 } from '@ionic/react';
-import { arrowUp, trashBinOutline } from 'ionicons/icons';
+import { arrowUp, closeOutline, trashBinOutline } from 'ionicons/icons';
 import { useState } from 'react';
 import { IRuleBase } from 'rules/RuleBase';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
@@ -32,57 +33,46 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
   return (
     <IonCard class="rule-item">
       {/* <IonItem> */}
+      <IonCardContent>
+        <IonItem lines="none" color="none">
+          <IonLabel color="primary">{rule.name}</IonLabel>
+          {deleting ? (
+            <IonSpinner color="primary" name="circular"></IonSpinner>
+          ) : (
+            <IonButton
+              fill="clear"
+              shape="round"
+              slot="end"
+              onClick={async () => {
+                setDeleting(true);
+                let postProcessingResponse = await RuleEngineClient.instance.unprocessRule(rule.id);
+                // rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
+                setDeleting(false);
 
-      <IonGrid>
-        <IonRow style={{ alignItems: 'center' }}>
-          {/*  */}
-          <IonCol>
-            <IonLabel>
-              <h2>{rule.description}</h2>
-            </IonLabel>
-          </IonCol>
-          <IonCol style={{ flex: '0' }}>
-            {deleting ? (
-              <IonSpinner color="primary" name="circular"></IonSpinner>
-            ) : (
-              <IonButton
-                fill="clear"
-                onClick={async () => {
-                  setDeleting(true);
-                  let postProcessingResponse = await RuleEngineClient.instance.unprocessRule(rule.id);
-                  // rule.setPostProcessingChances(postProcessingResponse != null ? postProcessingResponse.cacheSize : 0);
-                  setDeleting(false);
-
-                  dispatch({
-                    type: ActionType.REMOVE_RULE,
-                    rule: rule,
-                    postProcessingSnapshots: postProcessingResponse.ruleSnapShots,
-                  });
-                }}
-              >
-                <IonIcon
-                  icon={trashBinOutline}
-                  // slot="end"
-                ></IonIcon>
-              </IonButton>
-            )}
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol style={{ flex: '0' }}>
-            <IonChip color="success">
-              <IonIcon icon={arrowUp} class="percentage-arrow-icon"></IonIcon>
-              {formatPercentage(rule.postProcessingSnapshot?.percentageOfImprovementFromPrevState)}%
-            </IonChip>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
-
-      {/* </IonItem> */}
-      {/* <div>
-
-        </div> */}
+                dispatch({
+                  type: ActionType.REMOVE_RULE,
+                  rule: rule,
+                  postProcessingSnapshots: postProcessingResponse.ruleSnapShots,
+                });
+              }}
+            >
+              <IonIcon
+                icon={closeOutline}
+                // slot="end"
+              ></IonIcon>
+            </IonButton>
+          )}
+        </IonItem>
+        <IonItem lines="none" style={{ marginBottom: 10 }}>
+          {rule.description}
+        </IonItem>
+        <IonItem lines="none">
+          <IonChip color="success" slot="end">
+            <IonIcon icon={arrowUp} class="percentage-arrow-icon"></IonIcon>
+            {formatPercentage(rule.postProcessingSnapshot?.percentageOfImprovementFromPrevState)}%
+          </IonChip>
+        </IonItem>
+      </IonCardContent>
     </IonCard>
   );
 };

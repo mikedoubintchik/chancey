@@ -1,34 +1,18 @@
-import intersection from 'lodash/intersection';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
-import { arrayToBitMask, getNumberFrequencies } from 'utils/lottery-utils';
-import { RuleBase } from './RuleBase';
-import { min, max } from 'simple-statistics';
+import { getRanges } from 'utils/lottery-utils';
+import { RuleBase, RuleTarget } from './RuleBase';
 export class RecentRangesRule extends RuleBase {
   private recentRangesCount: number = 12;
   private ranges: Array<{ min: number; max: number }> = new Array<{ min: number; max: number }>();
-  private historicalData: Array<LotteryDrawModel> = [];
+
   constructor(historicalData: Array<LotteryDrawModel>, recentRangesCount = 12) {
-    super();
-    this.privateid = 'RecentRangesRule';
-    this.privateName = 'Recent 12 Ranges';
+    super(RuleTarget.NUMBERS, historicalData);
+    this.privateid = `Recent${recentRangesCount}RangesRule`;
+    this.privateName = `Recent ${recentRangesCount} Ranges`;
     this.recentRangesCount = recentRangesCount;
 
-    this.historicalData = historicalData.slice(0, recentRangesCount);
-
-    let recentRanges: Array<Array<number>> = [];
-    for (let i = 0; i < 5; i++) {
-      recentRanges.push(new Array<number>());
-    }
-    this.historicalData.forEach((element) => {
-      for (let i = 0; i < 5; i++) {
-        recentRanges[i].push(element.series.numbers[i]);
-      }
-    });
-    recentRanges.forEach((rangeN) => {
-      let r = { min: min(rangeN), max: max(rangeN) };
-      this.ranges.push(r);
-    });
+    this.ranges = getRanges(this.historicalData, this.recentRangesCount);
   }
 
   private getRangesDescription() {
@@ -41,24 +25,30 @@ export class RecentRangesRule extends RuleBase {
   }
 
   override get information(): string {
-    return 'This rule will force the random series generator to produce combinations that fall within the positional ranges of the last 12 drawings.';
+    return `This rule will force the random series generator to produce combinations that fall within the positional ranges of the last ${this.recentRangesCount} drawings.`;
   }
 
   override calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
     let count = 0;
-    this.historicalData.forEach((item) => {
-      if (this.validateSeries(item.series)) {
+    let totalIterations = 0;
+    for (let i = 1; i < lastDrawingsNumber && i + this.recentRangesCount <= this.historicalData.length; i++) {
+      let historicalSlice = this.historicalData.slice(i, i + this.recentRangesCount);
+      let ranges = getRanges(historicalSlice, this.recentRangesCount);
+
+      let seriesToVal = this.historicalData[i - 1];
+      if (this.validateSeries(seriesToVal.series, ranges)) {
         count += 1;
       }
-    });
+      totalIterations += 1;
+    }
 
-    return count / lastDrawingsNumber;
+    return count / totalIterations;
   }
 
-  private validateSeries(series: SeriesModel): boolean {
+  private validateSeries(series: SeriesModel, ranges: Array<{ min: number; max: number }>): boolean {
     let valids = [];
     for (let i = 0; i < 5; i++) {
-      if (series.numbers[i] >= this.ranges[i].min && series.numbers[i] <= this.ranges[i].max) {
+      if (series.numbers[i] >= ranges[i].min && series.numbers[i] <= ranges[i].max) {
         valids.push(1);
       }
     }
@@ -67,7 +57,7 @@ export class RecentRangesRule extends RuleBase {
 
   filter(serieses: Array<SeriesModel>, cache = true): Array<SeriesModel> {
     let results = serieses.filter((series) => {
-      return this.validateSeries(series);
+      return this.validateSeries(series, this.ranges);
     });
     if (cache) {
       this.postRuleCache = results;
@@ -76,6 +66,6 @@ export class RecentRangesRule extends RuleBase {
   }
 
   validate(series: SeriesModel): boolean {
-    return this.validateSeries(series);
+    return this.validateSeries(series, this.ranges);
   }
 }

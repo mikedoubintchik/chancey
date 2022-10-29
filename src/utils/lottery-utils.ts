@@ -1,5 +1,5 @@
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
-
+import { min, max } from 'simple-statistics';
 export type NumberFrequency = {
   number: number;
   frequency: number;
@@ -54,6 +54,28 @@ export const getNumberFrequencies = (
   return sortedFrequenciesList;
 };
 
+export const getRanges = (
+  historicalData: Array<LotteryDrawModel>,
+  useLast = 300,
+): Array<{ min: number; max: number }> => {
+  let latestData = historicalData.slice(0, useLast);
+  let recentRanges: Array<Array<number>> = [];
+  let ranges: Array<{ min: number; max: number }> = new Array<{ min: number; max: number }>();
+  for (let i = 0; i < 5; i++) {
+    recentRanges.push(new Array<number>());
+  }
+  latestData.forEach((element) => {
+    for (let i = 0; i < 5; i++) {
+      recentRanges[i].push(element.series.numbers[i]);
+    }
+  });
+  recentRanges.forEach((rangeN) => {
+    let r = { min: min(rangeN), max: max(rangeN) };
+    ranges.push(r);
+  });
+  return ranges;
+};
+
 export const arrayToBitMask = (arr: number[]) => {
   let mask = BigInt(0);
   arr.forEach((n) => {
@@ -66,6 +88,6 @@ export const formatPercentage = (decimal: number | null | undefined) => {
   if (decimal === null || decimal === undefined) {
     return 0;
   } else {
-    return Math.round(decimal * 100);
+    return Math.round(decimal * 1000) / 10;
   }
 };

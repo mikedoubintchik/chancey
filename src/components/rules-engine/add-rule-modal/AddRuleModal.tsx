@@ -23,7 +23,7 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
     setShowLoading(true);
     //calc with async await
     let postProcessingResponse = await RuleEngineClient.instance.processRule(rule.id);
-    console.log('🚀 ~ file: AddRuleModal.tsx ~ line 59 ~ onClick={ ~ postProcessingResponse', postProcessingResponse);
+    // console.log('🚀 ~ file: AddRuleModal.tsx ~ line 59 ~ onClick={ ~ postProcessingResponse', postProcessingResponse);
 
     setShowLoading(false);
     dispatch({

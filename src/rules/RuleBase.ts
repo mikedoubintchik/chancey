@@ -1,15 +1,18 @@
-import { nanoid } from 'nanoid';
+import { LotteryDrawModel } from 'types/lottery-draw';
 import { SeriesModel } from 'types/series';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
-import { LotteryDrawModel } from './../types/lottery-draw';
 
+export enum RuleTarget {
+  NUMBERS,
+  EXTRA,
+}
 export interface IRuleBase {
   readonly id: string;
   readonly name: string;
   readonly description: string;
   readonly information: string;
-  // getDescription(): string;
-  // getInformation(): string;
+  readonly ruleTarget: RuleTarget;
+
   calculatePercentageForRecentDrawings(lastDrawingsNumber: number): number;
   validate(series: SeriesModel): boolean;
   filter(serieses: Array<SeriesModel>, cache: boolean): Array<SeriesModel>;
@@ -18,14 +21,23 @@ export interface IRuleBase {
   setPostProcessingSnapshot(snapShot: IPostProcessRuleSnapshot): void;
 }
 
-export class RuleBase implements IRuleBase {
+export abstract class RuleBase implements IRuleBase {
   protected privateid: string = 'RuleBase';
   protected privateName: string = 'RuleBase';
   protected privateDescription: string = 'RuleBase';
   protected privateInformation: string = 'RuleBase';
 
   protected postRuleCache: Array<SeriesModel> | null = null;
+  private privateRuleTarget: RuleTarget = RuleTarget.NUMBERS;
+
   private privatePostProcessingSnapshot: IPostProcessRuleSnapshot | null = null;
+
+  protected historicalData: Array<LotteryDrawModel> = [];
+
+  constructor(ruleTarget: RuleTarget, historicalData: Array<LotteryDrawModel>) {
+    this.privateRuleTarget = ruleTarget;
+    this.historicalData = historicalData;
+  }
 
   get id(): string {
     return this.privateid;
@@ -43,8 +55,22 @@ export class RuleBase implements IRuleBase {
     return this.privateInformation;
   }
 
+  get ruleTarget(): RuleTarget {
+    return this.privateRuleTarget;
+  }
+
   calculatePercentageForRecentDrawings(lastDrawingsNumber: number = 300): number {
-    return 0;
+    let count = 0;
+    let totalIterations = 0;
+    for (let i = 0; i < lastDrawingsNumber; i++) {
+      let seriesToVal = this.historicalData[i];
+      if (this.validate(seriesToVal.series)) {
+        count += 1;
+      }
+      totalIterations += 1;
+    }
+
+    return count / totalIterations;
   }
 
   validate(series: SeriesModel): boolean {

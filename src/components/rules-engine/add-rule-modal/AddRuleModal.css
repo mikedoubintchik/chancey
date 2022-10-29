@@ -1,3 +1,13 @@
 .loading-indicator > .loading-wrapper {
   border-radius: 10px;
 }
+
+.rule-type-indicator {
+  display: flex;
+  scale: 0.25;
+  transform-origin: left;
+}
+
+.rule-type-indicator > .ball-container {
+  margin-right: 10px;
+}
