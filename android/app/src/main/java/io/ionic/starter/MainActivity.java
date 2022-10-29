@@ -1,4 +1,4 @@
-package com.robinhoods.tune;
+package io.chancey.app;
 
 import com.getcapacitor.BridgeActivity;
 

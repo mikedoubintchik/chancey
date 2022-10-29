@@ -1,0 +1,118 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "grka-cwac-tcnx-twtj"
+package = load_json(json_path: "./package.json")
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    add_badge(dark: true)
+    increment_build_number(xcodeproj: "ios/App.xcodeproj")
+    build_app(workspace: "ios/App.xcworkspace", scheme: "App")
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  lane :deploy do
+    increment_build_number(xcodeproj: "ios/App.xcodeproj")
+    build_app(workspace: "ios/App.xcworkspace", scheme: "App")
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  private_lane :inc_ver_ios do
+    increment_build_number(
+      xcodeproj: './ios/' + package['name'] + '.xcodeproj'
+    )
+    increment_version_number(
+      xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+      version_number: package['version']
+    )
+  end
+end
+
+platform :android do
+  desc "Push a new beta build to Google Play Internal Test Track"
+  lane :deploy do
+    increment_versions_android
+    gradle(
+      task: 'clean assemble',
+      build_type: 'Release',
+      project_dir: 'android/',
+      print_command: false,
+      properties: {
+        # "versionCode" => latest_testflight_build_number.to_i,
+        # "versionName" => package["version"],
+        "android.injected.signing.store.file" => "./android/app/homedics.keystore",
+        "android.injected.signing.store.password" => "homedics",
+        "android.injected.signing.key.alias" => "homedics",
+        "android.injected.signing.key.password" => "homedics",
+      }
+    )
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+    )
+    # slack(message: 'Successfully distributed a new internal test track build')
+  end
+
+  private_lane :increment_versions_android do
+    increment_version_code(
+      gradle_file_path: "./android/app/build.gradle"
+    )
+
+    increment_version_name(
+      gradle_file_path: "./android/app/build.gradle",
+      version_name: package['version']
+    )
+  end
+end
+
+desc "Generate app icons for App Store"
+lane :generateIcons do
+  appicon(
+    appicon_devices: [:ipad, :iphone, :ios_marketing],
+    appicon_path: "ios/App/Images.xcassets",
+    remove_alpha: true
+  )
+
+  # appicon(
+  #   appicon_devices: [:universal],
+  #   appicon_path: "ios/App/Images.xcassets",
+  #   appicon_name: 'SplashIcon.imageset'
+  # )
+
+  android_appicon(
+    appicon_image_file: 'fastlane/metadata/app_icon.png',
+    appicon_icon_types: [:launcher],
+    appicon_path: 'android/app/src/main/res/mipmap',
+    generate_rounded: true
+  )
+
+  android_appicon(
+    appicon_image_file: 'fastlane/metadata/app_icon.png',
+    appicon_icon_types: [:notification],
+    appicon_path: 'android/app/src/main/res/drawable',
+    appicon_filename: 'ic_notification',
+  )
+
+  # android_appicon(
+  #   appicon_image_file: 'fastlane/metadata/app_icon.png',
+  #   appicon_icon_types: [:splash_port, :splash_land],
+  #   appicon_path: 'android/app/src/main/res/drawable',
+  #   appicon_filename: 'splash'
+  # )
+end

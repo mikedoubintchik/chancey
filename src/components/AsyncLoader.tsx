@@ -1,10 +1,11 @@
-import { getPlatforms } from '@ionic/react';
 import { messaging } from 'config/firebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useNativePushNotification } from 'hooks/useNativePushNotifications';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
+import { Capacitor } from '@capacitor/core';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -47,11 +48,11 @@ const AsyncLoader: React.FC = () => {
   }, [initializeApplicationData]);
 
   useEffect(() => {
-    if (getPlatforms().includes('desktop') && messaging) {
+    if (Capacitor.getPlatform() === 'web' && messaging) {
       setupPushNotificationsForWeb(messaging);
     }
 
-    if (getPlatforms().includes('mobile')) {
+    if (Capacitor.isNativePlatform()) {
       setupPushNotificationsForMobile();
     }
   }, [setupPushNotificationsForWeb, setupPushNotificationsForMobile]);

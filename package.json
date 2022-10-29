@@ -1,5 +1,5 @@
 {
-  "name": "4tune",
+  "name": "chancey",
   "description": "Best lottery app out there",
   "version": "0.0.1",
   "private": true,
@@ -102,10 +102,14 @@
     "prepush": "npm run test:ci",
     "functions:emulate": "cd functions && npm run serve",
     "functions:watch": "cd functions && npm run serve:watch",
-    "start:ios": "GENERATE_SOURCEMAP=false ionic capacitor run ios -l -c --external",
-    "build:android": "ionic capacitor copy android",
-    "start:android": "GENERATE_SOURCEMAP=false ionic capacitor run android -l --host=$(ipconfig getifaddr en0)",
-    "deploy": "ionic build --prod && firebase deploy"
+    "build:ios": "ionic cap copy android",
+    "start:ios": "GENERATE_SOURCEMAP=false ionic cap run ios -l -c --external",
+    "build:android": "ionic cap copy android",
+    "start:android": "GENERATE_SOURCEMAP=false ionic cap run android -l --host=$(ipconfig getifaddr en0)",
+    "deploy:firebase": "ionic build --prod && firebase deploy",
+    "deploy:ios": "bundle exec fastlane ios",
+    "deploy:android": "bundle exec fastlane anroid",
+    "setup": "sh scripts/setup.sh"
   },
   "browserslist": {
     "production": [

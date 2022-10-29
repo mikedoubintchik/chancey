@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:56916722998:android:46d8101d7f847ecb38df97",
         "android_client_info": {
-          "package_name": "com.robinhoods.tune"
+          "package_name": "io.chancey.app"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "56916722998-bnoqks3icv6pfgqub77bskiihp6lar5u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.robinhoods.tune",
+            "package_name": "io.chancey.app",
             "certificate_hash": "ba25b183c320b725d6813d6a7315a9abbe9c5e8e"
           }
         },

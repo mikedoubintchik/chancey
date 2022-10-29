@@ -5,7 +5,7 @@ android {
     namespace 'io.ionic.starter'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.robinhoods.tune"
+        applicationId "io.chancey.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -25,15 +25,15 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('../4tune-key.keystore')
+            storeFile file('../chancey-key.keystore')
             storePassword '7Qa90Vq0!7^1'
-            keyAlias '4tune'
+            keyAlias 'chancey'
             keyPassword '7Qa90Vq0!7^1'
         }
         debug {
-            storeFile file('../4tune-key-debug.keystore')
+            storeFile file('../chancey-key-debug.keystore')
             storePassword '3^Cl2#b4m9d4'
-            keyAlias '4tune-debug'
+            keyAlias 'chancey-debug'
             keyPassword '3^Cl2#b4m9d4'
         }
     }

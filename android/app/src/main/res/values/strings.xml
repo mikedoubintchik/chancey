@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">4tune</string>
-    <string name="title_activity_main">4tune</string>
-    <string name="package_name">com.robinhoods.tune</string>
-    <string name="custom_url_scheme">com.robinhoods.tune</string>
+    <string name="app_name">chancey</string>
+    <string name="title_activity_main">chancey</string>
+    <string name="package_name">io.chancey.app</string>
+    <string name="custom_url_scheme">io.chancey.app</string>
 </resources>

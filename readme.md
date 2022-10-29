@@ -1,11 +1,14 @@
-# 4tune
+# Chancey
 
 ## Prep environment
+You can do this all in one go (except #4) by running `npm run setup`
 
 1. Install Firebase CLI `npm install -g firebase-tools`
 2. Install SDKMAN `curl -s "https://get.sdkman.io" | bash`
 3. Install JAVA `sdk install java 11.0.2-open`
-4. Add below environment variable to your shell .rc file (~/.zshrc or ~/.bashrc)
+4. Install RVM `\curl -sSL <https://get.rvm.io> | bash -s stable --ruby`
+5. Install NVM `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash`
+6. Add below environment variable to your shell .rc file (~/.zshrc or ~/.bashrc)
 
 
 ```sh
@@ -17,6 +20,10 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Fastlane
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 ```
 
 ## Running the app

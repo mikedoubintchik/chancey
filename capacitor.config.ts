@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.robinhoods.tune',
-  appName: '4tune',
+  appId: 'io.chancey.app',
+  appName: 'Chancey',
   webDir: 'build',
   bundledWebRuntime: false,
   // plugins: {
