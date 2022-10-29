@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:56916722998:android:46d8101d7f847ecb38df97",
+        "mobilesdk_app_id": "1:56916722998:android:a3ece77c31f0a66138df97",
         "android_client_info": {
           "package_name": "io.chancey.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "56916722998-bnoqks3icv6pfgqub77bskiihp6lar5u.apps.googleusercontent.com",
+          "client_id": "56916722998-j6m7t7957j5tjh11e202rn32jaue8jdh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "io.chancey.app",
-            "certificate_hash": "ba25b183c320b725d6813d6a7315a9abbe9c5e8e"
+            "certificate_hash": "9dedc6fed991cbb5cf5393756a3d946a205034c0"
           }
         },
         {
@@ -38,6 +38,13 @@
             {
               "client_id": "56916722998-a7b8smt7majdjugmq18has9nvoiqnmbj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "56916722998-ieq07pd8dpje14ver1g6ro1vjm26elrl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ronbinhoods.tune"
+              }
             }
           ]
         }

@@ -1,7 +1,7 @@
 import { getPlatforms } from '@ionic/react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, initializeAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, setLogLevel } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { getMessaging, Messaging } from 'firebase/messaging';
 import { getStorage } from 'firebase/storage';
@@ -39,10 +39,11 @@ export const auth = resolveAuth();
 export const storage = getStorage(app);
 export const functions = getFunctions(app);
 export const db = getFirestore(app);
-export const messaging: Messaging | null = getPlatforms().includes('desktop') ? getMessaging(app) : null;
+export const messaging: Messaging | null = Capacitor.getPlatform() === 'web' ? getMessaging(app) : null;
 
 export default app;
 
 if (process.env.REACT_APP_ENV === 'development') {
   connectFunctionsEmulator(functions, 'localhost', 5001);
+  setLogLevel('debug'); // for firestore debugging
 }

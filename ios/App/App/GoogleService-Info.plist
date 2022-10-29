@@ -3,9 +3,9 @@
 <plist version="1.0">
 	<dict>
 		<key>CLIENT_ID</key>
-		<string>56916722998-km0u81befrpgr8mu45intm10a8devvh4.apps.googleusercontent.com</string>
+		<string>56916722998-jfc2el4te798nk0m4tt46ubd3gmc256u.apps.googleusercontent.com</string>
 		<key>REVERSED_CLIENT_ID</key>
-		<string>com.googleusercontent.apps.56916722998-km0u81befrpgr8mu45intm10a8devvh4</string>
+		<string>com.googleusercontent.apps.56916722998-jfc2el4te798nk0m4tt46ubd3gmc256u</string>
 		<key>ANDROID_CLIENT_ID</key>
 		<string>56916722998-bnoqks3icv6pfgqub77bskiihp6lar5u.apps.googleusercontent.com</string>
 		<key>API_KEY</key>
@@ -31,7 +31,7 @@
 		<key>IS_SIGNIN_ENABLED</key>
 		<true></true>
 		<key>GOOGLE_APP_ID</key>
-		<string>1:56916722998:ios:5d925b4d28341b3e38df97</string>
+		<string>1:56916722998:ios:ed499328a107805238df97</string>
 		<key>DATABASE_URL</key>
 		<string>https://tune-363401-default-rtdb.firebaseio.com</string>
 	</dict>
