@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "tune-363401",
     "staging": "tune-363401"
   },
   "targets": {},

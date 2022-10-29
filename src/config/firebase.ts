@@ -1,4 +1,3 @@
-import { getPlatforms } from '@ionic/react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, initializeAuth } from 'firebase/auth';
 import { getFirestore, setLogLevel } from 'firebase/firestore';
@@ -8,8 +7,8 @@ import { getStorage } from 'firebase/storage';
 
 import config from './config';
 
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { Capacitor } from '@capacitor/core';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 const app = initializeApp(config.firebase);
 
