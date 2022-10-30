@@ -20,6 +20,7 @@ export const useNativePushNotification = () => {
 
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration', (token: Token) => {
+      console.log('Push Notifications Token: ', token);
       showToast('Push registration success');
     });
 

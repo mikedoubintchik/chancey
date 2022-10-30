@@ -103,7 +103,7 @@
     "functions:emulate": "cd functions && npm run serve",
     "functions:watch": "cd functions && npm run serve:watch",
     "build:ios": "ionic cap copy android",
-    "start:ios": "GENERATE_SOURCEMAP=false ionic cap run ios -l -c --external",
+    "start:ios": "GENERATE_SOURCEMAP=false ionic cap run ios -l -c --external --livereload --device",
     "build:android": "ionic cap copy android",
     "start:android": "GENERATE_SOURCEMAP=false ionic cap run android -l --host=$(ipconfig getifaddr en0)",
     "deploy:firebase": "ionic build --prod && firebase deploy",

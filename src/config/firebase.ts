@@ -1,14 +1,12 @@
+import { Capacitor } from '@capacitor/core';
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAuth, initializeAuth } from 'firebase/auth';
 import { getFirestore, setLogLevel } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { getMessaging, Messaging } from 'firebase/messaging';
 import { getStorage } from 'firebase/storage';
-
 import config from './config';
-
-import { Capacitor } from '@capacitor/core';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 const app = initializeApp(config.firebase);
 
@@ -28,18 +26,17 @@ initializeAppCheck(app, {
   // tokens as needed.
   isTokenAutoRefreshEnabled: true,
 });
-const resolveAuth = () => {
-  if (Capacitor.isNativePlatform()) {
-    return initializeAuth(app);
-  } else return getAuth(app);
-};
-export const auth = resolveAuth();
 
+const resolveAuth = () => {
+  if (Capacitor.isNativePlatform()) return initializeAuth(app);
+  else return getAuth(app);
+};
+
+export const auth = resolveAuth();
 export const storage = getStorage(app);
 export const functions = getFunctions(app);
 export const db = getFirestore(app);
 export const messaging: Messaging | null = Capacitor.getPlatform() === 'web' ? getMessaging(app) : null;
-
 export default app;
 
 if (process.env.REACT_APP_ENV === 'development') {
