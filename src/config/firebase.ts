@@ -41,5 +41,5 @@ export default app;
 
 if (process.env.REACT_APP_ENV === 'development') {
   connectFunctionsEmulator(functions, 'localhost', 5001);
-  setLogLevel('debug'); // for firestore debugging
+  if (process.env.REACT_APP_FIREBASE_DEBUG === 'true') setLogLevel('debug'); // for firestore debugging
 }
