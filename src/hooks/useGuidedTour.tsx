@@ -1,10 +1,7 @@
-import { Page } from '@ionic/core';
 import { useCallback, useEffect, useState } from 'react';
 import { CallBackProps, STATUS } from 'react-joyride';
-import { get, getObject, set, setObject } from 'stores/IonicStorage';
-import { ActionType, useStore } from 'stores/store';
-import { Pages } from 'types/pages';
-import { GuidedTour } from 'types/profile';
+import { get, set } from 'stores/IonicStorage';
+import { useStore } from 'stores/store';
 
 const useGuidedTour = () => {
   const page = window.location.pathname.substring(1);
