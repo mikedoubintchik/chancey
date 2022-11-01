@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react';
 export const useNativePushNotification = () => {
   const nullEntry: any[] = [];
   const [notifications, setNotifications] = useState(nullEntry);
-  console.log('Mobile push notifications', notifications);
+  // console.log('Mobile push notifications', notifications);
 
   const showToast = async (msg: string) => {
     await Toast.show({
@@ -53,7 +53,7 @@ export const useNativePushNotification = () => {
 
   const setupPushNotificationsForWeb = useCallback(
     async (messaging: Messaging) => {
-      console.log('Web push notifications', notifications);
+      // console.log('Web push notifications', notifications);
 
       // https://github.com/firebase/quickstart-js/tree/master/messaging
       try {

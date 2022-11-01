@@ -14,8 +14,8 @@ const AsyncLoader: React.FC = () => {
 
   const initializeApplicationData = useCallback(async () => {
     console.log('Creating ionic store in initializeApplicationData');
-    await createIonicStore('historical-data-mega');
-    let historicalData = await get('historical-data-mega');
+    await createIonicStore('app-data');
+    let historicalData = await get('app-data');
     // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 17 ~ initializeApplicationData ~ historicalData', historicalData);
 
     if (historicalData === null) {

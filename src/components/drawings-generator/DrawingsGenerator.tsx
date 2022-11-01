@@ -27,7 +27,7 @@ interface DrawingsGeneratorProps {
 const DrawingsGenerator: React.FC<DrawingsGeneratorProps> = ({ count, showMax }) => {
   const { state } = useStore();
   const [drawings, setDrawings] = useState<Array<SeriesModel>>([]);
-  const [generating, setGenerating] = useState<boolean>(true);
+  const [generating, setGenerating] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(5);
 
   const generateDrawings = useCallback(async () => {

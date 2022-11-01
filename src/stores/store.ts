@@ -2,7 +2,8 @@ import { createContext, Dispatch, Reducer, useContext } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
-import { TicketPhotoType, UserType } from 'types/profile';
+import { Pages } from 'types/pages';
+import { TicketPhotoType, GuidedTour, UserType } from 'types/profile';
 import { SeriesModel } from 'types/series';
 import Worker from 'web-worker';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
@@ -24,6 +25,7 @@ export enum ActionType {
   UPDATE_HISTORICAL_DATA = 'UPDATE_HISTORICAL_DATA',
   INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
   UPDATE_CHANCES = 'UPDATE_CHANCES',
+  UPDATE_GUIDED_TOUR = 'UPDATE_GUIDED_TOUR',
 }
 export interface IReducer {
   type: ActionType;

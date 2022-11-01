@@ -2,7 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, diamondOutline, homeOutline, infiniteOutline, person, statsChart } from 'ionicons/icons';
+import { camera, homeOutline, infiniteOutline, person, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
@@ -26,11 +26,13 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
-import './theme/variables.css';
-import './App.css';
 import AsyncLoader from 'components/AsyncLoader';
+import useGuidedTour from 'hooks/useGuidedTour';
 import RulesPage from 'pages/RulesPage';
 import { Reducer, useReducer } from 'react';
+import Joyride from 'react-joyride';
+import './App.css';
+import './theme/variables.css';
 
 library.add(fab);
 
@@ -38,6 +40,7 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
+  const { handleCallback, run, steps, stepIndex } = useGuidedTour();
   // console.log('Initializing app');
   // console.log('returning app component');
   return (
@@ -45,6 +48,23 @@ const App: React.FC = () => {
       {/* splash */}
       <IonApp>
         <AsyncLoader />
+        <Joyride
+          callback={handleCallback}
+          continuous
+          run={run}
+          // stepIndex={stepIndex}
+          steps={steps}
+          styles={
+            {
+              // options: {
+              //   arrowColor: theme.black,
+              //   backgroundColor: theme.black,
+              //   primaryColor: theme.colors.purple,
+              //   textColor: theme.white,
+              // },
+            }
+          }
+        />
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>

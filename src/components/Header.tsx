@@ -26,7 +26,7 @@ const Header: React.FC<IHeader> = ({ pageTitle }) => {
         </IonButtons> */}
         <IonButtons slot="end">
           <IonMenuToggle>
-            <IonButton>
+            <IonButton id="profile-menu">
               <IonIcon slot="icon-only" icon={personCircle} />
             </IonButton>
           </IonMenuToggle>
