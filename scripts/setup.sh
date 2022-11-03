@@ -1,7 +1,7 @@
 npm install -g firebase-tools
 curl -s "https://get.sdkman.io" | bash
 sdk install java 11.0.2-open
-\curl -sSL https://get.rvm.io | bash -s stable --ruby
+curl -sSL https://get.rvm.io | bash -s stable --ruby
 source /Users/ninja/.rvm/scripts/rvm
 gem install bundler
 bundle update
