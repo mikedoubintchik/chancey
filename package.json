@@ -109,7 +109,8 @@
     "start:android": "GENERATE_SOURCEMAP=false ionic cap run android -l --host=$(ipconfig getifaddr en0)",
     "deploy:firebase": "ionic build --prod && firebase deploy",
     "deploy:ios": "bundle exec fastlane ios",
-    "deploy:android": "bundle exec fastlane anroid",
+    "deploy:ios:beta": "bundle exec fastlane beta",
+    "deploy:android": "bundle exec fastlane android deploy",
     "setup": "sh scripts/setup.sh"
   },
   "browserslist": {

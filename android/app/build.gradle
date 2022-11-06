@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    namespace 'io.ionic.starter'
+    namespace 'io.chancey.app'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.chancey.app"
@@ -25,13 +25,13 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('../chancey-key.keystore')
+            storeFile file('../chancey.keystore')
             storePassword '7Qa90Vq0!7^1'
             keyAlias 'chancey'
             keyPassword '7Qa90Vq0!7^1'
         }
         debug {
-            storeFile file('../chancey-key-debug.keystore')
+            storeFile file('../chancey-debug.keystore')
             storePassword '3^Cl2#b4m9d4'
             keyAlias 'chancey-debug'
             keyPassword '3^Cl2#b4m9d4'

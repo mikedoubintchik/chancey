@@ -13,32 +13,48 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "grka-cwac-tcnx-twtj"
-package = load_json(json_path: "./package.json")
+# ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "grka-cwac-tcnx-twtj"
+package = load_json(json_path: "package.json")
 
 default_platform(:ios)
 
 platform :ios do
+  match(type: "appstore")
+
+  app_store_connect_api_key(
+    key_id: "YRNQ3QP7JY",
+    issuer_id: "69a6de97-eae7-47e3-e053-5b8c7c11a4d1",
+    key_filepath: "credentials/AuthKey_YRNQ3QP7JY.p8",
+    duration: 1200, # optional (maximum 1200)
+    in_house: false # optional but may be required if using match/sigh
+  )
+
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    add_badge(dark: true)
-    increment_build_number(xcodeproj: "ios/App.xcodeproj")
-    build_app(workspace: "ios/App.xcworkspace", scheme: "App")
+    # add_badge(dark: true)
+    # increment_build_number(xcodeproj: "ios/App/App.xcodeproj")
+    build_app(
+      workspace: "ios/App/App.xcworkspace",
+      scheme: "App"
+    )
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
   lane :deploy do
-    increment_build_number(xcodeproj: "ios/App.xcodeproj")
-    build_app(workspace: "ios/App.xcworkspace", scheme: "App")
+    increment_build_number(xcodeproj: "ios/App/App.xcodeproj")
+    build_app(
+      workspace: "ios/App/App.xcworkspace",
+      scheme: "App"
+    )
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
   private_lane :inc_ver_ios do
     increment_build_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj'
+      xcodeproj: './ios/App/' + package['name'] + '.xcodeproj'
     )
     increment_version_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+      xcodeproj: './ios/App/' + package['name'] + '.xcodeproj',
       version_number: package['version']
     )
   end
@@ -47,7 +63,7 @@ end
 platform :android do
   desc "Push a new beta build to Google Play Internal Test Track"
   lane :deploy do
-    increment_versions_android
+    # increment_versions_android
     gradle(
       task: 'clean assemble',
       build_type: 'Release',
@@ -56,10 +72,10 @@ platform :android do
       properties: {
         # "versionCode" => latest_testflight_build_number.to_i,
         # "versionName" => package["version"],
-        "android.injected.signing.store.file" => "./android/app/homedics.keystore",
-        "android.injected.signing.store.password" => "homedics",
-        "android.injected.signing.key.alias" => "homedics",
-        "android.injected.signing.key.password" => "homedics",
+        "android.injected.signing.store.file" => "credentials/chancey.keystore",
+        "android.injected.signing.store.password" => "chancey",
+        "android.injected.signing.key.alias" => "chancey",
+        "android.injected.signing.key.password" => "chancey",
       }
     )
     upload_to_play_store(
@@ -71,11 +87,11 @@ platform :android do
 
   private_lane :increment_versions_android do
     increment_version_code(
-      gradle_file_path: "./android/app/build.gradle"
+      gradle_file_path: "android/app/build.gradle"
     )
 
     increment_version_name(
-      gradle_file_path: "./android/app/build.gradle",
+      gradle_file_path: "android/app/build.gradle",
       version_name: package['version']
     )
   end

@@ -1,8 +1,13 @@
+# Apple
 app_identifier("io.chancey.app") # The bundle identifier of your app
 apple_id("mike.doubintchik@gmail.com") # Your Apple Developer Portal username
 
 itc_team_id("118906389") # App Store Connect Team ID
 team_id("5Y4E5ZP39A") # Developer Portal Team ID
+
+# Google
+json_key_file("credentials/google-cloud-api-key.json")
+package_name("io.chancey.app")
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile

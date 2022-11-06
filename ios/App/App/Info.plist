@@ -46,10 +46,14 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<true/>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Add your description for requiring permission here</string>
+		<string>Location is used for finding nearby lottery redemption locations and sending push notification when near key locations.</string>
 		<key>NSLocationAlwaysUsageDescription</key>
-		<string>Add your description for requiring permission here</string>
+		<string>Location is used for finding nearby lottery redemption locations and sending push notification when near key locations.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Add your description for requiring permission here</string>
+		<string>Location is used for finding nearby lottery redemption locations.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Photo library access is used to store photos of lottery tickets.</string>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
 	</dict>
 </plist>
