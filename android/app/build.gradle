@@ -25,16 +25,16 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('../chancey.keystore')
-            storePassword '7Qa90Vq0!7^1'
+            storeFile file('chancey.keystore')
+            storePassword 'chancey'
             keyAlias 'chancey'
-            keyPassword '7Qa90Vq0!7^1'
+            keyPassword 'chancey'
         }
         debug {
-            storeFile file('../chancey-debug.keystore')
-            storePassword '3^Cl2#b4m9d4'
+            storeFile file('chancey-debug.keystore')
+            storePassword 'chancey'
             keyAlias 'chancey-debug'
-            keyPassword '3^Cl2#b4m9d4'
+            keyPassword 'chancey'
         }
     }
 }
