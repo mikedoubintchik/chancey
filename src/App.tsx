@@ -7,7 +7,7 @@ import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,9 +29,10 @@ import '@ionic/react/css/text-transformation.css';
 import AsyncLoader from 'components/AsyncLoader';
 import useGuidedTour from 'hooks/useGuidedTour';
 import RulesPage from 'pages/RulesPage';
-import { Reducer, useReducer } from 'react';
+import { Reducer, useEffect, useReducer } from 'react';
 import Joyride from 'react-joyride';
 import './App.css';
+import WelcomePage from './pages/WelcomePage';
 import './theme/variables.css';
 
 library.add(fab);
@@ -41,8 +42,7 @@ setupIonicReact();
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
   const { handleCallback, run, steps, stepIndex } = useGuidedTour();
-  // console.log('Initializing app');
-  // console.log('returning app component');
+
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {/* splash */}
@@ -65,53 +65,55 @@ const App: React.FC = () => {
             }
           }
         />
-        <IonReactRouter>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/home">
-                <HomePage />
-              </Route>
-              <Route exact path="/stats">
-                <StatsPage />
-              </Route>
-              <Route path="/geolocation">
-                <GeolocationPage />
-              </Route>
-              <Route path="/scan">
-                <ScanTicket />
-              </Route>
-              <Route path="/stats">
-                <StatsPage />
-              </Route>
-              <Route path="/rules">
-                <RulesPage />
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/home" />
-              </Route>
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom" class="app-tab-bar">
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
-              </IonTabButton>
-              <IonTabButton tab="stats" href="/stats">
-                <IonIcon icon={statsChart} />
-              </IonTabButton>
-              <IonTabButton tab="rules" href="/rules">
-                <IonIcon
-                  icon={infiniteOutline}
-                  style={{ border: '1px solid', borderRadius: '100%', padding: '10px' }}
-                />
-              </IonTabButton>
-              <IonTabButton tab="geolocation" href="/geolocation">
-                <IonIcon icon={person} />
-              </IonTabButton>
-              <IonTabButton tab="scan" href="/scan">
-                <IonIcon icon={camera} />
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        </IonReactRouter>
+        <WelcomePage />
+
+        {/* Check if should show welcome page in some other way */}
+        {!window.location.pathname.includes('/welcome') && (
+          <IonReactRouter>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/home">
+                  <HomePage />
+                </Route>
+                <Route exact path="/stats">
+                  <StatsPage />
+                </Route>
+                <Route path="/geolocation">
+                  <GeolocationPage />
+                </Route>
+                <Route path="/scan">
+                  <ScanTicket />
+                </Route>
+                <Route path="/stats">
+                  <StatsPage />
+                </Route>
+                <Route path="/rules">
+                  <RulesPage />
+                </Route>
+              </IonRouterOutlet>
+              <IonTabBar slot="bottom" class="app-tab-bar">
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={homeOutline} />
+                </IonTabButton>
+                <IonTabButton tab="stats" href="/stats">
+                  <IonIcon icon={statsChart} />
+                </IonTabButton>
+                <IonTabButton tab="rules" href="/rules">
+                  <IonIcon
+                    icon={infiniteOutline}
+                    style={{ border: '1px solid', borderRadius: '100%', padding: '10px' }}
+                  />
+                </IonTabButton>
+                <IonTabButton tab="geolocation" href="/geolocation">
+                  <IonIcon icon={person} />
+                </IonTabButton>
+                <IonTabButton tab="scan" href="/scan">
+                  <IonIcon icon={camera} />
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </IonReactRouter>
+        )}
       </IonApp>
     </AppContext.Provider>
   );

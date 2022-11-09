@@ -88,7 +88,7 @@ export function useFirebase() {
           registerUser(user);
 
           // redirect to profile page upon successful login
-          history.push(`/home`);
+          history.push('/home');
         }
 
         // TODO: fix any
