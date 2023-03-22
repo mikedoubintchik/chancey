@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import { messaging } from 'config/firebase';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useNativePushNotification } from 'hooks/useNativePushNotifications';
@@ -5,7 +6,7 @@ import { useCallback, useEffect } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
-import { Capacitor } from '@capacitor/core';
+import GlassfyService from 'services/glassfy';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -40,6 +41,21 @@ const AsyncLoader: React.FC = () => {
         initialChances: initResults?.cacheSize,
         finalChances: initResults?.cacheSize,
       });
+    }
+  }, []);
+
+  const initializeGlassify = useCallback(async () => {
+    const Glassfy = new GlassfyService();
+
+    const offerings = Glassfy.getOfferings();
+    console.log('🚀 ~ file: AsyncLoader.tsx ~ line 51 ~ initializeGlassify ~ offerings', offerings);
+    const user = Glassfy.user;
+    console.log('🚀 ~ file: AsyncLoader.tsx ~ line 53 ~ initializeGlassify ~ user', user);
+  }, []);
+
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      initializeGlassify();
     }
   }, []);
 
