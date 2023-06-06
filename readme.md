@@ -6,9 +6,10 @@ You can do this all in one go (except #4) by running `npm run setup`
 1. Install Firebase CLI `npm install -g firebase-tools`
 2. Install SDKMAN `curl -s "https://get.sdkman.io" | bash`
 3. Install JAVA `sdk install java 11.0.2-open`
-4. Install RVM `\curl -sSL <https://get.rvm.io> | bash -s stable --ruby`
-5. Install NVM `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash`
-6. Add below environment variable to your shell .rc file (~/.zshrc or ~/.bashrc)
+4. Set correct path to
+5. Install RVM `\curl -sSL <https://get.rvm.io> | bash -s stable --ruby`
+6. Install NVM `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash`
+7. Add below environment variable to your shell .rc file (~/.zshrc or ~/.bashrc)
 
 
 ```sh
