@@ -1,6 +1,7 @@
 import {
   IonButtons,
   IonCard,
+  IonCardContent,
   IonCardHeader,
   IonCardTitle,
   IonContent,
@@ -23,6 +24,7 @@ import useModal from 'hooks/useModal';
 import { useEffect, useState } from 'react';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import HistoryPage from './HistoryPage';
+import LotteryDrawWithStats from 'components/lottery-draw-with-stats/LotteryDrawWithStats';
 const HomePage: React.FC = () => {
   const { getHistoricalData } = useHistoricalData();
   const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel> | []>([]);
@@ -73,11 +75,13 @@ const HomePage: React.FC = () => {
                 </IonButtons>
               </IonToolbar>
             </IonCardHeader>
-            {!currentDrawing && (
-              <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
-            )}
-
-            {currentDrawing && <LotteryDraw draw={currentDrawing} />}
+            <IonCardContent>
+              {' '}
+              {!currentDrawing && (
+                <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
+              )}
+              {currentDrawing && <LotteryDrawWithStats draw={currentDrawing} />}
+            </IonCardContent>
           </IonCard>
           <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator>
         </IonContent>

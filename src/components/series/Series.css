@@ -6,5 +6,14 @@
 .series-numbers-container {
   display: flex;
   flex-flow: row;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+.underline {
+  position: absolute;
+  bottom: 0px;
+  height: 5px;
+  width: 40px;
+  background-color: white;
+  border-radius: 5px;
+  transition: translate 0.3s ease-in-out;
 }

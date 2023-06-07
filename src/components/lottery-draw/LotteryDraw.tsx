@@ -13,13 +13,7 @@ const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw }) => {
   let finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : getDefaultLDM();
   return (
     <div>
-      {/* <IonCardHeader class="lottery-draw-header">
-        <IonLabel class="lottery-draw-date-label">{finalDraw.date.toLocaleDateString()}</IonLabel>
-        <IonIcon icon={calendarOutline} />
-      </IonCardHeader> */}
-      <IonCardContent>
-        <Series numbers={finalDraw.series.numbers} extra={finalDraw.series.extra} />
-      </IonCardContent>
+      <Series numbers={finalDraw.series.numbers} extra={finalDraw.series.extra} onBallClick={(n, ie) => {}} />
     </div>
   );
 };
