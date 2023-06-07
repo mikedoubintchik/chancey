@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
           <IonCard id="latest-result">
             <IonCardHeader>
               <IonToolbar>
-                <IonCardTitle className="title-left">Winning Numbers</IonCardTitle>
+                <IonCardTitle className="title-left">Mega Millions</IonCardTitle>
                 <IonButtons slot="end" className="date-dropdown">
                   <DateDropdown />
                 </IonButtons>
@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
               {!currentDrawing && (
                 <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
               )}
-              {currentDrawing && <LotteryDrawWithStats draw={currentDrawing} />}
+              {currentDrawing && <LotteryDrawWithStats draw={currentDrawing} history={latestResults} />}
             </IonCardContent>
           </IonCard>
           {/* <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator> */}

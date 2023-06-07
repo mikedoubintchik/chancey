@@ -12,9 +12,9 @@ const Ball: React.FC<BallProps> = ({ num, color, hollow }) => {
     color = 'transparent';
   }
   return (
-    <div className="ball-container" style={{ backgroundColor: color }}>
+    <div className="ball-container-flat" style={{ backgroundColor: color }}>
       {num > 0 && <div className="ball-number">{num}</div>}
-      {num > 0 && <div className="ball-number-decor"></div>}
+      {/* {num > 0 && <div className="ball-number-decor"></div>} */}
     </div>
   );
 };

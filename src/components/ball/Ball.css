@@ -7,6 +7,15 @@
   background-color: #CC9630;
 
 }
+.ball-container-flat {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-items: center;
+  background-color: #CC9630;
+
+}
 
 .ball-container::after {
   content: "";
