@@ -14,7 +14,7 @@ const getDefaultState = () => {
   return {
     series: [
       {
-        data: [{}],
+        data: [1, 2, 3, 4, 5],
       },
     ],
     options: {
@@ -44,10 +44,15 @@ const getDefaultState = () => {
 };
 
 const SingleNumberStats: React.FC<SingleNumberStatsProps> = ({ number }) => {
+  const [_chartState, setChartState] = useState(getDefaultState());
   useEffect(() => {
     console.log(number);
   }, [number]);
-  return <div></div>;
+  return (
+    <div>
+      <Chart options={_chartState.options as any} series={_chartState.series as any} type="line" height={200} />
+    </div>
+  );
 };
 
 export default SingleNumberStats;

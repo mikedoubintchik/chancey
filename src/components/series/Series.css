@@ -10,7 +10,7 @@
 }
 .underline {
   position: absolute;
-  bottom: 0px;
+  top: 45px;
   height: 5px;
   width: 40px;
   background-color: white;
