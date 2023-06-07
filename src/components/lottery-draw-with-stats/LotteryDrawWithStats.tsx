@@ -22,6 +22,7 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
     // console.log("currentDrawingIndex",currentDrawingIndex)
     let maxScanBack = 200;
     let windowSize = 50;
+
     let histryToCurrent = history.slice(currentDrawingIndex, currentDrawingIndex + maxScanBack);
     var len = histryToCurrent.length - windowSize;
     if (len <= 0) {
@@ -47,23 +48,7 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
       }
     }
     counts = counts.reverse();
-    // if(len<51){
-    //   for(var i = 0 ; i<49;i++){
-    //     counts.push(0);
-    //   }
-    //   var singleCount = 0;
-    //   for (var i = 0; i < len; i++) {
-    //     let numbers = histryToCurrent[i].series.numbers;
-    //     if (numbers.indexOf(num) > -1) {
-    //       singleCount += 1;
-    //     }
-    //   }
-    //   counts.push(singleCount);
-    //   console.log(counts)
-    // }
-    // else{
 
-    // }
     setCurrentNumStats(counts);
   };
 
