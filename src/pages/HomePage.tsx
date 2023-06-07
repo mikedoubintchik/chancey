@@ -1,4 +1,18 @@
-import { IonCard, IonCardHeader, IonContent, IonHeader, IonPage, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonButtons,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonLabel,
+  IonPage,
+  IonSelect,
+  IonSelectOption,
+  IonSpinner,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import DrawingsGenerator from 'components/drawings-generator/DrawingsGenerator';
 import Header from 'components/Header';
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
@@ -10,13 +24,34 @@ import { useEffect, useState } from 'react';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import HistoryPage from './HistoryPage';
 const HomePage: React.FC = () => {
-  const { getLatestMegaResults } = useHistoricalData();
-  const [latestResult, setLatestResult] = useState<LotteryDrawModel | undefined>(undefined);
+  const { getHistoricalData } = useHistoricalData();
+  const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel> | []>([]);
+  const [currentDrawing, setCurrentDrawing] = useState<LotteryDrawModel | undefined>(undefined);
   const [isOpen, showModal, hideModal] = useModal();
 
   useEffect(() => {
-    getLatestMegaResults().then((data) => setLatestResult(data));
+    getHistoricalData().then((data) => {
+      setLatestResults(data);
+      setCurrentDrawing(data[0]);
+    });
   }, []);
+
+  const DateDropdown = () => {
+    return (
+      <IonSelect
+        placeholder="Select Drawing Date"
+        interface="popover"
+        onIonChange={(ev) => setCurrentDrawing(ev.detail.value)}
+        selectedText={currentDrawing ? currentDrawing.date.toDateString() : undefined}
+      >
+        {latestResults.map((drawing) => (
+          <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
+            {drawing.date.toDateString()}
+          </IonSelectOption>
+        ))}
+      </IonSelect>
+    );
+  };
 
   return (
     <>
@@ -29,19 +64,23 @@ const HomePage: React.FC = () => {
               <IonTitle size="large">Tab 1</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonCard id="latest-result" onClick={() => showModal()}>
-            <IonCardHeader style={{ textAlign: 'center' }}>Winning Numbers</IonCardHeader>
-            {!latestResult && (
+          <IonCard id="latest-result">
+            <IonCardHeader>
+              <IonToolbar>
+                <IonCardTitle className="title-left">Winning Numbers</IonCardTitle>
+                <IonButtons slot="end" className="date-dropdown">
+                  <DateDropdown />
+                </IonButtons>
+              </IonToolbar>
+            </IonCardHeader>
+            {!currentDrawing && (
               <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
             )}
 
-            {latestResult && <LotteryDraw draw={latestResult} />}
+            {currentDrawing && <LotteryDraw draw={currentDrawing} />}
           </IonCard>
           <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator>
         </IonContent>
-        <Modal isOpen={isOpen} hideModal={hideModal} title="Previous Drawings">
-          <HistoryPage></HistoryPage>
-        </Modal>
       </IonPage>
     </>
   );
