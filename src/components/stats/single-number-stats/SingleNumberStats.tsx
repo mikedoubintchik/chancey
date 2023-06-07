@@ -14,30 +14,37 @@ const getDefaultState = () => {
   return {
     series: [
       {
-        data: [1, 2, 3, 4, 5],
+        data: [1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
       },
     ],
     options: {
+      tooltip: {
+        enabled: false,
+      },
       chart: {
-        type: 'boxPlot',
+        type: 'line',
+
         toolbar: {
           show: false,
         },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          barHeight: '50%',
+        selection: {
+          enabled: false,
         },
-        boxPlot: {
-          colors: {
-            upper: '#e9ecef',
-            lower: '#f8f9fa',
-          },
+        zoom: {
+          enabled: false,
         },
       },
       stroke: {
-        colors: ['#6c757d'],
+        width: 1,
+      },
+      // plotOptions: {
+      //   bar: {
+      //     horizontal: false
+      //   },
+
+      // },
+      grid: {
+        show: false, // Hide horizontal lines
       },
     },
   };
@@ -49,7 +56,7 @@ const SingleNumberStats: React.FC<SingleNumberStatsProps> = ({ number }) => {
     console.log(number);
   }, [number]);
   return (
-    <div>
+    <div style={{ marginTop: '20px', marginLeft: '-15px' }}>
       <Chart options={_chartState.options as any} series={_chartState.series as any} type="line" height={200} />
     </div>
   );

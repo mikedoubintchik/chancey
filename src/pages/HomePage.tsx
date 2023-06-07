@@ -83,7 +83,7 @@ const HomePage: React.FC = () => {
               {currentDrawing && <LotteryDrawWithStats draw={currentDrawing} />}
             </IonCardContent>
           </IonCard>
-          <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator>
+          {/* <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator> */}
         </IonContent>
       </IonPage>
     </>
