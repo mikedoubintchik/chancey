@@ -1,24 +1,15 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import {
-  IonApp,
-  IonIcon,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact,
-  useIonViewWillEnter,
-} from '@ionic/react';
+import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { camera, homeOutline, infiniteOutline, person, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
 import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
-import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
-import { ActionType, AppContext, initialState, InitialStateType, IReducer, reducer } from 'stores/store';
+import { Redirect, Route } from 'react-router-dom';
 import { get } from 'stores/IonicStorage';
+import { AppContext, IReducer, InitialStateType, initialState, reducer } from 'stores/store';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,19 +29,16 @@ import '@ionic/react/css/text-transformation.css';
 
 /* Theme variables */
 import AsyncLoader from 'components/AsyncLoader';
+import WelcomePageLogin from 'components/welcome/WelcomePageLogin';
+import WelcomePageLogo from 'components/welcome/WelcomePageLogo';
+import WelcomePageLuckyToken from 'components/welcome/WelcomePageLuckyToken';
+import WelcomePageName from 'components/welcome/WelcomePageName';
 import useGuidedTour from 'hooks/useGuidedTour';
 import RulesPage from 'pages/RulesPage';
 import { Reducer, useEffect, useReducer, useState } from 'react';
 import Joyride from 'react-joyride';
 import './App.css';
-import WelcomePage from './pages/WelcomePage';
 import './theme/variables.css';
-import WelcomePageLogo from 'components/welcome/WelcomePageLogo';
-import WelcomePageName from 'components/welcome/WelcomePageName';
-import WelcomePageLuckyToken from 'components/welcome/WelcomePageLuckyToken';
-import WelcomePageLogin from 'components/welcome/WelcomePageLogin';
-import { truncate } from 'lodash';
-import ProtectedRoute from 'components/ProtectedRoute';
 
 library.add(fab);
 
