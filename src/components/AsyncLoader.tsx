@@ -41,6 +41,15 @@ const AsyncLoader: React.FC = () => {
         finalChances: initResults?.cacheSize,
       });
     }
+
+    const welcomeFinished = await get('welcomeFinished');
+
+    if (welcomeFinished) {
+      dispatch({
+        type: ActionType.UPDATE_WELCOME_FINISHED,
+        welcomeFinished,
+      });
+    }
   }, []);
 
   useEffect(() => {

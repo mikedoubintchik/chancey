@@ -1,5 +1,10 @@
 import { UserCredential } from 'firebase/auth';
 
+export type SignupUserType = {
+  displayName?: UserCredential['user']['displayName'];
+  token?: string;
+};
+
 export type UserType = {
   uid: UserCredential['user']['uid'];
   displayName: UserCredential['user']['displayName'];

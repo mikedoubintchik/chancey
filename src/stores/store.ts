@@ -2,7 +2,7 @@ import { createContext, Dispatch, Reducer, useContext } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { getRulesBank } from 'rules/RuleUtils';
 import { LotteryDrawModel } from 'types/lottery-draw';
-import { TicketPhotoType, UserType } from 'types/profile';
+import { SignupUserType, TicketPhotoType, UserType } from 'types/profile';
 import { SeriesModel } from 'types/series';
 import Worker from 'web-worker';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
@@ -16,6 +16,9 @@ RuleEngineClient.initInstance(worker);
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
+  UPDATE_USER_NAME = 'UPDATE_USER_NAME',
+  UPDATE_USER_TOKEN = 'UPDATE_USER_TOKEN',
+  UPDATE_WELCOME_FINISHED = 'UPDATE_WELCOME_FINISHED',
   UPDATE_TICKET_PHOTOS = 'UPDATE_TICKET_PHOTOS',
   UPDATE_TICKET_PHOTOS_TEXT = 'UPDATE_TICKET_PHOTOS_TEXT',
   ADD_ENGINE_RULE = 'ADD_ENGINE_RULE',
@@ -29,6 +32,9 @@ export enum ActionType {
 export interface IReducer {
   type: ActionType;
   user: UserType;
+  displayName: SignupUserType['displayName'];
+  token: SignupUserType['token'];
+  welcomeFinished: boolean;
   ticketPhotos: TicketPhotoType[];
   ticketText: TicketPhotoType['ticketText'];
   rule: IRuleBase;
@@ -43,6 +49,8 @@ export interface IReducer {
 
 export type InitialStateType = {
   user: UserType | null;
+  signupUser: SignupUserType | null;
+  welcomeFinished: boolean;
   ticketPhotos: TicketPhotoType[];
   rules: IRuleBase[];
   cache: Array<SeriesModel>;
@@ -55,6 +63,8 @@ export type InitialStateType = {
 
 export const initialState: InitialStateType = {
   user: null,
+  signupUser: null,
+  welcomeFinished: false,
   ticketPhotos: [],
   rules: [],
   cache: [],
@@ -76,12 +86,19 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       };
     case ActionType.UPDATE_USER:
       return { ...state, user: action.user };
+    case ActionType.UPDATE_USER_NAME:
+      return { ...state, signupUser: { ...state.signupUser, displayName: action.displayName } };
+    case ActionType.UPDATE_USER_TOKEN:
+      return { ...state, signupUser: { ...state.signupUser, token: action.token } };
+    case ActionType.UPDATE_WELCOME_FINISHED:
+      return { ...state, welcomeFinished: action.welcomeFinished };
     case ActionType.UPDATE_TICKET_PHOTOS:
       return { ...state, ticketPhotos: action.ticketPhotos };
     case ActionType.UPDATE_TICKET_PHOTOS_TEXT: {
       const lastTicket = state.ticketPhotos.pop() as TicketPhotoType;
       const updatedTicket = { ...lastTicket, ticketText: action.ticketText };
       const updatedTickets = state.ticketPhotos;
+      console.log('🚀 ~ file: store.ts:85 ~ updatedTicket', updatedTicket);
       updatedTickets.push(updatedTicket);
       return { ...state, ticketPhotos: updatedTickets };
     }

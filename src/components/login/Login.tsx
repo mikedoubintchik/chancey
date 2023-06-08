@@ -1,14 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IonButton, IonMenuToggle, IonNavLink, IonRouterLink, IonText, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonButton, IonCol, IonGrid, IonImg, IonRow } from '@ionic/react';
 import { useFirebase } from 'hooks/useFirebase';
 import { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { set } from 'stores/IonicStorage';
 import { UserRegisterMethodType } from 'types/profile';
+import { nanoid } from 'nanoid';
 
 const Login: React.FC = () => {
-  const { login } = useFirebase();
-  const history = useHistory();
+  const { login, redirectToHome, registerUser } = useFirebase();
+
   const [, setError] = useState<string>();
 
   const [, setShowErrorToast] = useState<boolean>(false);
@@ -27,15 +26,28 @@ const Login: React.FC = () => {
   );
 
   const handleContinueAsGuest = () => {
-    history.push('/home');
+    const user = {
+      displayName: 'Guest',
+      email: '',
+      photoURL: '',
+      providerId: 'guest',
+      uid: nanoid(),
+    };
 
-    set('welcomeFinished', true);
+    registerUser(user, false);
+    redirectToHome();
   };
 
   return (
     <IonGrid fixed={true}>
-      <IonRow>
-        <IonCol size="6" offset="3">
+      <IonRow className="ion-align-items-center" style={{ height: '100vh' }}>
+        <IonCol size="8" offset="2">
+          <IonImg
+            className="ion-align-self-center"
+            src={require('../../assets/images/chansey.jpg')}
+            alt="Chansey"
+            style={{ width: '150px', height: '150px', margin: 'auto' }}
+          />
           <IonButton expand="full" onClick={() => requestLogin(UserRegisterMethodType.google)}>
             <FontAwesomeIcon className="ion-margin-end" icon={['fab', 'google']} />
             Login with Google
@@ -44,7 +56,7 @@ const Login: React.FC = () => {
             <FontAwesomeIcon className="ion-margin-end" icon={['fab', 'facebook']} />
             Login with Facebook
           </IonButton>
-          <IonButton expand="full" fill="clear" onClick={() => handleContinueAsGuest}>
+          <IonButton expand="full" fill="clear" onClick={() => handleContinueAsGuest()}>
             Continue as Guest
           </IonButton>
         </IonCol>
