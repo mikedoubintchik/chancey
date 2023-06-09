@@ -1,12 +1,38 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
-@font-face {
-  font-family: "SF Pro Rounded";
-  font-style: normal;
-  font-weight: 300;
+/* fonts.css */
 
-  src: url("./../../public/assets/fonts/SF-Pro-Rounded-Regular.ttf")
+@font-face {
+  font-family: 'Roboto Thin';
+  src: url('./../../public/assets/fonts/roboto-thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'Roboto Light';
+  src: url('./../../public/assets/fonts/roboto-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Medium';
+  src: url('./../../public/assets/fonts/roboto-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+.font-thin {
+  font-family: 'Roboto Thin' !important;
+  font-weight: 100;
+}
+
+.font-bold {
+  font-family: 'Roboto Medium' !important;
+  font-weight: 500;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
@@ -82,7 +108,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-tint: #f5f6f9;
 
 
-  --ion-font-family: 'SF Pro Rounded' !important;
+  --ion-font-family: 'Roboto Medium' !important;
 
 }
 

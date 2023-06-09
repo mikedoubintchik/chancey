@@ -4,11 +4,12 @@ import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { ref, uploadBytes } from 'firebase/storage';
 import { useHistory } from 'react-router-dom';
+import { set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
 import { TicketPhotoType, UserRegisterMethodType, UserType } from 'types/profile';
 
 export function useFirebase() {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
   const history = useHistory();
 
   const readNumbersFromTicket = async (fileName: TicketPhotoType['filePath']) => {
@@ -41,15 +42,31 @@ export function useFirebase() {
   };
 
   // TODO: fix any
-  const registerUser = async (user: UserType) => {
+  const registerUser = async (user: UserType, save: boolean) => {
+    console.info('user registered: ', user);
     // save user to database
     // TODO: we no longer have permissions to do this
-    await setDoc(doc(db, 'users', user.uid), { ...user });
+    if (save) await setDoc(doc(db, 'users', user.uid), { ...user });
+
+    // TODO - save user to ionic storage with expiration so that user doesn't have to login all the time
 
     dispatch({
       type: ActionType.UPDATE_USER,
       user,
     });
+  };
+
+  const redirectToHome = () => {
+    dispatch({
+      type: ActionType.UPDATE_WELCOME_FINISHED,
+      welcomeFinished: true,
+    });
+
+    // store that welcome flow has been finished to device storage
+    set('welcomeFinished', true);
+
+    // redirect to profile page upon successful login
+    history.push('/home');
   };
 
   const login = async (method: UserRegisterMethodType, username = null, password = null) => {
@@ -84,11 +101,11 @@ export function useFirebase() {
             email,
             providerId,
           };
+          console.log('🚀 ~ file: useFirebase.ts:95 ~ login ~ user:', user);
 
-          registerUser(user);
+          registerUser(user, true);
 
-          // redirect to profile page upon successful login
-          history.push('/home');
+          redirectToHome();
         }
 
         // TODO: fix any
@@ -118,6 +135,8 @@ export function useFirebase() {
     readNumbersFromTicket,
     login,
     logout,
+    redirectToHome,
+    registerUser,
     uploadToFirebaseStorage,
   };
 }
