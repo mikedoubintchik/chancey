@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
         selectedText={currentDrawing ? currentDrawing.date.toDateString() : undefined}
       >
         {latestResults.map((drawing) => {
-          console.log(drawing);
+          // console.log(drawing);
           return (
             <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
               {drawing.date.toDateString()}
