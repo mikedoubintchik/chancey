@@ -93,7 +93,7 @@ const DrawingsGenerator: React.FC<DrawingsGeneratorProps> = ({ count, showMax })
       </IonCardHeader>
       <IonCardContent>{renderDrawings()}</IonCardContent>
       <IonPopover
-        class="drawings-generator-popover"
+        className="drawings-generator-popover"
         trigger="drawing-gen-menu-button"
         dismissOnSelect={true}
         size="auto"

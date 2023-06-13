@@ -18,7 +18,7 @@ const FlowSummary: React.FC<IFlowSummaryProps> = ({ postRuleCombsCount }) => {
   );
   return (
     // <IonCard>
-    <IonCard class="rule-item">
+    <IonCard className="rule-item">
       <IonCardContent>
         <IonItem lines="none">
           <IonLabel style={{ whiteSpace: 'unset' }}>

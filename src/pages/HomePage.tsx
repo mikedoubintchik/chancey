@@ -43,14 +43,18 @@ const HomePage: React.FC = () => {
       <IonSelect
         placeholder="Select Drawing Date"
         interface="popover"
+        id="asd"
         onIonChange={(ev) => setCurrentDrawing(ev.detail.value)}
         selectedText={currentDrawing ? currentDrawing.date.toDateString() : undefined}
       >
-        {latestResults.map((drawing) => (
-          <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
-            {drawing.date.toDateString()}
-          </IonSelectOption>
-        ))}
+        {latestResults.map((drawing) => {
+          console.log(drawing);
+          return (
+            <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
+              {drawing.date.toDateString()}
+            </IonSelectOption>
+          );
+        })}
       </IonSelect>
     );
   };

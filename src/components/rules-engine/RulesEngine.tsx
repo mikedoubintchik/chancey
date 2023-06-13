@@ -67,7 +67,7 @@ const RulesEngine: React.FC<IRulesEngineProps> = () => {
         <FlowStart></FlowStart>
         <FlowSeparator></FlowSeparator>
         {state.rules.length > 0 && renderRules(state.rules)}
-        <IonCard class="rule-item">
+        <IonCard className="rule-item">
           <IonButton expand="full" onClick={showModal} fill="clear">
             <IonIcon slot="icon-only" icon={add}></IonIcon>
             <IonRippleEffect></IonRippleEffect>

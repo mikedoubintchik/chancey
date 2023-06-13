@@ -31,7 +31,7 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
   // console.log('🚀 ~ file: Rule.tsx ~ line 15 ~ processing', processing);
 
   return (
-    <IonCard class="rule-item">
+    <IonCard className="rule-item">
       {/* <IonItem> */}
       <IonCardContent>
         <IonItem lines="none" color="none">
@@ -68,7 +68,7 @@ const Rule: React.FC<IRuleProps> = ({ rule }) => {
         </IonItem>
         <IonItem lines="none">
           <IonChip color="success" slot="end">
-            <IonIcon icon={arrowUp} class="percentage-arrow-icon"></IonIcon>
+            <IonIcon icon={arrowUp} className="percentage-arrow-icon"></IonIcon>
             {formatPercentage(rule.postProcessingSnapshot?.percentageOfImprovementFromPrevState)}%
           </IonChip>
         </IonItem>

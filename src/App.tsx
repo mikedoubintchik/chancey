@@ -122,7 +122,7 @@ const App: React.FC = () => {
                 <RulesPage />
               </Route>
             </IonRouterOutlet>
-            <IonTabBar slot="bottom" class="app-tab-bar" style={{ display: showFooterTabs ? 'flex' : 'none' }}>
+            <IonTabBar slot="bottom" className="app-tab-bar" style={{ display: showFooterTabs ? 'flex' : 'none' }}>
               <IonTabButton tab="home" href="/home">
                 <IonIcon icon={homeOutline} />
               </IonTabButton>
