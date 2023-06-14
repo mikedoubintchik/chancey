@@ -31,14 +31,14 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
 
   return (
     <div className="series-container">
-      <div className="series-numbers-container" style={{ width: numbers.length * (40 + 10) }}>
+      <div className="series-numbers-container">
         {numbers.map((n) => (
           <div key={n} onClick={(event) => handleElementClick(event, n, false)}>
             <Ball num={n} />
           </div>
         ))}
-      </div>
-      <div className="series-extra-container">
+        {/* </div>
+      <div className="series-extra-container"> */}
         {extra != null && (
           <div onClick={(event) => handleElementClick(event, extra, true)}>
             <Ball num={extra} color="#BD4F46" />
