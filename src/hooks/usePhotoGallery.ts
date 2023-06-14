@@ -1,12 +1,7 @@
-import { useState, useEffect } from 'react';
-import { isPlatform } from '@ionic/react';
+import { useState } from 'react';
 
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Preferences } from '@capacitor/preferences';
-import { Capacitor } from '@capacitor/core';
 import { TicketPhotoType, UserType } from 'types/profile';
-import { useStore } from 'stores/store';
 import { useFirebase } from '../hooks/useFirebase';
 
 export function usePhotoGallery() {
@@ -18,6 +13,7 @@ export function usePhotoGallery() {
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
       quality: 100,
+      presentationStyle: 'fullscreen',
     });
 
     const fileName = `${user?.uid}-${new Date().getTime()}`;
