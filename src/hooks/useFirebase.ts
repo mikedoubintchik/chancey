@@ -19,10 +19,13 @@ export function useFirebase() {
     // https://console.cloud.google.com/functions/details/us-central1/helloWorld?env=gen1&tab=logs&project=tune-363401
     try {
       const { data } = await httpsCallable(functions, 'getTextFromTicket')({ fileName });
+
       dispatch({
         type: ActionType.UPDATE_TICKET_PHOTOS_TEXT,
         ticketText: data,
       });
+
+      return data;
     } catch ({ code, message, details }) {
       console.error(code, message, details);
     }
@@ -101,7 +104,6 @@ export function useFirebase() {
             email,
             providerId,
           };
-          console.log('🚀 ~ file: useFirebase.ts:95 ~ login ~ user:', user);
 
           registerUser(user, true);
 

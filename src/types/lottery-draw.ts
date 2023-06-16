@@ -10,3 +10,8 @@ export type LotteryDrawModel = {
   series: SeriesModel;
   date: Date;
 };
+
+export type TicketNumbersType = {
+  numbers: number[];
+  multiplier: number;
+};

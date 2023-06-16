@@ -17,10 +17,12 @@ import { useFirebase } from 'hooks/useFirebase';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { ActionType, useStore } from 'stores/store';
 
 const ScanTicket: React.FC = () => {
   const { state, dispatch } = useStore();
+  const history = useHistory();
   // console.log('🚀 ~ file: ScanTicket.tsx ~ line 21 ~ state', state);
   const { photos, takePhoto } = usePhotoGallery();
   const { readNumbersFromTicket } = useFirebase();
@@ -31,6 +33,14 @@ const ScanTicket: React.FC = () => {
       ticketPhotos: photos,
     });
   }, [dispatch, photos]);
+
+  const handleTakePhotoClick = async () => {
+    if (state.user) {
+      console.log('taking photo...');
+      await takePhoto(state.user);
+      history.push('/validate-scan');
+    }
+  };
 
   return (
     <>
@@ -48,7 +58,7 @@ const ScanTicket: React.FC = () => {
           >
             Read Ticket
           </IonButton>
-          <IonButton onClick={() => state.user && takePhoto(state.user)}>Take Photo</IonButton>
+          <IonButton onClick={handleTakePhotoClick}>Take Photo</IonButton>
           <ExploreContainer name="Scan ticket page" />
           <IonGrid>
             <IonRow>

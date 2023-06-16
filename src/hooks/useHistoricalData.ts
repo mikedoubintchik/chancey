@@ -5,7 +5,10 @@ import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 
 import { get } from 'stores/IonicStorage';
 import { arrayToBitMask } from 'utils/lottery-utils';
+import { ActionType, useStore } from 'stores/store';
 export function useHistoricalData() {
+  const { dispatch } = useStore();
+
   const getLatestMegaResults = async () => {
     try {
       // const { data } = await httpsCallable(functions, 'updateRemoteWithMegaData')();
@@ -63,7 +66,7 @@ export function useHistoricalData() {
         } as LotteryDrawModel);
       });
     }
-    // console.log(historicalData);
+
     return historicalData;
   };
 

@@ -35,7 +35,7 @@ export interface IReducer {
   displayName: SignupUserType['displayName'];
   token: SignupUserType['token'];
   welcomeFinished: boolean;
-  ticketPhotos: TicketPhotoType[];
+  ticketPhoto: TicketPhotoType;
   ticketText: TicketPhotoType['ticketText'];
   rule: IRuleBase;
   id: IRuleBase['id'];
@@ -52,6 +52,7 @@ export type InitialStateType = {
   signupUser: SignupUserType | null;
   welcomeFinished: boolean;
   ticketPhotos: TicketPhotoType[];
+  latestTicket: TicketPhotoType | null;
   rules: IRuleBase[];
   cache: Array<SeriesModel>;
   historicalData: LotteryDrawModel[];
@@ -62,10 +63,18 @@ export type InitialStateType = {
 };
 
 export const initialState: InitialStateType = {
+  // // uncomment the below to skip having to authenticate during development
+  // user: {
+  //   uid: '4VfLNhjOjwXwvLEK2qE6t3W9Hgb2',
+  //   displayName: 'Mike Doubintchik',
+  //   email: 'mike.doubintchik@gmail.com',
+  //   providerId: 'google.com',
+  // },
   user: null,
   signupUser: null,
   welcomeFinished: false,
   ticketPhotos: [],
+  latestTicket: null,
   rules: [],
   cache: [],
   historicalData: [],
@@ -92,15 +101,17 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, signupUser: { ...state.signupUser, token: action.token } };
     case ActionType.UPDATE_WELCOME_FINISHED:
       return { ...state, welcomeFinished: action.welcomeFinished };
-    case ActionType.UPDATE_TICKET_PHOTOS:
-      return { ...state, ticketPhotos: action.ticketPhotos };
+    case ActionType.UPDATE_TICKET_PHOTOS: {
+      const updatedTickets = state.ticketPhotos;
+      updatedTickets.push(action.ticketPhoto);
+      return { ...state, ticketPhotos: updatedTickets, latestTicket: action.ticketPhoto };
+    }
     case ActionType.UPDATE_TICKET_PHOTOS_TEXT: {
       const lastTicket = state.ticketPhotos.pop() as TicketPhotoType;
       const updatedTicket = { ...lastTicket, ticketText: action.ticketText };
       const updatedTickets = state.ticketPhotos;
-      console.log('🚀 ~ file: store.ts:85 ~ updatedTicket', updatedTicket);
       updatedTickets.push(updatedTicket);
-      return { ...state, ticketPhotos: updatedTickets };
+      return { ...state, ticketPhotos: updatedTickets, latestTicket: updatedTicket };
     }
     case ActionType.ADD_ENGINE_RULE: {
       let modifiedRules = [...state.rules, action.rule];

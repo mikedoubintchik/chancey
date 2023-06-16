@@ -1,12 +1,11 @@
-import { useState } from 'react';
-
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { ActionType, useStore } from 'stores/store';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { useFirebase } from '../hooks/useFirebase';
 
 export function usePhotoGallery() {
-  const [photos, setPhotos] = useState<TicketPhotoType[]>([]);
-  const { uploadToFirebaseStorage } = useFirebase();
+  const { dispatch } = useStore();
+  const { readNumbersFromTicket, uploadToFirebaseStorage } = useFirebase();
 
   const takePhoto = async (user: UserType) => {
     const ticketPhoto: Photo = await Camera.getPhoto({
@@ -24,15 +23,23 @@ export function usePhotoGallery() {
       webviewPath: ticketPhoto.webPath,
     };
 
-    const newPhotos = [newPhoto, ...photos];
-
-    setPhotos(newPhotos);
+    dispatch({
+      type: ActionType.UPDATE_TICKET_PHOTOS,
+      ticketPhoto: newPhoto,
+    });
 
     uploadToFirebaseStorage(newPhoto);
+
+    // // testing purposes, comment out all above to read from single ticket that's already uploaded and bypass the camera step
+    // const newPhoto: TicketPhotoType = {
+    //   fileName: 'asdasd',
+    //   filePath: '',
+    // };
+
+    await readNumbersFromTicket(newPhoto.fileName);
   };
 
   return {
-    photos,
     takePhoto,
   };
 }

@@ -22,8 +22,7 @@ interface IModal {
   hideModal: () => void;
 }
 
-const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
-  const modal = useRef<HTMLIonModalElement>(null);
+const LoginModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
   const { state, dispatch } = useStore();
   const [showLoading, setShowLoading] = useState(false);
   const { login, logout } = useFirebase();
@@ -72,4 +71,4 @@ const AddRuleModal: React.FC<IModal> = ({ isOpenModal, hideModal }) => {
   );
 };
 
-export default AddRuleModal;
+export default LoginModal;
