@@ -89,23 +89,28 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
       let maxNum = max(stats);
       return (
         <div className="series-bars-container">
-          {draw.series.numbers.map((n, i) => (
-            <div key={n}>
-              <Bar index={i} height={200} maxVal={maxNum} value={stats[i]}></Bar>
-            </div>
-          ))}
+          <div className="series-bars-data">
+            {draw.series.numbers.map((n, i) => (
+              <div key={n}>
+                <Bar index={i} height={200} maxVal={maxNum} value={stats[i]}></Bar>
+              </div>
+            ))}
 
-          {draw.series.extra != null && (
-            <div>
-              <Bar
-                index={6}
-                height={200}
-                maxVal={maxNum}
-                value={stats[draw.series.numbers.length]}
-                color="#BD4F46"
-              ></Bar>
-            </div>
-          )}
+            {draw.series.extra != null && (
+              <div>
+                <Bar
+                  index={6}
+                  height={200}
+                  maxVal={maxNum}
+                  value={stats[draw.series.numbers.length]}
+                  color="#BD4F46"
+                ></Bar>
+              </div>
+            )}
+          </div>
+          <div className="series-bars-title">
+            <div>Occurance in recent 50 drawings</div>
+          </div>
         </div>
       );
     }

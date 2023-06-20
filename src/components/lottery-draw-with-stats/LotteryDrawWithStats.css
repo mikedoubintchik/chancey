@@ -10,7 +10,21 @@
     padding-right: 5%;
     /* margin-top: 20px; */
     display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.series-bars-data {
+    
+    /* margin-top: 20px; */
+    display: flex;
     flex-flow: row;
     justify-content: space-between;
     flex: 1;
+}
+
+.series-bars-title {
+    margin-top: 10px;
+    padding: 5px;
 }
