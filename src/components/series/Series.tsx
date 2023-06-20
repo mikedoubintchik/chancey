@@ -1,8 +1,6 @@
-import './Series.css';
+import { MouseEvent, useEffect, useRef } from 'react';
 import Ball from '../ball/Ball';
-import { MouseEvent, useEffect } from 'react';
-import { useRef } from 'react';
-import Bar from 'components/bar/Bar';
+import './Series.css';
 
 interface SeriesProps {
   numbers: number[];
@@ -50,19 +48,7 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
           </div>
         )}
       </div>
-      {/* <div className="series-bars-container">
-        {numbers.map((n,i) => (
-            <div key={n} >
-              <Bar index={i} height={200} maxVal={10} value={5}></Bar>
-            </div>
-          ))}
-        
-          {extra != null && (
-            <div>
-               <Bar index={6} height={200} maxVal={10} value={10}></Bar>
-            </div>
-          )}
-      </div> */}
+
       <div className="underline-container">
         <div className="underline" ref={underlineRef}></div>
       </div>

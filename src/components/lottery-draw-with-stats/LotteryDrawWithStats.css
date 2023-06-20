@@ -1,14 +1,5 @@
-.lottery-draw-with-stats .series-container {
-    padding-left: 6%;
-    padding-right: 5%;
-}
-
-.lottery-draw-with-stats .underline-container {}
-
 .series-bars-container {
-    padding-left: 6%;
-    padding-right: 5%;
-    /* margin-top: 20px; */
+   
     display: flex;
     flex-flow: column;
     justify-content: space-between;
@@ -17,7 +8,6 @@
 
 .series-bars-data {
     
-    /* margin-top: 20px; */
     display: flex;
     flex-flow: row;
     justify-content: space-between;

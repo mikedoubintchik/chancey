@@ -1,13 +1,9 @@
-import { IonCard, IonCardContent, IonCardHeader, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import Series from 'components/series/Series';
 import { LotteryDrawModel } from 'types/lottery-draw';
 import './LotteryDrawWithStats.css';
 
-import SingleNumberStats from 'components/stats/single-number-stats/SingleNumberStats';
+import Bar from 'components/stats/bar/Bar';
 import { useEffect, useState } from 'react';
-import { UseFrequentNumberRule } from 'rules/UseFrequentNumbersRule';
-import SeriesFrequency from 'components/stats/series-frequency/SeriesFrequency';
-import Bar from 'components/bar/Bar';
 import { max } from 'simple-statistics';
 
 interface LotteryDrawWithStatsProps {
@@ -17,7 +13,11 @@ interface LotteryDrawWithStatsProps {
 
 const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, history }) => {
   const [currentNum, setCurrentNum] = useState<{ num: number; isExtra: boolean } | null>(null);
-  const [currentNumStats, setCurrentNumStats] = useState<number[]>([]);
+
+  /*
+    Summary - this function returns the number of times a number has been drawn in the last 50 draws
+    @returns counts[] - an array of 6 numbers, the first 6 are the number of times each number has been drawn, the last number is the number of times the extra number has been drawn
+  */
   const getStats = () => {
     let currentDrawingIndex = history.findIndex((drawing) => {
       return drawing.date === draw?.date;
@@ -46,43 +46,9 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
     return counts;
   };
 
-  const processStats = (num: number, isExtra: boolean) => {
-    let currentDrawingIndex = history.findIndex((drawing) => {
-      return drawing.date === draw?.date;
-    });
-    // console.log("currentDrawingIndex",currentDrawingIndex)
-    let maxScanBack = 200;
-    let windowSize = 50;
-
-    let histryToCurrent = history.slice(currentDrawingIndex, currentDrawingIndex + maxScanBack);
-    var len = histryToCurrent.length - windowSize;
-    if (len <= 0) {
-      len = histryToCurrent.length;
-    }
-    // console.log("historical len",len)
-    let counts = [];
-    for (var i = 0; i < len; i++) {
-      counts.push(0);
-      for (var o = 0; o < windowSize; o++) {
-        let index = i + o;
-        if (index < len) {
-          let numbers = histryToCurrent[index].series.numbers;
-          if (numbers.indexOf(num) > -1 || (isExtra && num == histryToCurrent[index].series.extra)) {
-            counts[i] += 1;
-          }
-        }
-      }
-    }
-    if (counts.length < windowSize) {
-      for (var i = 0; i < windowSize - counts.length; i++) {
-        counts.push(0);
-      }
-    }
-    counts = counts.reverse();
-
-    setCurrentNumStats(counts);
-  };
-
+  /*
+    Summary - this function returns the view of the stats
+  */
   const getStatsView = () => {
     if (draw) {
       let stats = getStats();
@@ -115,13 +81,14 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
       );
     }
   };
+
   useEffect(() => {
     if (draw) {
       let num = draw.series.numbers[0];
       setCurrentNum({ num: num, isExtra: false });
-      processStats(num, false);
     }
   }, [draw]);
+
   return (
     <div className="lottery-draw-with-stats">
       {draw && (
@@ -131,29 +98,11 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
           onBallClick={(n, ie) => {
             // console.log('onBallClick');
             setCurrentNum({ num: n, isExtra: ie });
-            processStats(n, ie);
           }}
         />
       )}
-      {/* {draw && <SeriesFrequency stats={[currentNumStats]} />} */}
-      {
-        draw && getStatsView()
-        // draw && (
-        //   <div className="series-bars-container">
-        //     {draw.series.numbers.map((n, i) => (
-        //       <div key={n} >
-        //         <Bar index={i} height={200} maxVal={10} value={5}></Bar>
-        //       </div>
-        //     ))}
 
-        //     {draw.series.extra != null && (
-        //       <div>
-        //         <Bar index={6} height={200} maxVal={10} value={10}></Bar>
-        //       </div>
-        //     )}
-        //   </div>
-        // )
-      }
+      {draw && getStatsView()}
     </div>
   );
 };
