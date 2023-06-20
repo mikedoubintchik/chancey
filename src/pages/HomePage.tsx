@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonButtons,
   IonCard,
   IonCardContent,
@@ -6,7 +7,7 @@ import {
   IonCardTitle,
   IonContent,
   IonHeader,
-  IonLabel,
+  IonIcon,
   IonPage,
   IonSelect,
   IonSelectOption,
@@ -14,22 +15,25 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import DrawingsGenerator from 'components/drawings-generator/DrawingsGenerator';
 import Header from 'components/Header';
-import LotteryDraw from 'components/lottery-draw/LotteryDraw';
-import Modal from 'components/modals/Modal';
 import SideMenu from 'components/SideMenu';
+import LotteryDrawWithStats from 'components/lottery-draw-with-stats/LotteryDrawWithStats';
+import LoginModal from 'components/modals/LoginModal';
 import { useHistoricalData } from 'hooks/useHistoricalData';
 import useModal from 'hooks/useModal';
+import { usePhotoGallery } from 'hooks/usePhotoGallery';
+import { cameraOutline, filterOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
+import { useStore } from 'stores/store';
 import { LotteryDrawModel } from 'types/lottery-draw';
-import HistoryPage from './HistoryPage';
-import LotteryDrawWithStats from 'components/lottery-draw-with-stats/LotteryDrawWithStats';
+
 const HomePage: React.FC = () => {
+  const { state } = useStore();
   const { getHistoricalData } = useHistoricalData();
   const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel> | []>([]);
   const [currentDrawing, setCurrentDrawing] = useState<LotteryDrawModel | undefined>(undefined);
-  const [isOpen, showModal, hideModal] = useModal();
+  const [isLoginModalOpen, showLoginModal, hideLoginModal] = useModal();
+  const { photos, takePhoto } = usePhotoGallery();
 
   useEffect(() => {
     getHistoricalData().then((data) => {
@@ -59,6 +63,8 @@ const HomePage: React.FC = () => {
     );
   };
 
+  const handleCameraClick = () => (state.user ? takePhoto(state.user) : showLoginModal());
+
   return (
     <>
       <SideMenu />
@@ -80,7 +86,6 @@ const HomePage: React.FC = () => {
               </IonToolbar>
             </IonCardHeader>
             <IonCardContent>
-              {' '}
               {!currentDrawing && (
                 <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
               )}
@@ -88,7 +93,15 @@ const HomePage: React.FC = () => {
             </IonCardContent>
           </IonCard>
           {/* <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator> */}
+          <IonCard>
+            <IonCardContent class="ion-text-center">
+              <IonButton fill="clear" onClick={handleCameraClick}>
+                <IonIcon slot="icon-only" size="large" icon={cameraOutline}></IonIcon>
+              </IonButton>
+            </IonCardContent>
+          </IonCard>
         </IonContent>
+        <LoginModal isOpenModal={isLoginModalOpen} hideModal={hideLoginModal} />
       </IonPage>
     </>
   );
