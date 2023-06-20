@@ -14,12 +14,17 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
 
   const handleElementClick = (event: MouseEvent<HTMLDivElement>, number: number, isExtra: boolean) => {
     let boundingBox = (event.target as HTMLDivElement).getBoundingClientRect();
-    if (underlineRef.current) {
-      underlineRef.current.style.width = boundingBox.width + 'px';
-      underlineRef.current.style.translate = boundingBox.left - boundingBox.width / 2 - 6 + 'px';
-    }
-    if (onBallClick) {
-      onBallClick(number, isExtra);
+    let parentBBox = (
+      event.target as HTMLDivElement
+    ).parentElement?.parentElement?.parentElement?.getBoundingClientRect();
+    if (parentBBox) {
+      if (underlineRef.current) {
+        underlineRef.current.style.width = boundingBox.width + 'px';
+        underlineRef.current.style.translate = boundingBox.left - parentBBox.left + 'px';
+      }
+      if (onBallClick) {
+        onBallClick(number, isExtra);
+      }
     }
   };
 
@@ -45,7 +50,9 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
           </div>
         )}
       </div>
-      <div className="underline" ref={underlineRef}></div>
+      <div className="underline-container">
+        <div className="underline" ref={underlineRef}></div>
+      </div>
     </div>
   );
 };

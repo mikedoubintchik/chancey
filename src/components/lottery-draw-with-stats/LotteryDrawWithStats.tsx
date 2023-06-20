@@ -6,6 +6,7 @@ import './LotteryDrawWithStats.css';
 import SingleNumberStats from 'components/stats/single-number-stats/SingleNumberStats';
 import { useEffect, useState } from 'react';
 import { UseFrequentNumberRule } from 'rules/UseFrequentNumbersRule';
+import SeriesFrequency from 'components/stats/series-frequency/SeriesFrequency';
 
 interface LotteryDrawWithStatsProps {
   draw: LotteryDrawModel | undefined;
@@ -60,7 +61,7 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
     }
   }, [draw]);
   return (
-    <div>
+    <div className="lottery-draw-with-stats">
       {draw && (
         <Series
           numbers={draw.series.numbers}
@@ -72,7 +73,7 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
           }}
         />
       )}
-      {draw && <SingleNumberStats stats={currentNumStats} />}
+      {draw && <SeriesFrequency stats={[currentNumStats]} />}
     </div>
   );
 };
