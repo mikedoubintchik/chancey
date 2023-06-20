@@ -1,0 +1,22 @@
+.bar-container {
+  width: 40px;
+  height: 200px;
+  display: flex;
+  flex-flow: column;
+  background-color: transparent;
+  align-items: center;
+  flex: 1;
+}
+.bar {
+  border-radius: 10px;
+  width: 30px;
+  height: 0px;
+  background-color: #BD4F46;
+  /* flex: 1;   */
+}
+.bar-label-container {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+ 
