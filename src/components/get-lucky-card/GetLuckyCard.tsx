@@ -18,6 +18,7 @@ import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { useEffect, useState } from 'react';
 import { SeriesModel } from 'types/series';
 import { first } from 'lodash';
+import { useHistory } from 'react-router';
 
 interface GetLuckyCardProps {}
 
@@ -25,6 +26,7 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const [generatedDrawing, setGeneratedDrawing] = useState<SeriesModel | null>(null);
   const [showLoading, setShowLoading] = useState(true);
   const [firstTime, setFirstTime] = useState(true);
+  const history = useHistory();
 
   const generateSingleDrawing = async () => {
     setFirstTime(false);
@@ -38,6 +40,9 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
     }
   };
 
+  const handleEditRulesClick = () => {
+    history.push('/rules');
+  };
   useEffect(() => {
     // generateSingleDrawing();
     setShowLoading(!RuleEngineClient.instance.isInitialized);
@@ -53,7 +58,11 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
             </IonButton>
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton onClick={() => {}}>
+            <IonButton
+              onClick={() => {
+                handleEditRulesClick();
+              }}
+            >
               <IonIcon slot="icon-only" icon={pencilOutline}></IonIcon>
             </IonButton>
           </IonButtons>
