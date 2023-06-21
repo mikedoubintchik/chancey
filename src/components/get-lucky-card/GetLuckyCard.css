@@ -1,0 +1,10 @@
+.get-lucky-card-content{
+  display: flex;
+  flex-flow: column;
+   
+}
+
+.get-lucky-card-content ion-button {
+  align-self: center;
+  margin: 20px;
+}

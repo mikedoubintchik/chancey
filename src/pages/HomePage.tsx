@@ -17,6 +17,7 @@ import {
 } from '@ionic/react';
 import Header from 'components/Header';
 import SideMenu from 'components/SideMenu';
+import GetLuckyCard from 'components/get-lucky-card/GetLuckyCard';
 import LotteryDrawWithStats from 'components/lottery-draw-with-stats/LotteryDrawWithStats';
 import LoginModal from 'components/modals/LoginModal';
 import { useHistoricalData } from 'hooks/useHistoricalData';
@@ -100,6 +101,8 @@ const HomePage: React.FC = () => {
               </IonButton>
             </IonCardContent>
           </IonCard>
+
+          <GetLuckyCard></GetLuckyCard>
         </IonContent>
         <LoginModal isOpenModal={isLoginModalOpen} hideModal={hideLoginModal} />
       </IonPage>
