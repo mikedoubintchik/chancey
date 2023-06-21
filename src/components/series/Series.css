@@ -1,16 +1,22 @@
 .series-container {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   justify-content: space-between;
 }
 .series-numbers-container {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
+  flex: 1;
 }
+
+.underline-container {
+  flex: 1;
+  margin-top: 10px;
+} 
 .underline {
-  position: absolute;
-  top: 55px;
+  position: relative;
+  top: 0px;
   height: 5px;
   width: 40px;
   background-color: white;
