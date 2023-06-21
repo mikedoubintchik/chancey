@@ -2,6 +2,8 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { ActionType, useStore } from 'stores/store';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { useFirebase } from '../hooks/useFirebase';
+import { parseDate, parseMegaMillionsNumbersAndMultiplier } from 'utils/lottery-utils';
+import { TicketTextType } from 'types/lottery-draw';
 
 export function usePhotoGallery() {
   const { dispatch } = useStore();
@@ -15,7 +17,7 @@ export function usePhotoGallery() {
       presentationStyle: 'fullscreen',
     });
 
-    const fileName = `${user?.uid}-${new Date().getTime()}`;
+    const fileName = `${user?.uid}-${new Date().getTime()}.jpg`;
 
     const newPhoto: TicketPhotoType = {
       fileName,
@@ -28,15 +30,28 @@ export function usePhotoGallery() {
       ticketPhoto: newPhoto,
     });
 
-    uploadToFirebaseStorage(newPhoto);
+    await uploadToFirebaseStorage(newPhoto);
 
-    // // testing purposes, comment out all above to read from single ticket that's already uploaded and bypass the camera step
-    // const newPhoto: TicketPhotoType = {
-    //   fileName: 'asdasd',
-    //   filePath: '',
-    // };
+    const ticketText: TicketTextType | false = await readNumbersFromTicket(newPhoto.filePath);
 
-    await readNumbersFromTicket(newPhoto.fileName);
+    if (ticketText) {
+      const values = parseMegaMillionsNumbersAndMultiplier(ticketText[0].description);
+      const { ticketDate } = parseDate(ticketText[0].description);
+
+      if (values) {
+        dispatch({
+          type: ActionType.UPDATE_LATEST_TICKET,
+          values,
+        });
+      }
+
+      if (ticketDate) {
+        dispatch({
+          type: ActionType.UPDATED_LATEST_TICKET_DATE,
+          ticketDate,
+        });
+      }
+    }
   };
 
   return {

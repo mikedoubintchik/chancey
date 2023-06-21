@@ -1,3 +1,4 @@
+import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import { SeriesModel } from './series';
 
 export enum DrawType {
@@ -11,7 +12,12 @@ export type LotteryDrawModel = {
   date: Date;
 };
 
-export type TicketNumbersType = {
-  numbers: number[];
-  multiplier: number;
-};
+export interface LotteryTicketModel extends LotteryDrawModel {
+  ticketDate: Date;
+}
+
+export type TicketTextType = [
+  {
+    description: string;
+  },
+];

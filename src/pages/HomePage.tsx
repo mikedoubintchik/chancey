@@ -22,7 +22,7 @@ import LoginModal from 'components/modals/LoginModal';
 import useModal from 'hooks/useModal';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
 import { cameraOutline } from 'ionicons/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStore } from 'stores/store';
 import { LotteryDrawModel } from 'types/lottery-draw';
@@ -41,15 +41,13 @@ const HomePage: React.FC = () => {
         interface="popover"
         id="asd"
         onIonChange={(ev) => setCurrentDrawing(ev.detail.value)}
-        selectedText={currentDrawing ? currentDrawing.date.toDateString() : undefined}
+        selectedText={currentDrawing?.date.toDateString()}
       >
-        {state.historicalData.map((drawing) => {
-          return (
-            <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
-              {drawing.date.toDateString()}
-            </IonSelectOption>
-          );
-        })}
+        {state.historicalData.map((drawing) => (
+          <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
+            {drawing.date.toDateString()}
+          </IonSelectOption>
+        ))}
       </IonSelect>
     );
   };
@@ -63,6 +61,10 @@ const HomePage: React.FC = () => {
       showLoginModal();
     }
   };
+
+  useEffect(() => {
+    setCurrentDrawing(state.historicalData[0]);
+  }, [state.historicalData]);
 
   return (
     <>
@@ -89,7 +91,7 @@ const HomePage: React.FC = () => {
                 <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
               )}
               {state.historicalData.length > 0 && (
-                <LotteryDrawWithStats draw={state.historicalData[0]} history={state.historicalData} />
+                <LotteryDrawWithStats draw={currentDrawing} history={state.historicalData} />
               )}
             </IonCardContent>
           </IonCard>

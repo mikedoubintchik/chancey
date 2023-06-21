@@ -1,4 +1,5 @@
 import { UserCredential } from 'firebase/auth';
+import { LotteryDrawModel } from './lottery-draw';
 
 export type SignupUserType = {
   displayName?: UserCredential['user']['displayName'];
@@ -29,4 +30,6 @@ export interface TicketPhotoType {
   webviewPath?: string;
   // TODO: fix below type
   ticketText?: Record<string, unknown>;
+  values?: LotteryDrawModel;
+  ticketDate?: Date;
 }

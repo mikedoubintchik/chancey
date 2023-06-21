@@ -6,36 +6,41 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { useHistory } from 'react-router-dom';
 import { set } from 'stores/IonicStorage';
 import { ActionType, useStore } from 'stores/store';
+import { TicketTextType } from 'types/lottery-draw';
 import { TicketPhotoType, UserRegisterMethodType, UserType } from 'types/profile';
 
 export function useFirebase() {
-  const { state, dispatch } = useStore();
+  const { dispatch } = useStore();
   const history = useHistory();
 
-  const readNumbersFromTicket = async (fileName: TicketPhotoType['filePath']) => {
+  const readNumbersFromTicket = async (filePath: TicketPhotoType['filePath']): Promise<TicketTextType | false> => {
     console.log('reading numbers');
+    let result: TicketTextType | false = false;
 
     // TODO: remove public access
     // https://console.cloud.google.com/functions/details/us-central1/helloWorld?env=gen1&tab=logs&project=tune-363401
     try {
-      const { data } = await httpsCallable(functions, 'getTextFromTicket')({ fileName });
+      const { data } = await httpsCallable(functions, 'getTextFromTicket')({ filePath });
 
       dispatch({
         type: ActionType.UPDATE_TICKET_PHOTOS_TEXT,
-        ticketText: data,
+        ticketText: data as TicketTextType,
       });
 
-      return data;
-    } catch ({ code, message, details }) {
+      result = data as TicketTextType;
+    } catch ({ code, message, details }: any) {
       console.error(code, message, details);
+      throw new Error('Error reading text from ticket');
     }
+
+    return result;
   };
 
   // TODO: add return type on function
   const uploadToFirebaseStorage = async (ticketPhoto: TicketPhotoType) => {
     if (!ticketPhoto?.webviewPath) return;
 
-    const storageRef = ref(storage, `tickets/${ticketPhoto.filePath}.jpg`);
+    const storageRef = ref(storage, `tickets/${ticketPhoto.filePath}`);
 
     const ticketBlob = await fetch(ticketPhoto?.webviewPath).then((r) => r.blob());
 

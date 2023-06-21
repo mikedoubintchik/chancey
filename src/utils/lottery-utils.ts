@@ -1,6 +1,6 @@
-import { DrawType, LotteryDrawModel, TicketNumbersType } from 'types/lottery-draw';
-import { min, max } from 'simple-statistics';
 import { format, parse } from 'date-fns';
+import { max, min } from 'simple-statistics';
+import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 
 export type NumberFrequency = {
   number: number;
@@ -107,7 +107,11 @@ export function parseMegaMillionsNumbersAndMultiplier(text: string): LotteryDraw
     const extra = Number(multiplierMatch[1]);
 
     if (numbers?.length === 5 && numbers.every((num) => num >= 1 && num <= 70) && extra >= 1 && extra <= 25) {
-      result = { type: DrawType['MEGA'], series: { numbers, extra }, date: new Date() };
+      result = {
+        type: DrawType['MEGA'],
+        series: { numbers, extra },
+        date: new Date(parseDate(text).drawingDate || ''),
+      };
     } else {
       throw new Error('Invalid numbers or extra number detected.');
     }
