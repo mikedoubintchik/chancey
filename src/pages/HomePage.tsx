@@ -19,28 +19,20 @@ import Header from 'components/Header';
 import SideMenu from 'components/SideMenu';
 import LotteryDrawWithStats from 'components/lottery-draw-with-stats/LotteryDrawWithStats';
 import LoginModal from 'components/modals/LoginModal';
-import { useHistoricalData } from 'hooks/useHistoricalData';
 import useModal from 'hooks/useModal';
 import { usePhotoGallery } from 'hooks/usePhotoGallery';
-import { cameraOutline, filterOutline } from 'ionicons/icons';
+import { cameraOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useStore } from 'stores/store';
 import { LotteryDrawModel } from 'types/lottery-draw';
 
 const HomePage: React.FC = () => {
   const { state } = useStore();
-  const { getHistoricalData } = useHistoricalData();
-  const [latestResults, setLatestResults] = useState<Array<LotteryDrawModel> | []>([]);
+  const history = useHistory();
   const [currentDrawing, setCurrentDrawing] = useState<LotteryDrawModel | undefined>(undefined);
   const [isLoginModalOpen, showLoginModal, hideLoginModal] = useModal();
-  const { photos, takePhoto } = usePhotoGallery();
-
-  useEffect(() => {
-    getHistoricalData().then((data) => {
-      setLatestResults(data);
-      setCurrentDrawing(data[0]);
-    });
-  }, []);
+  const { takePhoto } = usePhotoGallery();
 
   const DateDropdown = () => {
     return (
@@ -49,21 +41,30 @@ const HomePage: React.FC = () => {
         interface="popover"
         id="asd"
         onIonChange={(ev) => setCurrentDrawing(ev.detail.value)}
-        selectedText={currentDrawing ? currentDrawing.date.toDateString() : undefined}
+        selectedText={currentDrawing?.date.toDateString()}
       >
-        {latestResults.map((drawing) => {
-          // console.log(drawing);
-          return (
-            <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
-              {drawing.date.toDateString()}
-            </IonSelectOption>
-          );
-        })}
+        {state.historicalData.map((drawing) => (
+          <IonSelectOption key={drawing.date.toDateString()} value={drawing}>
+            {drawing.date.toDateString()}
+          </IonSelectOption>
+        ))}
       </IonSelect>
     );
   };
 
-  const handleCameraClick = () => (state.user ? takePhoto(state.user) : showLoginModal());
+  const handleCameraClick = async () => {
+    if (state.user) {
+      console.log('taking photo...');
+      await takePhoto(state.user);
+      history.push('/validate-scan');
+    } else {
+      showLoginModal();
+    }
+  };
+
+  useEffect(() => {
+    setCurrentDrawing(state.historicalData[0]);
+  }, [state.historicalData]);
 
   return (
     <>
@@ -86,10 +87,12 @@ const HomePage: React.FC = () => {
               </IonToolbar>
             </IonCardHeader>
             <IonCardContent>
-              {!currentDrawing && (
+              {state.historicalData.length === 0 && (
                 <IonSpinner name="circular" style={{ width: '100%', marginTop: 20, marginBottom: 20 }}></IonSpinner>
               )}
-              {currentDrawing && <LotteryDrawWithStats draw={currentDrawing} history={latestResults} />}
+              {state.historicalData.length > 0 && (
+                <LotteryDrawWithStats draw={currentDrawing} history={state.historicalData} />
+              )}
             </IonCardContent>
           </IonCard>
           {/* <DrawingsGenerator count={1} showMax={10}></DrawingsGenerator> */}

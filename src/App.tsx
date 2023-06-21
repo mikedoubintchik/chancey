@@ -5,7 +5,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import { camera, homeOutline, infiniteOutline, person, statsChart } from 'ionicons/icons';
 import GeolocationPage from 'pages/GeolocationPage';
 import HomePage from 'pages/HomePage';
-import ScanTicket from 'pages/ScanTicket';
 import StatsPage from 'pages/StatsPage';
 import { Redirect, Route } from 'react-router-dom';
 import { get } from 'stores/IonicStorage';
@@ -35,6 +34,7 @@ import WelcomePageLuckyToken from 'components/welcome/WelcomePageLuckyToken';
 import WelcomePageName from 'components/welcome/WelcomePageName';
 import useGuidedTour from 'hooks/useGuidedTour';
 import RulesPage from 'pages/RulesPage';
+import ValidateScanPage from 'pages/ValidateScanPage';
 import { Reducer, useEffect, useReducer, useState } from 'react';
 import Joyride from 'react-joyride';
 import './App.css';
@@ -112,8 +112,8 @@ const App: React.FC = () => {
               <Route exact path="/geolocation">
                 <GeolocationPage />
               </Route>
-              <Route exact path="/scan">
-                <ScanTicket />
+              <Route exact path="/validate-scan">
+                <ValidateScanPage />
               </Route>
               <Route exact path="/stats">
                 <StatsPage />

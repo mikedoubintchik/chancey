@@ -1,12 +1,13 @@
-import { useState } from 'react';
-
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { ActionType, useStore } from 'stores/store';
 import { TicketPhotoType, UserType } from 'types/profile';
 import { useFirebase } from '../hooks/useFirebase';
+import { parseDate, parseMegaMillionsNumbersAndMultiplier } from 'utils/lottery-utils';
+import { TicketTextType } from 'types/lottery-draw';
 
 export function usePhotoGallery() {
-  const [photos, setPhotos] = useState<TicketPhotoType[]>([]);
-  const { uploadToFirebaseStorage } = useFirebase();
+  const { dispatch } = useStore();
+  const { readNumbersFromTicket, uploadToFirebaseStorage } = useFirebase();
 
   const takePhoto = async (user: UserType) => {
     const ticketPhoto: Photo = await Camera.getPhoto({
@@ -16,7 +17,7 @@ export function usePhotoGallery() {
       presentationStyle: 'fullscreen',
     });
 
-    const fileName = `${user?.uid}-${new Date().getTime()}`;
+    const fileName = `${user?.uid}-${new Date().getTime()}.jpg`;
 
     const newPhoto: TicketPhotoType = {
       fileName,
@@ -24,15 +25,36 @@ export function usePhotoGallery() {
       webviewPath: ticketPhoto.webPath,
     };
 
-    const newPhotos = [newPhoto, ...photos];
+    dispatch({
+      type: ActionType.UPDATE_TICKET_PHOTOS,
+      ticketPhoto: newPhoto,
+    });
 
-    setPhotos(newPhotos);
+    await uploadToFirebaseStorage(newPhoto);
 
-    uploadToFirebaseStorage(newPhoto);
+    const ticketText: TicketTextType | false = await readNumbersFromTicket(newPhoto.filePath);
+
+    if (ticketText) {
+      const values = parseMegaMillionsNumbersAndMultiplier(ticketText[0].description);
+      const { ticketDate } = parseDate(ticketText[0].description);
+
+      if (values) {
+        dispatch({
+          type: ActionType.UPDATE_LATEST_TICKET,
+          values,
+        });
+      }
+
+      if (ticketDate) {
+        dispatch({
+          type: ActionType.UPDATED_LATEST_TICKET_DATE,
+          ticketDate,
+        });
+      }
+    }
   };
 
   return {
-    photos,
     takePhoto,
   };
 }

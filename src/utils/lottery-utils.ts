@@ -1,5 +1,7 @@
+import { format, parse } from 'date-fns';
+import { max, min } from 'simple-statistics';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
-import { min, max } from 'simple-statistics';
+
 export type NumberFrequency = {
   number: number;
   frequency: number;
@@ -91,3 +93,71 @@ export const formatPercentage = (decimal: number | null | undefined) => {
     return Math.round(decimal * 1000) / 10;
   }
 };
+
+export function parseMegaMillionsNumbersAndMultiplier(text: string): LotteryDrawModel | false {
+  const regexConsecutiveNumbers = /(\d{2}\s?){5}/; // Matches 5 consecutive double-digit numbers
+  const regexMultiplier = /QP\s(\d+)/; // Matches the multiplier preceded by "QP"
+  let result: LotteryDrawModel | false = false;
+
+  const consecutiveNumbersMatch = text.match(regexConsecutiveNumbers);
+  const multiplierMatch = text.match(regexMultiplier);
+
+  if (consecutiveNumbersMatch && multiplierMatch) {
+    const numbers = consecutiveNumbersMatch[0].match(/\d{2}/g)?.map(Number);
+    const extra = Number(multiplierMatch[1]);
+
+    if (numbers?.length === 5 && numbers.every((num) => num >= 1 && num <= 70) && extra >= 1 && extra <= 25) {
+      result = {
+        type: DrawType['MEGA'],
+        series: { numbers, extra },
+        date: new Date(parseDate(text).drawingDate || ''),
+      };
+    } else {
+      throw new Error('Invalid numbers or extra number detected.');
+    }
+  } else {
+    throw new Error('No valid consecutive numbers or extra number found.');
+  }
+
+  return result;
+}
+
+export function parseDate(text: string): { ticketDate: string | null; drawingDate: string | null } {
+  const dateRegex = /([A-Z]{3,})\s?(\d{1,2})(?:[.,])?(?:\s(\d{2,4}))?/gi;
+  const matches = text.match(dateRegex);
+
+  if (!matches) {
+    return { ticketDate: null, drawingDate: null };
+  }
+
+  const dates = matches.map((match) => {
+    const [_, month, day, year] = match.match(/([A-Z]{3,})\s?(\d{1,2})(?:[.,])?(?:\s(\d{2,4}))?/i) || [];
+    const parsedYear = year ? (year.length === 2 ? `20${year}` : year) : new Date().getFullYear().toString();
+    const date = parse(`${month} ${day} ${parsedYear}`, 'MMM d yyyy', new Date());
+    return { text: match, date };
+  });
+
+  if (dates.length === 1) {
+    return { ticketDate: null, drawingDate: format(dates[0].date, 'MMMM d, yyyy') };
+  }
+
+  const numbersMatch = text.match(/\b\d{2}\b/g);
+  const numbers = numbersMatch ? numbersMatch.map(Number) : [];
+
+  if (numbers.length === 0) {
+    return { ticketDate: format(dates[0].date, 'MMMM d, yyyy'), drawingDate: format(dates[1].date, 'MMMM d, yyyy') };
+  }
+
+  const ticketDate = dates.reduce((closestDate, currentDate) => {
+    const currentDiff = Math.abs(currentDate.date.getTime() - numbers[0]);
+    const closestDiff = Math.abs(closestDate.date.getTime() - numbers[0]);
+    return currentDiff < closestDiff ? currentDate : closestDate;
+  });
+
+  const drawingDate = dates.find((date) => date !== ticketDate);
+
+  return {
+    ticketDate: ticketDate ? format(ticketDate.date, 'MMMM d, yyyy') : null,
+    drawingDate: drawingDate ? format(drawingDate.date, 'MMMM d, yyyy') : null,
+  };
+}

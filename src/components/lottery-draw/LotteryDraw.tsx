@@ -1,20 +1,20 @@
-import { IonCard, IonCardContent, IonCardHeader, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import Series from 'components/series/Series';
 import { LotteryDrawModel } from 'types/lottery-draw';
-import './LotteryDraw.css';
-import { calendarOutline } from 'ionicons/icons';
 import { getDefaultLDM } from 'utils/lottery-utils';
+import './LotteryDraw.css';
 
 interface LotteryDrawProps {
   draw: LotteryDrawModel | undefined;
+  onBallClick?: (number: number, isExtra: boolean, index: number) => void;
 }
 
-const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw }) => {
-  let finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : getDefaultLDM();
+const LotteryDraw: React.FC<LotteryDrawProps> = ({ draw, onBallClick }) => {
+  const finalDraw = draw !== undefined ? (draw as LotteryDrawModel) : getDefaultLDM();
+
   return (
-    <div>
-      <Series numbers={finalDraw.series.numbers} extra={finalDraw.series.extra} onBallClick={(n, ie) => {}} />
-    </div>
+    <>
+      <Series numbers={finalDraw.series.numbers} extra={finalDraw.series.extra} onBallClick={onBallClick} />
+    </>
   );
 };
 
