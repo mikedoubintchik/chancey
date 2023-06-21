@@ -271,17 +271,4 @@ http://ionicframework.com/docs/theming/ */
   }
 }
 
-ion-button.my-custom-button {
-  --background: var(--ion-color-primary);
-  --box-shadow: none;
-  --border-radius: 20px;
-}
 
-ion-content {
-  --background: #FAFAFA;
-}
-
-ion-card {
-  box-shadow: none;
-  border: 0.5px solid var(--ion-color-primary)
-}

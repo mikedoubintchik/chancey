@@ -9,3 +9,8 @@
   margin: 20px;
   min-width: 150px;
 }
+
+.get-lucky-label {
+  align-self: center;
+  font-size: 20px;
+}

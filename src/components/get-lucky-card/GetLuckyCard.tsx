@@ -17,13 +17,17 @@ import Series from 'components/series/Series';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { useEffect, useState } from 'react';
 import { SeriesModel } from 'types/series';
+import { first } from 'lodash';
 
 interface GetLuckyCardProps {}
 
 const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const [generatedDrawing, setGeneratedDrawing] = useState<SeriesModel | null>(null);
   const [showLoading, setShowLoading] = useState(true);
+  const [firstTime, setFirstTime] = useState(true);
+
   const generateSingleDrawing = async () => {
+    setFirstTime(false);
     setShowLoading(true);
     if (RuleEngineClient.instance.isInitialized) {
       let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
@@ -31,17 +35,17 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
         setGeneratedDrawing(drawingResponse.drawings[0]);
         setShowLoading(false);
       }
-    } else {
     }
   };
 
   useEffect(() => {
-    generateSingleDrawing();
-  }, []);
+    // generateSingleDrawing();
+    setShowLoading(!RuleEngineClient.instance.isInitialized);
+  }, [RuleEngineClient.instance.isInitialized]);
 
   return (
     <IonCard>
-      <IonCardHeader>
+      <IonCardHeader style={{ padding: '3px' }}>
         <IonToolbar>
           <IonButtons slot="start">
             <IonButton onClick={() => {}}>
@@ -57,7 +61,7 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
       </IonCardHeader>
       <IonCardContent className="get-lucky-card-content">
         {generatedDrawing && <Series numbers={generatedDrawing.numbers} extra={generatedDrawing.extra}></Series>}
-
+        {firstTime && <IonLabel className="get-lucky-label">Get Lucky and generate your numbers</IonLabel>}
         <IonButton
           onClick={() => {
             generateSingleDrawing();
