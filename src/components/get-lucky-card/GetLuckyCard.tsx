@@ -6,15 +6,39 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
+  IonLabel,
+  IonLoading,
+  IonSpinner,
   IonToolbar,
 } from '@ionic/react';
 import './GetLuckyCard.css';
 import { create, createOutline, createSharp, informationCircle, pencilOutline, time } from 'ionicons/icons';
 import Series from 'components/series/Series';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
+import { useEffect, useState } from 'react';
+import { SeriesModel } from 'types/series';
 
 interface GetLuckyCardProps {}
 
 const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
+  const [generatedDrawing, setGeneratedDrawing] = useState<SeriesModel | null>(null);
+  const [showLoading, setShowLoading] = useState(true);
+  const generateSingleDrawing = async () => {
+    setShowLoading(true);
+    if (RuleEngineClient.instance.isInitialized) {
+      let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
+      if (drawingResponse.drawings.length > 0) {
+        setGeneratedDrawing(drawingResponse.drawings[0]);
+        setShowLoading(false);
+      }
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    generateSingleDrawing();
+  }, []);
+
   return (
     <IonCard>
       <IonCardHeader>
@@ -32,9 +56,16 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
         </IonToolbar>
       </IonCardHeader>
       <IonCardContent className="get-lucky-card-content">
-        <Series numbers={[1, 2, 3, 4, 5]} extra={4}></Series>
-        <IonButton onClick={() => {}} className="my-custom-button">
-          Get Lucky
+        {generatedDrawing && <Series numbers={generatedDrawing.numbers} extra={generatedDrawing.extra}></Series>}
+
+        <IonButton
+          onClick={() => {
+            generateSingleDrawing();
+          }}
+          className="my-custom-button"
+        >
+          {showLoading && <IonSpinner name="circular"></IonSpinner>}
+          {!showLoading && <IonLabel>Get Lucky</IonLabel>}
         </IonButton>
       </IonCardContent>
     </IonCard>

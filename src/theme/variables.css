@@ -280,3 +280,8 @@ ion-button.my-custom-button {
 ion-content {
   --background: #FAFAFA;
 }
+
+ion-card {
+  box-shadow: none;
+  border: 0.5px solid var(--ion-color-primary)
+}

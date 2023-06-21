@@ -7,4 +7,5 @@
 .get-lucky-card-content ion-button {
   align-self: center;
   margin: 20px;
+  min-width: 150px;
 }
