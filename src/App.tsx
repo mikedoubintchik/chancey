@@ -112,9 +112,6 @@ const App: React.FC = () => {
               <Route exact path="/geolocation">
                 <GeolocationPage />
               </Route>
-              {/* <Route exact path="/scan">
-                <ScanTicket />
-              </Route> */}
               <Route exact path="/validate-scan">
                 <ValidateScanPage />
               </Route>
