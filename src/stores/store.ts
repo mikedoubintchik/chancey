@@ -31,6 +31,7 @@ export enum ActionType {
   INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
   UPDATE_CHANCES = 'UPDATE_CHANCES',
   UPDATE_GUIDED_TOUR = 'UPDATE_GUIDED_TOUR',
+  ADD_LUCKY_GENERATED_RESULT = 'ADD_LUCKY_GENERATED_RESULT',
 }
 export interface IReducer {
   type: ActionType;
@@ -50,6 +51,7 @@ export interface IReducer {
   initialChances: number;
   finalChances: number;
   postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
+  historicalLuckyGeneratedResult: SeriesModel;
 }
 
 export type InitialStateType = {
@@ -64,6 +66,7 @@ export type InitialStateType = {
   rulesBank: IRuleBase[];
   initialChances: number;
   finalChances: number;
+  historicalLuckyGeneratedResults: SeriesModel[];
   // postProcessingSnapshot: [];
 };
 
@@ -79,6 +82,7 @@ export const initialState: InitialStateType = {
   rulesBank: [],
   initialChances: 0,
   finalChances: 0,
+  historicalLuckyGeneratedResults: [],
   // postProcessingSnapshot: [],
 };
 
@@ -175,6 +179,15 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
         initialChances = action.initialChances;
       }
       return { ...state, initialChances: initialChances, finalChances: action.finalChances };
+    }
+    case ActionType.ADD_LUCKY_GENERATED_RESULT: {
+      console.log('adding lucky generated result', action);
+      let modifiedHistoricalGeneratedResults = [
+        ...state.historicalLuckyGeneratedResults,
+        action.historicalLuckyGeneratedResult,
+      ];
+      console.log(modifiedHistoricalGeneratedResults);
+      return { ...state, historicalLuckyGeneratedResults: modifiedHistoricalGeneratedResults };
     }
     default:
       return state;

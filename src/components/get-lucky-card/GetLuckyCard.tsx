@@ -19,6 +19,9 @@ import { useEffect, useState } from 'react';
 import { SeriesModel } from 'types/series';
 import { first } from 'lodash';
 import { useHistory } from 'react-router';
+import useModal from 'hooks/useModal';
+import HistoricalGeneratedModal from './historical-generated/HistoricalGeneratedModal';
+import { ActionType, useStore } from 'stores/store';
 
 interface GetLuckyCardProps {}
 
@@ -27,6 +30,8 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const [showLoading, setShowLoading] = useState(true);
   const [firstTime, setFirstTime] = useState(true);
   const history = useHistory();
+  const [isOpen, showModal, hideModal] = useModal();
+  const { state, dispatch } = useStore();
 
   const generateSingleDrawing = async () => {
     setFirstTime(false);
@@ -35,6 +40,10 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
       let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
       if (drawingResponse.drawings.length > 0) {
         setGeneratedDrawing(drawingResponse.drawings[0]);
+        dispatch({
+          type: ActionType.ADD_LUCKY_GENERATED_RESULT,
+          historicalLuckyGeneratedResult: drawingResponse.drawings[0],
+        });
         setShowLoading(false);
       }
     }
@@ -43,6 +52,11 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const handleEditRulesClick = () => {
     history.push('/rules');
   };
+
+  const handleHistoricalGeneratedClick = () => {
+    showModal();
+  };
+
   useEffect(() => {
     // generateSingleDrawing();
     setShowLoading(!RuleEngineClient.instance.isInitialized);
@@ -53,7 +67,11 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
       <IonCardHeader style={{ padding: '3px' }}>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={() => {}}>
+            <IonButton
+              onClick={() => {
+                handleHistoricalGeneratedClick();
+              }}
+            >
               <IonIcon slot="icon-only" icon={time}></IonIcon>
             </IonButton>
           </IonButtons>
@@ -81,6 +99,8 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
           {!showLoading && <IonLabel>Get Lucky</IonLabel>}
         </IonButton>
       </IonCardContent>
+
+      <HistoricalGeneratedModal isOpenModal={isOpen} hideModal={hideModal}></HistoricalGeneratedModal>
     </IonCard>
   );
 };
