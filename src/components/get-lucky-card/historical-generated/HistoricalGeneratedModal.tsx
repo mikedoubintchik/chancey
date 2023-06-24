@@ -4,7 +4,7 @@ import { useStore } from 'stores/store';
 
 import './HistoricalGeneratedModal.css';
 import Series from 'components/series/Series';
-import { IonCard, IonCardContent, IonCardHeader, IonContent, IonLabel } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonGrid, IonLabel, IonRow } from '@ionic/react';
 
 interface IModal {
   isOpenModal: boolean;
@@ -20,10 +20,21 @@ const HistoricalGeneratedModal: React.FC<IModal> = ({ isOpenModal, hideModal }) 
       return state.historicalLuckyGeneratedResults.map((result, index) => (
         <IonCard>
           <IonCardHeader>
-            <IonLabel>Lucky Guess #{index + 1}</IonLabel>
+            <IonGrid className="lucky-guesses-header-grid">
+              <IonRow>
+                <IonCol className="lucky-guesses-header-col">
+                  <IonLabel>Lucky Guess #{index + 1}</IonLabel>
+                </IonCol>
+                <IonCol className="lucky-guesses-header-col">
+                  <IonLabel className="lucky-guesses-header-date-label">
+                    Generatred on {result.date.toLocaleDateString()}
+                  </IonLabel>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
           </IonCardHeader>
           <IonCardContent>
-            <Series numbers={result.numbers} extra={result.extra}></Series>
+            <Series numbers={result.series.numbers} extra={result.series.extra}></Series>
           </IonCardContent>
         </IonCard>
       ));

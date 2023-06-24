@@ -22,11 +22,12 @@ import { useHistory } from 'react-router';
 import useModal from 'hooks/useModal';
 import HistoricalGeneratedModal from './historical-generated/HistoricalGeneratedModal';
 import { ActionType, useStore } from 'stores/store';
+import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
 
 interface GetLuckyCardProps {}
 
 const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
-  const [generatedDrawing, setGeneratedDrawing] = useState<SeriesModel | null>(null);
+  const [generatedDrawing, setGeneratedDrawing] = useState<LotteryDrawModel | null>(null);
   const [showLoading, setShowLoading] = useState(true);
   const [firstTime, setFirstTime] = useState(true);
   const history = useHistory();
@@ -39,10 +40,12 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
     if (RuleEngineClient.instance.isInitialized) {
       let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
       if (drawingResponse.drawings.length > 0) {
-        setGeneratedDrawing(drawingResponse.drawings[0]);
+        let draw = { date: new Date(), series: drawingResponse.drawings[0], type: DrawType.MEGA };
+        setGeneratedDrawing(draw);
+
         dispatch({
           type: ActionType.ADD_LUCKY_GENERATED_RESULT,
-          historicalLuckyGeneratedResult: drawingResponse.drawings[0],
+          historicalLuckyGeneratedResult: draw,
         });
         setShowLoading(false);
       }
@@ -87,7 +90,9 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
         </IonToolbar>
       </IonCardHeader>
       <IonCardContent className="get-lucky-card-content">
-        {generatedDrawing && <Series numbers={generatedDrawing.numbers} extra={generatedDrawing.extra}></Series>}
+        {generatedDrawing && (
+          <Series numbers={generatedDrawing.series.numbers} extra={generatedDrawing.series.extra}></Series>
+        )}
         {firstTime && <IonLabel className="get-lucky-label">Get Lucky and generate your numbers</IonLabel>}
         <IonButton
           onClick={() => {

@@ -38,13 +38,17 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
     <div className="series-container">
       <div className="series-numbers-container">
         {numbers.map((number, index) => (
-          <div key={nanoid()} onClick={(event) => handleElementClick(event, number, false, index)}>
+          <div
+            key={nanoid()}
+            onClick={(event) => handleElementClick(event, number, false, index)}
+            className="series-item"
+          >
             <Ball num={number} />
           </div>
         ))}
 
         {extra != null && (
-          <div onClick={(event) => handleElementClick(event, extra, true, 5)}>
+          <div onClick={(event) => handleElementClick(event, extra, true, 5)} className="series-item-extra">
             <Ball num={extra} color="#BD4F46" />
           </div>
         )}

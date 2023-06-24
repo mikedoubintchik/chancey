@@ -51,7 +51,7 @@ export interface IReducer {
   initialChances: number;
   finalChances: number;
   postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
-  historicalLuckyGeneratedResult: SeriesModel;
+  historicalLuckyGeneratedResult: LotteryDrawModel;
 }
 
 export type InitialStateType = {
@@ -66,7 +66,7 @@ export type InitialStateType = {
   rulesBank: IRuleBase[];
   initialChances: number;
   finalChances: number;
-  historicalLuckyGeneratedResults: SeriesModel[];
+  historicalLuckyGeneratedResults: LotteryDrawModel[];
   // postProcessingSnapshot: [];
 };
 

@@ -24,3 +24,14 @@
   border-radius: 5px;
   transition: translate 0.3s ease-in-out;
 }
+
+.series-item {
+  flex: 1;
+}
+
+.series-item-extra {
+  flex: 1;
+  > div {
+    float: right;
+  }
+}
