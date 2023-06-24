@@ -57,13 +57,13 @@ const LotteryDrawWithStats: React.FC<LotteryDrawWithStatsProps> = ({ draw, histo
         <div className="series-bars-container">
           <div className="series-bars-data">
             {draw.series.numbers.map((n, i) => (
-              <div key={n}>
+              <div key={n} className="series-bar-item">
                 <Bar index={i} height={200} maxVal={maxNum} value={stats[i]}></Bar>
               </div>
             ))}
 
             {draw.series.extra != null && (
-              <div>
+              <div className="series-bar-item-extra">
                 <Bar
                   index={6}
                   height={200}

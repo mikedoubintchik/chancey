@@ -18,3 +18,14 @@
     margin-top: 10px;
     padding: 5px;
 }
+
+.series-bar-item {
+    flex: 1;
+}
+
+.series-bar-item-extra {
+    flex: 1;
+    > div {
+        float: right;
+    }
+}
