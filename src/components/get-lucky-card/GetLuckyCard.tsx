@@ -29,13 +29,12 @@ interface GetLuckyCardProps {}
 const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const [generatedDrawing, setGeneratedDrawing] = useState<LotteryDrawModel | null>(null);
   const [showLoading, setShowLoading] = useState(true);
-  const [firstTime, setFirstTime] = useState(true);
+
   const history = useHistory();
   const [isOpen, showModal, hideModal] = useModal();
   const { state, dispatch } = useStore();
 
   const generateSingleDrawing = async () => {
-    setFirstTime(false);
     setShowLoading(true);
     if (RuleEngineClient.instance.isInitialized) {
       let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
@@ -93,7 +92,9 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
         {generatedDrawing && (
           <Series numbers={generatedDrawing.series.numbers} extra={generatedDrawing.series.extra}></Series>
         )}
-        {firstTime && <IonLabel className="get-lucky-label">Get Lucky and generate your numbers</IonLabel>}
+        {generatedDrawing == null && (
+          <IonLabel className="get-lucky-label">Get Lucky and generate your numbers</IonLabel>
+        )}
         <IonButton
           onClick={() => {
             generateSingleDrawing();
