@@ -90,7 +90,7 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
       </IonCardHeader>
       <IonCardContent className="get-lucky-card-content">
         {generatedDrawing && (
-          <Series numbers={generatedDrawing.series.numbers} extra={generatedDrawing.series.extra}></Series>
+          <Series animate numbers={generatedDrawing.series.numbers} extra={generatedDrawing.series.extra}></Series>
         )}
         {generatedDrawing == null && (
           <IonLabel className="get-lucky-label">Get Lucky and generate your numbers</IonLabel>

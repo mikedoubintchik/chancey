@@ -2,14 +2,15 @@ import { nanoid } from 'nanoid';
 import { MouseEvent, useEffect, useRef } from 'react';
 import Ball from '../ball/Ball';
 import './Series.css';
-
+import { motion } from 'framer-motion';
 interface SeriesProps {
   numbers: number[];
   extra: number | null;
   onBallClick?: (number: number, isExtra: boolean, index: number) => void;
+  animate?: boolean;
 }
 
-const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
+const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick, animate }) => {
   const underlineRef = useRef<HTMLDivElement | null>(null);
 
   const handleElementClick = (event: MouseEvent<HTMLDivElement>, number: number, isExtra: boolean, index: number) => {
@@ -38,19 +39,29 @@ const Series: React.FC<SeriesProps> = ({ numbers, extra, onBallClick }) => {
     <div className="series-container">
       <div className="series-numbers-container">
         {numbers.map((number, index) => (
-          <div
-            key={nanoid()}
+          <motion.div
+            key={'number-' + number + '-' + index}
             onClick={(event) => handleElementClick(event, number, false, index)}
             className="series-item"
+            initial={animate ? { opacity: 0, translateY: -60 } : {}}
+            animate={animate ? { opacity: 1, translateY: 0 } : {}}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: index * Math.random() * 0.05 }}
           >
             <Ball num={number} />
-          </div>
+          </motion.div>
         ))}
 
         {extra != null && (
-          <div onClick={(event) => handleElementClick(event, extra, true, 5)} className="series-item-extra">
+          <motion.div
+            key={'number-' + extra + '-' + 6}
+            onClick={(event) => handleElementClick(event, extra, true, 5)}
+            className="series-item-extra"
+            initial={animate ? { opacity: 0, translateY: -60 } : {}}
+            animate={animate ? { opacity: 1, translateY: 0 } : {}}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 6 * Math.random() * 0.05 }}
+          >
             <Ball num={extra} color="#BD4F46" />
-          </div>
+          </motion.div>
         )}
       </div>
 
