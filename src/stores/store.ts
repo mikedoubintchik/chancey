@@ -184,17 +184,23 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       return { ...state, initialChances: initialChances, finalChances: action.finalChances };
     }
     case ActionType.INITIALIZE_LUCKY_GENERATED_RESULT: {
-      console.log('initializing lucky generated result', action);
+      // console.log('initializing lucky generated result', action);
 
       return { ...state, historicalLuckyGeneratedResults: action.historicalLuckyGeneratedResults };
     }
     case ActionType.ADD_LUCKY_GENERATED_RESULT: {
-      console.log('adding lucky generated result', action);
+      // console.log('adding lucky generated result', action);
       let modifiedHistoricalGeneratedResults = [
         ...state.historicalLuckyGeneratedResults,
         action.historicalLuckyGeneratedResult,
       ];
-      console.log(modifiedHistoricalGeneratedResults);
+      // console.log(modifiedHistoricalGeneratedResults);
+      let maxLen = 50;
+      if (modifiedHistoricalGeneratedResults.length > maxLen) {
+        let len = modifiedHistoricalGeneratedResults.length;
+        // this is to limit the historical data to maxLen
+        modifiedHistoricalGeneratedResults = modifiedHistoricalGeneratedResults.slice(len - maxLen, len);
+      }
       set('historical-lucky-generated-results', modifiedHistoricalGeneratedResults);
       return { ...state, historicalLuckyGeneratedResults: modifiedHistoricalGeneratedResults };
     }
