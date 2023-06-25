@@ -18,7 +18,7 @@ const HistoricalGeneratedModal: React.FC<IModal> = ({ isOpenModal, hideModal }) 
   const renderHistoricalGueneratedResults = (): ReactElement[] => {
     if (state.historicalLuckyGeneratedResults && state.historicalLuckyGeneratedResults.length > 0) {
       return state.historicalLuckyGeneratedResults.map((result, index) => (
-        <IonCard>
+        <IonCard key={'lucky-guess - ' + index}>
           <IonCardHeader>
             <IonGrid className="lucky-guesses-header-grid">
               <IonRow>

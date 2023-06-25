@@ -7,6 +7,7 @@ import { SeriesModel } from 'types/series';
 import Worker from 'web-worker';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
 import { IRuleBase } from '../rules/RuleBase';
+import { createIonicStore, get, set } from 'stores/IonicStorage';
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
   type: 'module',
@@ -32,6 +33,7 @@ export enum ActionType {
   UPDATE_CHANCES = 'UPDATE_CHANCES',
   UPDATE_GUIDED_TOUR = 'UPDATE_GUIDED_TOUR',
   ADD_LUCKY_GENERATED_RESULT = 'ADD_LUCKY_GENERATED_RESULT',
+  INITIALIZE_LUCKY_GENERATED_RESULT = 'INITIALIZE_LUCKY_GENERATED_RESULT',
 }
 export interface IReducer {
   type: ActionType;
@@ -52,6 +54,7 @@ export interface IReducer {
   finalChances: number;
   postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
   historicalLuckyGeneratedResult: LotteryDrawModel;
+  historicalLuckyGeneratedResults: LotteryDrawModel[];
 }
 
 export type InitialStateType = {
@@ -180,6 +183,11 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       }
       return { ...state, initialChances: initialChances, finalChances: action.finalChances };
     }
+    case ActionType.INITIALIZE_LUCKY_GENERATED_RESULT: {
+      console.log('initializing lucky generated result', action);
+
+      return { ...state, historicalLuckyGeneratedResults: action.historicalLuckyGeneratedResults };
+    }
     case ActionType.ADD_LUCKY_GENERATED_RESULT: {
       console.log('adding lucky generated result', action);
       let modifiedHistoricalGeneratedResults = [
@@ -187,6 +195,7 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
         action.historicalLuckyGeneratedResult,
       ];
       console.log(modifiedHistoricalGeneratedResults);
+      set('historical-lucky-generated-results', modifiedHistoricalGeneratedResults);
       return { ...state, historicalLuckyGeneratedResults: modifiedHistoricalGeneratedResults };
     }
     default:

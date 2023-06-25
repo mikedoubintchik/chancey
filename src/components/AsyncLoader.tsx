@@ -29,6 +29,15 @@ const AsyncLoader: React.FC = () => {
       // }
     }
 
+    let historicalLuckyGeneratedResults = await get('historical-lucky-generated-results');
+
+    if (historicalLuckyGeneratedResults) {
+      dispatch({
+        type: ActionType.INITIALIZE_LUCKY_GENERATED_RESULT,
+        historicalLuckyGeneratedResults,
+      });
+    }
+
     if (state.historicalData.length === 0 && historicalData.length > 0) {
       dispatch({
         type: ActionType.UPDATE_HISTORICAL_DATA,
