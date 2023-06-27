@@ -14,6 +14,11 @@ const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.m
 });
 RuleEngineClient.initInstance(worker);
 
+export enum Storages {
+  HISTORICAL_LUCKY_GENERATED_RESULTS = 'historical-lucky-generated-results',
+  HISTOICAL_DATA_MEGA = 'historical-data-mega',
+}
+
 export enum ActionType {
   RESET = 'RESET',
   UPDATE_USER = 'UPDATE_USER',
@@ -53,7 +58,6 @@ export interface IReducer {
   initialChances: number;
   finalChances: number;
   postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
-  historicalLuckyGeneratedResult: LotteryDrawModel;
   historicalLuckyGeneratedResults: LotteryDrawModel[];
 }
 
@@ -192,7 +196,7 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
       // console.log('adding lucky generated result', action);
       let modifiedHistoricalGeneratedResults = [
         ...state.historicalLuckyGeneratedResults,
-        action.historicalLuckyGeneratedResult,
+        action.historicalLuckyGeneratedResults[0],
       ];
       // console.log(modifiedHistoricalGeneratedResults);
       let maxLen = 50;

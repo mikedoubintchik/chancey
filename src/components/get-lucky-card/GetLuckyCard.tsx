@@ -4,29 +4,24 @@ import {
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardTitle,
   IonIcon,
   IonLabel,
-  IonLoading,
   IonSpinner,
   IonToolbar,
 } from '@ionic/react';
-import './GetLuckyCard.css';
-import { create, createOutline, createSharp, informationCircle, pencilOutline, time } from 'ionicons/icons';
 import Series from 'components/series/Series';
-import { RuleEngineClient } from 'rules/RuleEngineClient';
-import { useEffect, useState } from 'react';
-import { SeriesModel } from 'types/series';
-import { first } from 'lodash';
-import { useHistory } from 'react-router';
 import useModal from 'hooks/useModal';
-import HistoricalGeneratedModal from './historical-generated/HistoricalGeneratedModal';
+import { pencilOutline, time } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { ActionType, useStore } from 'stores/store';
 import { DrawType, LotteryDrawModel } from 'types/lottery-draw';
+import HistoricalGeneratedModal from './historical-generated/HistoricalGeneratedModal';
 
-interface GetLuckyCardProps {}
+import './GetLuckyCard.css';
 
-const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
+const GetLuckyCard: React.FC<{}> = ({}) => {
   const [generatedDrawing, setGeneratedDrawing] = useState<LotteryDrawModel | null>(null);
   const [showLoading, setShowLoading] = useState(true);
 
@@ -37,14 +32,14 @@ const GetLuckyCard: React.FC<GetLuckyCardProps> = ({}) => {
   const generateSingleDrawing = async () => {
     setShowLoading(true);
     if (RuleEngineClient.instance.isInitialized) {
-      let drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
+      const drawingResponse = await RuleEngineClient.instance.generateDrawings(1);
       if (drawingResponse.drawings.length > 0) {
-        let draw = { date: new Date(), series: drawingResponse.drawings[0], type: DrawType.MEGA };
-        setGeneratedDrawing(draw);
+        const generatedGuess = { date: new Date(), series: drawingResponse.drawings[0], type: DrawType.MEGA };
+        setGeneratedDrawing(generatedGuess);
 
         dispatch({
           type: ActionType.ADD_LUCKY_GENERATED_RESULT,
-          historicalLuckyGeneratedResult: draw,
+          historicalLuckyGeneratedResults: [generatedGuess],
         });
         setShowLoading(false);
       }
