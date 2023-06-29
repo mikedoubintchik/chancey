@@ -1,7 +1,8 @@
-.app-tab-bar {
-  padding-top: 10px;
-  border-radius: 15px 15px 0px 0px;
-  padding-bottom: 10px;
+.app-tab-bar {  
+  border-radius: 15px;  
+  margin: 10px 20px 10px 20px;  
+  border: 0.5px solid var(--ion-color-primary);
+  padding: 5px;
 }
 
 @keyframes scaleUp {
@@ -33,50 +34,6 @@
   animation: scaleUp 0.2s linear;
 }
 
-.app-tab-bar {
-  contain: none;
-  border-top: 0.5px solid var(--ion-color-medium);
-}
-
-.app-tab-bar::before {
-  content: "";
-  border-radius: 100%;
-  margin-top: -10px;
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  background-color: var(--ion-tab-bar-background);
-  border-top: 1px solid var(--ion-color-medium);
-
-}
-
-.app-tab-bar::after {
-  content: "";
-  /* border-radius: 100%; */
-  margin-top: 25px;
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  background-color: var(--ion-tab-bar-background);
-
-}
-
-#tab-button-rules {
-  margin-top: -20px;
-}
-
-ion-toolbar.solid-clear {
-  --background: var(--ion-background-color);
-}
-
 .header-md::after {
   background-image: none;
-}
-
-ion-card {
-  border-radius: 15px;
-}
-
-ion-modal ion-content {
-  --ion-padding: 0px;
 }

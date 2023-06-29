@@ -39,6 +39,7 @@ import { Reducer, useEffect, useReducer, useState } from 'react';
 import Joyride from 'react-joyride';
 import './App.css';
 import './theme/variables.css';
+import './theme/global-styles.css';
 
 library.add(fab);
 

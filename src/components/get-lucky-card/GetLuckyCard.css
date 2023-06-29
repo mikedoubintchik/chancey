@@ -1,0 +1,17 @@
+.get-lucky-card-content{
+  display: flex;
+  flex-flow: column;
+   
+}
+
+.get-lucky-card-content ion-button {
+  align-self: center;
+  margin: 20px;
+  min-width: 150px;
+}
+
+.get-lucky-label {
+  align-self: center;
+  font-size: 20px;
+  padding: 20px;
+}

@@ -4,7 +4,7 @@ import { useNativePushNotification } from 'hooks/useNativePushNotifications';
 import { useCallback, useEffect } from 'react';
 import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
-import { ActionType, useStore } from 'stores/store';
+import { ActionType, Storages, useStore } from 'stores/store';
 import { Capacitor } from '@capacitor/core';
 
 const AsyncLoader: React.FC = () => {
@@ -23,10 +23,19 @@ const AsyncLoader: React.FC = () => {
       // if (historicalData.length > 0) {
       // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 23 ~ initializeApplicationData ~ historicalData', historicalData);
       if (historicalData.length > 0) {
-        set('historical-data-mega', historicalData);
+        set(Storages.HISTOICAL_DATA_MEGA, historicalData);
       }
 
       // }
+    }
+
+    const historicalLuckyGeneratedResults = await get(Storages.HISTORICAL_LUCKY_GENERATED_RESULTS);
+
+    if (historicalLuckyGeneratedResults) {
+      dispatch({
+        type: ActionType.INITIALIZE_LUCKY_GENERATED_RESULT,
+        historicalLuckyGeneratedResults,
+      });
     }
 
     if (state.historicalData.length === 0 && historicalData.length > 0) {

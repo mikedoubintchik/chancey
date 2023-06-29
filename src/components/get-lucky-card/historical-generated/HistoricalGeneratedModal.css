@@ -1,0 +1,18 @@
+.lucky-guesses-container {
+  display: flex;
+  flex-flow: column;
+}
+
+.lucky-guesses-header-grid {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.lucky-guesses-header-col {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.lucky-guesses-header-date-label {
+  float:right;
+}

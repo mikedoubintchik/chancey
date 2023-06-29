@@ -1,0 +1,33 @@
+ion-button.my-custom-button {
+    --background: var(--ion-color-primary);
+    --box-shadow: none;
+    --border-radius: 20px;
+}
+
+ion-content {
+    --background: #FAFAFA;
+}
+
+ion-card {
+    border-radius: 15px;
+    box-shadow: none;
+    border: 0.5px solid var(--ion-color-primary);
+    margin: 20px;
+}
+
+ion-card-header {
+    padding: 20px;
+}
+
+ion-card-content {
+    padding: 20px;
+}
+
+ion-tabs {
+    background: #FAFAFA;
+}
+
+
+ion-modal ion-content {
+    --ion-padding: 0px;
+}

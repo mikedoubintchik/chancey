@@ -7,11 +7,17 @@ import { SeriesModel } from 'types/series';
 import Worker from 'web-worker';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
 import { IRuleBase } from '../rules/RuleBase';
+import { createIonicStore, get, set } from 'stores/IonicStorage';
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
   type: 'module',
 });
 RuleEngineClient.initInstance(worker);
+
+export enum Storages {
+  HISTORICAL_LUCKY_GENERATED_RESULTS = 'historical-lucky-generated-results',
+  HISTOICAL_DATA_MEGA = 'historical-data-mega',
+}
 
 export enum ActionType {
   RESET = 'RESET',
@@ -31,6 +37,8 @@ export enum ActionType {
   INITIALIZE_RULES_BANK = 'INITIALIZE_RULES_BANK',
   UPDATE_CHANCES = 'UPDATE_CHANCES',
   UPDATE_GUIDED_TOUR = 'UPDATE_GUIDED_TOUR',
+  ADD_LUCKY_GENERATED_RESULT = 'ADD_LUCKY_GENERATED_RESULT',
+  INITIALIZE_LUCKY_GENERATED_RESULT = 'INITIALIZE_LUCKY_GENERATED_RESULT',
 }
 export interface IReducer {
   type: ActionType;
@@ -50,6 +58,7 @@ export interface IReducer {
   initialChances: number;
   finalChances: number;
   postProcessingSnapshots: Array<IPostProcessRuleSnapshot>;
+  historicalLuckyGeneratedResults: LotteryDrawModel[];
 }
 
 export type InitialStateType = {
@@ -64,6 +73,7 @@ export type InitialStateType = {
   rulesBank: IRuleBase[];
   initialChances: number;
   finalChances: number;
+  historicalLuckyGeneratedResults: LotteryDrawModel[];
   // postProcessingSnapshot: [];
 };
 
@@ -79,6 +89,7 @@ export const initialState: InitialStateType = {
   rulesBank: [],
   initialChances: 0,
   finalChances: 0,
+  historicalLuckyGeneratedResults: [],
   // postProcessingSnapshot: [],
 };
 
@@ -175,6 +186,27 @@ export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
         initialChances = action.initialChances;
       }
       return { ...state, initialChances: initialChances, finalChances: action.finalChances };
+    }
+    case ActionType.INITIALIZE_LUCKY_GENERATED_RESULT: {
+      // console.log('initializing lucky generated result', action);
+
+      return { ...state, historicalLuckyGeneratedResults: action.historicalLuckyGeneratedResults };
+    }
+    case ActionType.ADD_LUCKY_GENERATED_RESULT: {
+      // console.log('adding lucky generated result', action);
+      let modifiedHistoricalGeneratedResults = [
+        ...state.historicalLuckyGeneratedResults,
+        action.historicalLuckyGeneratedResults[0],
+      ];
+      // console.log(modifiedHistoricalGeneratedResults);
+      let maxLen = 50;
+      if (modifiedHistoricalGeneratedResults.length > maxLen) {
+        let len = modifiedHistoricalGeneratedResults.length;
+        // this is to limit the historical data to maxLen
+        modifiedHistoricalGeneratedResults = modifiedHistoricalGeneratedResults.slice(len - maxLen, len);
+      }
+      set('historical-lucky-generated-results', modifiedHistoricalGeneratedResults);
+      return { ...state, historicalLuckyGeneratedResults: modifiedHistoricalGeneratedResults };
     }
     default:
       return state;
