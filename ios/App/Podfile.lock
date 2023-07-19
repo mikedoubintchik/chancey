@@ -1,0 +1,163 @@
+PODS:
+  - Capacitor (4.3.0):
+    - CapacitorCordova
+  - CapacitorApp (4.0.1):
+    - Capacitor
+  - CapacitorCamera (4.1.1):
+    - Capacitor
+  - CapacitorCommunityFcm (3.0.0):
+    - Capacitor
+    - Firebase/Messaging
+  - CapacitorCordova (4.3.0)
+  - CapacitorFilesystem (4.1.1):
+    - Capacitor
+  - CapacitorHaptics (4.0.1):
+    - Capacitor
+  - CapacitorKeyboard (4.0.1):
+    - Capacitor
+  - CapacitorPreferences (4.0.1):
+    - Capacitor
+  - CapacitorPushNotifications (4.1.0):
+    - Capacitor
+  - CapacitorStatusBar (4.0.1):
+    - Capacitor
+  - CapacitorToast (4.0.1):
+    - Capacitor
+  - Firebase/CoreOnly (10.11.0):
+    - FirebaseCore (= 10.11.0)
+  - Firebase/Messaging (10.11.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.11.0)
+  - FirebaseAppCheck (10.11.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseCore (10.11.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreInternal (10.11.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseInstallations (10.11.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.11.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleDataTransport (9.2.3):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.11.1):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.11.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.11.1):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.11.1)"
+  - GoogleUtilities/Reachability (7.11.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.11.1):
+    - GoogleUtilities/Logger
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - PromisesObjC (2.2.0)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
+  - "CapacitorCommunityFcm (from `../../node_modules/@capacitor-community/fcm`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorPushNotifications (from `../../node_modules/@capacitor/push-notifications`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
+  - FirebaseAppCheck
+
+SPEC REPOS:
+  trunk:
+    - Firebase
+    - FirebaseAppCheck
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebaseMessaging
+    - GoogleDataTransport
+    - GoogleUtilities
+    - nanopb
+    - PromisesObjC
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
+  CapacitorCommunityFcm:
+    :path: "../../node_modules/@capacitor-community/fcm"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorHaptics:
+    :path: "../../node_modules/@capacitor/haptics"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPreferences:
+    :path: "../../node_modules/@capacitor/preferences"
+  CapacitorPushNotifications:
+    :path: "../../node_modules/@capacitor/push-notifications"
+  CapacitorStatusBar:
+    :path: "../../node_modules/@capacitor/status-bar"
+  CapacitorToast:
+    :path: "../../node_modules/@capacitor/toast"
+
+SPEC CHECKSUMS:
+  Capacitor: 5534f805df231c76164e1d63119bff7b4eac6cd5
+  CapacitorApp: 70ea773d069c24ab188ae7a01237b951920ffacf
+  CapacitorCamera: 0bdf42438683cdc89fd0fc674a2ee281293d4cb3
+  CapacitorCommunityFcm: 26ef2f7f4cac1a9928745bf7de848fe8d8702f44
+  CapacitorCordova: 19a82a3b91fbeb9bdd049729551edc3cd7e5e648
+  CapacitorFilesystem: e36a560cb7013cba63cb90bccb04612026f3e3cd
+  CapacitorHaptics: 02d48e2efca06ccf3273dbb638b68b0e145f623a
+  CapacitorKeyboard: 3b49a9d517641c123fb691713f99a89d6ebf3a37
+  CapacitorPreferences: d365ea3b5023b2aac39e8f5ce18de141e39d2cae
+  CapacitorPushNotifications: afc6b4d3c7935a3fa6cb08bc78b344c282cafe91
+  CapacitorStatusBar: e6cf2a9ed07f92ddae9ca101be36d08c61866b35
+  CapacitorToast: 1dc62f6482adba545aeb58d791f66cc7d9731c92
+  Firebase: 31d9575c124839fb5abc0db6d39511cc1dab1b85
+  FirebaseAppCheck: fb7a0f680b941e9efd67b1ed9b1d700a2ed73ce5
+  FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
+  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
+  FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
+  FirebaseMessaging: 06253e9669434df0a40718fc82a90c78090f4704
+  GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
+  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+
+PODFILE CHECKSUM: 23eb8c55a382df383ecb2c9278090190d87ea3a4
+
+COCOAPODS: 1.12.1
