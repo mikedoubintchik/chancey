@@ -21,6 +21,7 @@ def capacitor_pods
   pod 'CapacitorPushNotifications', :path => '../../node_modules/@capacitor/push-notifications'
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
   pod 'CapacitorToast', :path => '../../node_modules/@capacitor/toast'
+  pod 'CapacitorPluginGlassfy', :path => '../../node_modules/capacitor-plugin-glassfy'
 end
 
 target 'App' do
