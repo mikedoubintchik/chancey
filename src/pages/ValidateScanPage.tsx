@@ -18,6 +18,7 @@ import {
 import Header from 'components/Header';
 import LotteryDrawWithoutStats from 'components/lottery-draw-without-stats/LotteryDrawWithoutStats';
 import LotteryDraw from 'components/lottery-draw/LotteryDraw';
+import LotteryTickets from 'components/lottery-tickets/LotteryTickets';
 import BallEditModal from 'components/modals/BallEditModal';
 import useModal from 'hooks/useModal';
 import { informationCircleOutline } from 'ionicons/icons';
@@ -25,19 +26,20 @@ import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { useMockStore } from 'stores/mockStore';
 import { useStore } from 'stores/store';
-import { LotteryDrawModel } from 'types/lottery-draw';
+import { LotteryDrawModel, LotteryTicketModel } from 'types/lottery-draw';
 
 const ValidateScanPage: React.FC = () => {
-  // const { state } = useMockStore(); // use mock store to avoid making API calls
-  const { state } = useStore();
-  console.log('🚀 ~ file: ValidateScanPage.tsx:33 ~ state:', state);
-  const [lotteryTicket, setLotteryTicket] = useState<LotteryDrawModel | undefined>();
+  const { state } = useMockStore(); // use mock store to avoid making API calls
+  // const { state } = useStore();
+  // console.log('🚀 ~ file: ValidateScanPage.tsx:33 ~ state:', state);
+  const [lotteryTicket, setLotteryTicket] = useState<LotteryDrawModel[] | undefined>();
+  const [seriesIndex, setSeriesIndex] = useState<number>(0);
   const [editNumber, setEditNumber] = useState<number>();
   const [editIndex, setEditIndex] = useState<number>();
   const [isBallEditModalOpen, showBallEditModal, hideBallEditModal] = useModal();
 
   useEffect(() => {
-    setLotteryTicket(state.latestTicket?.values);
+    if (state.latestTicket?.values) setLotteryTicket(state.latestTicket?.values);
   }, [state.latestTicket?.values]);
 
   return (
@@ -69,7 +71,7 @@ const ValidateScanPage: React.FC = () => {
                         <IonPopover trigger="click-trigger" triggerAction="click">
                           Click on the numbers below to correct mistakes
                         </IonPopover>
-                        <p>Drawing Date: {state.latestTicket?.values?.date.toDateString()}</p>
+                        <p>Drawing Date: {lotteryTicket[0].date.toDateString()}</p>
                         <p>Ticket Date: {state.latestTicket?.ticketDate?.toDateString()}</p>
                       </IonToolbar>
                     </IonCardHeader>
@@ -84,25 +86,39 @@ const ValidateScanPage: React.FC = () => {
                           }}
                           ballNumber={editNumber}
                           setNewNumber={(newBallNumber) => {
+                            console.log('🚀 ~ file: ValidateScanPage.tsx:89 ~ newBallNumber:', newBallNumber);
                             setEditNumber(newBallNumber);
                             // if extra ball
                             if (editIndex === 6) {
-                              lotteryTicket.series.extra = newBallNumber;
+                              lotteryTicket[seriesIndex].series.extra = newBallNumber;
                             } else {
-                              lotteryTicket.series.numbers[editIndex - 1] = newBallNumber; // index starts with 1
+                              const updatedLotteryTicket = lotteryTicket.map((ticket) => Object.assign({}, ticket));
+
+                              updatedLotteryTicket[seriesIndex].series.numbers[editIndex - 1] = newBallNumber; // index starts with 1
+
+                              setLotteryTicket(updatedLotteryTicket);
                             }
                           }}
                         />
                       )}
                       {lotteryTicket && (
-                        <LotteryDraw
-                          draw={lotteryTicket}
-                          onBallClick={(number, isExtra, index) => {
+                        <LotteryTickets
+                          draws={lotteryTicket}
+                          onBallClick={(number, isExtra, index, seriesIndex) => {
+                            setSeriesIndex(seriesIndex);
                             setEditNumber(number);
                             setEditIndex(index);
                             showBallEditModal();
                           }}
                         />
+                        // <LotteryDraw
+                        //   draw={lotteryTicket[0]}
+                        //   onBallClick={(number, isExtra, index) => {
+                        //     setEditNumber(number);
+                        //     setEditIndex(index);
+                        //     showBallEditModal();
+                        //   }}
+                        // />
                       )}
                     </IonCardContent>
                   </>

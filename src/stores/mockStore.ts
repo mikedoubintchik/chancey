@@ -103,14 +103,35 @@ export const initialState: InitialStateType = {
   latestTicket: {
     fileName: '',
     filePath: '',
-    values: {
-      type: DrawType.MEGA,
-      series: {
-        numbers: [1, 2, 3, 4, 5],
-        extra: 6,
+    values: [
+      {
+        type: DrawType.MEGA,
+        series: {
+          numbers: [1, 2, 3, 4, 5],
+          extra: 6,
+        },
+
+        date: new Date('May 22, 2023'),
       },
-      date: new Date('May 22, 2023'),
-    },
+      {
+        type: DrawType.MEGA,
+        series: {
+          numbers: [2, 5, 6, 7, 8],
+          extra: 6,
+        },
+
+        date: new Date('May 22, 2023'),
+      },
+      {
+        type: DrawType.MEGA,
+        series: {
+          numbers: [9, 10, 11, 12, 13],
+          extra: 6,
+        },
+
+        date: new Date('May 22, 2023'),
+      },
+    ],
     ticketDate: new Date('May 22, 2023'),
   },
   rules: [],
