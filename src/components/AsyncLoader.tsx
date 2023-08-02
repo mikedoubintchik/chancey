@@ -6,6 +6,7 @@ import { RuleEngineClient } from 'rules/RuleEngineClient';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
 import { ActionType, Storages, useStore } from 'stores/store';
 import { Capacitor } from '@capacitor/core';
+import { Glassfy } from 'capacitor-plugin-glassfy';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -13,6 +14,13 @@ const AsyncLoader: React.FC = () => {
   const { setupPushNotificationsForMobile, setupPushNotificationsForWeb } = useNativePushNotification();
 
   const initializeApplicationData = useCallback(async () => {
+    try {
+      await Glassfy.initialize({ apiKey: '393489baa5b44bf7a9af2975f6ee2d01', watcherMode: false });
+    } catch (e) {
+      // initialization error
+      console.log('Glassfy Initialization error', e);
+    }
+
     console.log('Creating ionic store in initializeApplicationData');
     await createIonicStore('app-data');
     let historicalData = await get('app-data');
