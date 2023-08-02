@@ -12,7 +12,10 @@ import { LowBallerRule } from './LowBaller';
 import { ExcludeRecentDrawingsNumbersRule } from './ExlcudeRecentDrawings';
 
 export const getRulesBank = (historicalData: Array<LotteryDrawModel>): Array<IRuleBase> => {
-  // console.log('🚀 ~ file: RuleUtils.ts ~ line 9 ~ getRulesBank ~ getRulesBank');
+  if (historicalData.length === 0) {
+    return [];
+  }
+
   return [
     new RecentRangesRule(historicalData, 10),
     new RecentRangesRule(historicalData, 50),

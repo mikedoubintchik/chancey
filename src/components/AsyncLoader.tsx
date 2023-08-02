@@ -1,44 +1,38 @@
+import { Capacitor } from '@capacitor/core';
 import { messaging } from 'config/firebase';
-import { useHistoricalData } from 'hooks/useHistoricalData';
 import { useNativePushNotification } from 'hooks/useNativePushNotifications';
 import { useCallback, useEffect } from 'react';
-import { RuleEngineClient } from 'rules/RuleEngineClient';
-import { createIonicStore, get, set } from 'stores/IonicStorage';
-import { ActionType, Storages, useStore } from 'stores/store';
-import { Capacitor } from '@capacitor/core';
-import { Glassfy } from 'capacitor-plugin-glassfy';
+import { ActionType, useStore } from 'stores/store';
+import { AsyncLoaderHelper } from './utils/AsyncLoaderHelper';
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
-  const { getHistoricalData } = useHistoricalData();
   const { setupPushNotificationsForMobile, setupPushNotificationsForWeb } = useNativePushNotification();
 
+  // initialize application data
   const initializeApplicationData = useCallback(async () => {
-    try {
-      await Glassfy.initialize({ apiKey: '393489baa5b44bf7a9af2975f6ee2d01', watcherMode: false });
-    } catch (e) {
-      // initialization error
-      console.log('Glassfy Initialization error', e);
-    }
+    //1. initialize glassfy
+    Capacitor.isNativePlatform() && (await AsyncLoaderHelper.initializeGlassfy());
+    //2. create ionic store
+    await AsyncLoaderHelper.initializeAppStore();
 
-    console.log('Creating ionic store in initializeApplicationData');
-    await createIonicStore('app-data');
-    let historicalData = await get('app-data');
-    // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 17 ~ initializeApplicationData ~ historicalData', historicalData);
+    //3. get historical data from api
+    let historicalData = await AsyncLoaderHelper.loadHistoricalData();
+    dispatch({
+      type: ActionType.UPDATE_HISTORICAL_DATA,
+      historicalData,
+    });
 
-    if (historicalData === null) {
-      historicalData = await getHistoricalData();
-      // if (historicalData.length > 0) {
-      // console.log('🚀 ~ file: AsyncLoader.tsx ~ line 23 ~ initializeApplicationData ~ historicalData', historicalData);
-      if (historicalData.length > 0) {
-        set(Storages.HISTOICAL_DATA_MEGA, historicalData);
-      }
+    //4. initialize rule engine
+    let initialResults = await AsyncLoaderHelper.initializeRuleEngine(historicalData);
+    dispatch({
+      type: ActionType.UPDATE_CHANCES,
+      initialChances: initialResults?.cacheSize,
+      finalChances: initialResults?.cacheSize,
+    });
 
-      // }
-    }
-
-    const historicalLuckyGeneratedResults = await get(Storages.HISTORICAL_LUCKY_GENERATED_RESULTS);
-
+    //5. load historical lucky generated results
+    let historicalLuckyGeneratedResults = await AsyncLoaderHelper.loadHistoricalLuckyGeneratedResults();
     if (historicalLuckyGeneratedResults) {
       dispatch({
         type: ActionType.INITIALIZE_LUCKY_GENERATED_RESULT,
@@ -46,21 +40,8 @@ const AsyncLoader: React.FC = () => {
       });
     }
 
-    if (state.historicalData.length === 0 && historicalData.length > 0) {
-      dispatch({
-        type: ActionType.UPDATE_HISTORICAL_DATA,
-        historicalData,
-      });
-      let initResults = await RuleEngineClient.instance.initializeRuleEngine(historicalData);
-      dispatch({
-        type: ActionType.UPDATE_CHANCES,
-        initialChances: initResults?.cacheSize,
-        finalChances: initResults?.cacheSize,
-      });
-    }
-
-    const welcomeFinished = await get('welcomeFinished');
-
+    //6. update welcome finished state
+    let welcomeFinished = await AsyncLoaderHelper.updateWelcomeFinishedState();
     if (welcomeFinished) {
       dispatch({
         type: ActionType.UPDATE_WELCOME_FINISHED,
