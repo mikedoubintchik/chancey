@@ -15,6 +15,7 @@ const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.m
 RuleEngineClient.initInstance(worker);
 
 export enum Storages {
+  APP_DATA = 'app-data',
   HISTORICAL_LUCKY_GENERATED_RESULTS = 'historical-lucky-generated-results',
   HISTOICAL_DATA_MEGA = 'historical-data-mega',
 }
