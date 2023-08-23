@@ -8,6 +8,10 @@ import Worker from 'web-worker';
 import { IPostProcessRuleSnapshot } from 'workers/messages';
 import { IRuleBase } from '../rules/RuleBase';
 import { createIonicStore, get, set } from 'stores/IonicStorage';
+import config from 'utils/config';
+import mockInitialState from 'stores/mockInitialState';
+
+const { USE_MOCK_STORE } = config;
 
 const worker = new Worker(new URL('./../workers/rule-engine.worker.ts', import.meta.url), {
   type: 'module',
@@ -78,21 +82,23 @@ export type InitialStateType = {
   // postProcessingSnapshot: [];
 };
 
-export const initialState: InitialStateType = {
-  user: null,
-  signupUser: null,
-  welcomeFinished: false,
-  ticketPhotos: [],
-  latestTicket: null,
-  rules: [],
-  cache: [],
-  historicalData: [],
-  rulesBank: [],
-  initialChances: 0,
-  finalChances: 0,
-  historicalLuckyGeneratedResults: [],
-  // postProcessingSnapshot: [],
-};
+export const initialState: InitialStateType = USE_MOCK_STORE
+  ? mockInitialState
+  : {
+      user: null,
+      signupUser: null,
+      welcomeFinished: false,
+      ticketPhotos: [],
+      latestTicket: null,
+      rules: [],
+      cache: [],
+      historicalData: [],
+      rulesBank: [],
+      initialChances: 0,
+      finalChances: 0,
+      historicalLuckyGeneratedResults: [],
+      // postProcessingSnapshot: [],
+    };
 
 export const reducer: Reducer<InitialStateType, IReducer> = (state, action) => {
   // console.log('reducing...', action.type);

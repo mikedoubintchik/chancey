@@ -24,7 +24,7 @@ const Modal: React.FC<IModal> = (props) => {
           <IonTitle slot="">{title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">{children}</IonContent>
+      <IonContent className="ion-align-items-center ion-padding">{children}</IonContent>
     </IonModal>
   );
 };

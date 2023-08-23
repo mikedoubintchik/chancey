@@ -4,6 +4,9 @@ import { useNativePushNotification } from 'hooks/useNativePushNotifications';
 import { useCallback, useEffect } from 'react';
 import { ActionType, useStore } from 'stores/store';
 import { AsyncLoaderHelper } from './utils/AsyncLoaderHelper';
+import config from 'utils/config';
+
+const { FEATURE_PUSH_NOTIFICATIONS } = config;
 
 const AsyncLoader: React.FC = () => {
   const { state, dispatch } = useStore();
@@ -55,11 +58,11 @@ const AsyncLoader: React.FC = () => {
   }, [initializeApplicationData]);
 
   useEffect(() => {
-    if (Capacitor.getPlatform() === 'web' && messaging) {
+    if (Capacitor.getPlatform() === 'web' && messaging && FEATURE_PUSH_NOTIFICATIONS) {
       setupPushNotificationsForWeb(messaging);
     }
 
-    if (Capacitor.isNativePlatform()) {
+    if (Capacitor.isNativePlatform() && FEATURE_PUSH_NOTIFICATIONS) {
       setupPushNotificationsForMobile();
     }
   }, [setupPushNotificationsForWeb, setupPushNotificationsForMobile]);

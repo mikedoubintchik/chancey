@@ -1,4 +1,4 @@
-import { InputChangeEventDetail, IonButton, IonContent, IonInput, IonLoading } from '@ionic/react';
+import { InputChangeEventDetail, IonButton, IonContent, IonFooter, IonInput, IonLoading } from '@ionic/react';
 import Modal from 'components/modals/Modal';
 import { useState } from 'react';
 
@@ -31,16 +31,17 @@ const BallEditModal: React.FC<IBallEditModal> = ({ isOpenModal, hideModal, ballN
         message={'Logging in...'}
         spinner="circular"
       />
-      <IonContent className="ion-align-items-center ion-padding">
-        <IonInput
-          label="Ball"
-          type="number"
-          placeholder={'Enter a ball number'}
-          value={newBallNumber}
-          onIonChange={handleChange}
-        ></IonInput>
-        <IonButton onClick={handleSave}>Save</IonButton>
-      </IonContent>
+      <IonInput
+        label="Ball"
+        type="number"
+        placeholder={'Enter a ball number'}
+        value={newBallNumber}
+        onIonInput={handleChange}
+        clearInput={true}
+        fill="solid"
+        helperText="Enter a valid number"
+      />
+      <IonButton onClick={handleSave}>Save</IonButton>
     </Modal>
   );
 };
