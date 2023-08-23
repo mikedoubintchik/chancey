@@ -27,6 +27,9 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStore } from 'stores/store';
 import { LotteryDrawModel } from 'types/lottery-draw';
+import config from 'utils/config';
+
+const { FEATURE_AUTHENTICATION } = config;
 
 const HomePage: React.FC = () => {
   const { state } = useStore();
@@ -71,13 +74,8 @@ const HomePage: React.FC = () => {
     <>
       <SideMenu />
       <IonPage id="main-content">
-        <Header />
+        {FEATURE_AUTHENTICATION && <Header />}
         <IonContent fullscreen>
-          <IonHeader collapse="condense">
-            <IonToolbar>
-              <IonTitle size="large">Tab 1</IonTitle>
-            </IonToolbar>
-          </IonHeader>
           <IonCard id="latest-result">
             <IonCardHeader>
               <IonToolbar>

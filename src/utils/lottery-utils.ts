@@ -7,16 +7,25 @@ export type NumberFrequency = {
   frequency: number;
 };
 
-export const parseMegaRecord = (record: Array<string>): LotteryDrawModel => {
-  let date = new Date(record[8]);
-  let numbers = record[9].split(' ').map((n: string) => parseInt(n));
-  let extra = parseInt(record[10]);
-  var ldm: LotteryDrawModel = {
+export const parseMegaRecord = (record: (string | number | null)[]): LotteryDrawModel => {
+  if (
+    typeof record[9] !== 'string' ||
+    typeof record[10] !== 'string' ||
+    typeof record[8] !== 'string' ||
+    isNaN(new Date(record[8]).getTime())
+  ) {
+    throw new Error('Invalid record format');
+  }
+
+  const numbers = record[9].split(' ').map((n: string) => parseInt(n));
+  const extra = parseInt(record[10]);
+
+  const lotteryDraw: LotteryDrawModel = {
     type: DrawType.MEGA,
-    date: date,
-    series: { numbers: numbers, extra: extra }, //bitMask: arrayToBitMask(numbers)
+    date: new Date(record[8]),
+    series: { numbers, extra },
   };
-  return ldm;
+  return lotteryDraw;
 };
 
 export const getDefaultLDM = (): LotteryDrawModel => {

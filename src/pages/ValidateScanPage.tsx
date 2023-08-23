@@ -17,21 +17,20 @@ import {
 } from '@ionic/react';
 import Header from 'components/Header';
 import LotteryDrawWithoutStats from 'components/lottery-draw-without-stats/LotteryDrawWithoutStats';
-import LotteryDraw from 'components/lottery-draw/LotteryDraw';
 import LotteryTickets from 'components/lottery-tickets/LotteryTickets';
 import BallEditModal from 'components/modals/BallEditModal';
 import useModal from 'hooks/useModal';
 import { informationCircleOutline } from 'ionicons/icons';
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import { useMockStore } from 'stores/mockStore';
 import { useStore } from 'stores/store';
-import { LotteryDrawModel, LotteryTicketModel } from 'types/lottery-draw';
+import { LotteryDrawModel } from 'types/lottery-draw';
+import config from 'utils/config';
+
+const { FEATURE_AUTHENTICATION } = config;
 
 const ValidateScanPage: React.FC = () => {
-  const { state } = useMockStore(); // use mock store to avoid making API calls
-  // const { state } = useStore();
-  // console.log('🚀 ~ file: ValidateScanPage.tsx:33 ~ state:', state);
+  const { state } = useStore();
   const [lotteryTicket, setLotteryTicket] = useState<LotteryDrawModel[] | undefined>();
   const [seriesIndex, setSeriesIndex] = useState<number>(0);
   const [editNumber, setEditNumber] = useState<number>();
@@ -44,7 +43,7 @@ const ValidateScanPage: React.FC = () => {
 
   return (
     <IonPage id="main-content">
-      <Header pageTitle="Validate Ticket" />
+      {FEATURE_AUTHENTICATION && <Header pageTitle="Validate Ticket" />}
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>

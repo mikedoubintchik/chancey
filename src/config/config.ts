@@ -1,3 +1,5 @@
+import { parseEnvBool } from 'utils/config';
+
 const config = {
   firebase: {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -8,6 +10,7 @@ const config = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+    FEATURE_FIREBASE_APP_CHECK: parseEnvBool(process.env.REACT_APP_FEATURE_FIREBASE_APP_CHECK),
   },
 };
 

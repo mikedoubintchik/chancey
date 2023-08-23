@@ -32,14 +32,16 @@ import WelcomePageLogin from 'components/welcome/WelcomePageLogin';
 import WelcomePageLogo from 'components/welcome/WelcomePageLogo';
 import WelcomePageLuckyToken from 'components/welcome/WelcomePageLuckyToken';
 import WelcomePageName from 'components/welcome/WelcomePageName';
-import useGuidedTour from 'hooks/useGuidedTour';
 import RulesPage from 'pages/RulesPage';
 import ValidateScanPage from 'pages/ValidateScanPage';
 import { Reducer, useEffect, useReducer, useState } from 'react';
-import Joyride from 'react-joyride';
 import './App.css';
-import './theme/variables.css';
 import './theme/global-styles.css';
+import './theme/variables.css';
+import Walkthrough from 'components/Walkthrough';
+import config from 'utils/config';
+
+const { FEATURE_WELCOME, FEATURE_WALKTHROUGH } = config;
 
 library.add(fab);
 
@@ -47,14 +49,14 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer<Reducer<InitialStateType, IReducer>>(reducer, initialState);
-  const { handleCallback, run, steps, stepIndex } = useGuidedTour();
   const [showFooterTabs, setShowFooterTabs] = useState<boolean>(false);
   const [redirectTo, setRedirectTo] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       const welcomeFinished = await get('welcomeFinished');
-      setRedirectTo(welcomeFinished ? '/home' : '/welcome/logo');
+
+      setRedirectTo(welcomeFinished || !FEATURE_WELCOME ? '/home' : '/welcome/logo');
 
       // if not welcome screens or login page or base route, show footer tabs
       if (!window.location.pathname.includes('welcome') && !(window.location.pathname === '/') && state.welcomeFinished)
@@ -64,26 +66,10 @@ const App: React.FC = () => {
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      {/* splash */}
       <IonApp>
         <AsyncLoader />
-        <Joyride
-          callback={handleCallback}
-          continuous
-          run={run}
-          // stepIndex={stepIndex}
-          steps={steps}
-          styles={
-            {
-              // options: {
-              //   arrowColor: theme.black,
-              //   backgroundColor: theme.black,
-              //   primaryColor: theme.colors.purple,
-              //   textColor: theme.white,
-              // },
-            }
-          }
-        />
+
+        {FEATURE_WALKTHROUGH && <Walkthrough />}
 
         <IonReactRouter>
           <IonTabs>
